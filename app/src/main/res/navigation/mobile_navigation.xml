@@ -22,4 +22,10 @@
         android:name="ajman.shd.app1.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_calculator"
+        android:name="ajman.shd.app1.ui.calculator.CalculatorFragment"
+        android:label="@string/menu_calculator"
+        tools:layout="@layout/fragment_calculator_1" />
 </navigation>
