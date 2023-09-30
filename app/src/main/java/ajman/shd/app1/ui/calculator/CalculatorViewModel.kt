@@ -1,13 +1,14 @@
 package ajman.shd.app1.ui.calculator
 
+import ajman.shd.app1.entities.JoistDesign
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CalculatorViewModel : ViewModel() {
+class CalculatorViewModel(var joistDesign: JoistDesign) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is calculator Fragment"
+    private val _joistDesignLiveData = MutableLiveData<JoistDesign>().apply {
+        value = joistDesign
     }
-    val text: LiveData<String> = _text
+    val joistDesignLiveData: LiveData<JoistDesign> = _joistDesignLiveData
 }

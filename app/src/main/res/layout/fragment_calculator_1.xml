@@ -7,63 +7,73 @@
     tools:context=".ui.calculator.CalculatorFragment">
 
 
-    <EditText
-        android:id="@+id/editTextSpan"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewSpan"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter Span (meters)"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/span_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/editTextSpan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/span_placeholder"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewSpan"
+        android:autofillHints="0.0" />
+
+    <TextView
+        android:id="@+id/textViewLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/load_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextSpan"/>
 
     <EditText
         android:id="@+id/editTextLoad"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Load (newtons)"
+        android:hint="@string/load_placeholder"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintTop_toBottomOf="@id/textViewLoad"
+        android:autofillHints="0.0" />
 
     <Button
         android:id="@+id/buttonCalculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Calculate"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/calculate_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@id/editTextLoad" />
 
     <TextView
         android:id="@+id/textViewShear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shear: "
+        android:text="@string/shear_label"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintTop_toBottomOf="@id/buttonCalculate" />
 
     <TextView
         android:id="@+id/textViewMoment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Moment: "
+        android:text="@string/moment_label"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintTop_toBottomOf="@id/textViewShear" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,4 +11,11 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_calculator">Calculator</string>
+    <string name="span_label">Span (m)</string>
+    <string name="span_placeholder">Enter Span</string>
+    <string name="load_label">Load (kgf/m²)</string>
+    <string name="load_placeholder">Enter Load</string>
+    <string name="calculate_label">Calculate</string>
+    <string name="shear_label">Shear:</string>
+    <string name="moment_label">Moment:</string>
 </resources>

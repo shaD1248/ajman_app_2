@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import ajman.shd.app1.databinding.FragmentCalculator1Binding
+import ajman.shd.app1.entities.JoistDesign
 
 class CalculatorFragment : Fragment() {
-
+    private var joistDesign = JoistDesign(0.0, 0.0)
     private var _binding: FragmentCalculator1Binding? = null
 
     // This property is only valid between onCreateView and
@@ -22,21 +22,26 @@ class CalculatorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val calculatorViewModel = CalculatorViewModel(joistDesign)
+
         _binding = FragmentCalculator1Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        _binding?.buttonCalculate?.setOnClickListener {
-            // Get input values from EditTexts
-            val span = _binding?.editTextSpan?.text.toString().toDoubleOrNull() ?: 0.0
-            val load = _binding?.editTextLoad?.text.toString().toDoubleOrNull() ?: 0.0
+        val spanTextView: TextView = binding.editTextSpan
+        val loadTextView: TextView = binding.editTextLoad
+        val observer: (value: JoistDesign) -> Unit = {
+            spanTextView.text = it.span.toString()
+            loadTextView.text = it.load.toString()
+            binding.textViewShear.text = String.format("Shear: %s kgf", it.shear)
+            binding.textViewMoment.text = String.format("Moment: %s kgfm", it.moment)
+        }
+        calculatorViewModel.joistDesignLiveData.observe(viewLifecycleOwner, observer)
 
-            // Calculate Shear and Moment
-            val shear = 0.5 * span * load
-            val moment = (1.0 / 8.0) * Math.pow(span, 2.0) * load
-
-            // Display results in TextViews
-            _binding?.textViewShear?.text = "Shear: $shear newtons"
-            _binding?.textViewMoment?.text = "Moment: $moment newton-meters"
+        binding.buttonCalculate.setOnClickListener {
+            joistDesign.span = spanTextView.text.toString().toDoubleOrNull() ?: 0.0
+            joistDesign.load = loadTextView.text.toString().toDoubleOrNull() ?: 0.0
+            joistDesign.analyze()
+            observer(joistDesign)
         }
 
         return root
