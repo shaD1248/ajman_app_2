@@ -1,19 +1,19 @@
 package ajman.shd.app1.models.requirements.limit_states.flexure
 
+import ajman.shd.app1.enums.Unit
 import ajman.shd.app1.models.Requirement
 import ajman.shd.app1.models.RequirementApplication
-import ajman.shd.app1.models.generateAssignment
-import ajman.shd.app1.models.generateAssignmentWithFormula
 import ajman.shd.app1.models.joinMessages
 import ajman.shd.app1.models.structure.LocatedCompositeSection
-import ajman.shd.app1.models.structure.kgf
-import ajman.shd.app1.models.structure.m
+import ajman.shd.app1.models.templates.Assignment
 import kotlin.math.min
 import kotlin.math.pow
 
 class FlexuralStrengthOfCompositeSection: Requirement<LocatedCompositeSection>() {
     override fun apply(target: LocatedCompositeSection): RequirementApplication {
+        val assignments = mutableListOf<Assignment>()
         val Mu: Double = 0.5 * target.qu * target.x * (target.L - target.x)
+        assignments.add(Assignment("Mu", Mu, Unit.KGFM, "qu * x * (L - x)"))
         val phi_b: Double
         val Mn: Double
         if (target.hasConcreteWeb) {
@@ -24,13 +24,11 @@ class FlexuralStrengthOfCompositeSection: Requirement<LocatedCompositeSection>()
             phi_b = 0.9
             Mn = min(target.Fy * target.Sb, -0.7 * target.fc * target.Sc)
         }
+        assignments.add(Assignment("phi_b", phi_b, Unit.UNIT))
+        assignments.add(Assignment("Mn", Mn, Unit.KGFM))
         val ratio = Mu / phi_b / Mn
-        val messages = mutableListOf(
-            generateAssignment("Mu", Mu / kgf / m, "%.2f", "kgfm"),
-            generateAssignment("phi_b", phi_b, "%.2f", ""),
-            generateAssignment("Mn", Mn / kgf / m, "%.2f", "kgfm"),
-            generateAssignmentWithFormula("ratio", "Mu / phi_b / Mn", ratio, "%.2f", ""),
-        )
+        assignments.add(Assignment("ratio", ratio, Unit.UNIT, "Mu / phi_b / Mn"))
+        val messages = assignments.map { it.toString() }.toMutableList()
         return RequirementApplication(ratio, joinMessages(messages))
     }
 
