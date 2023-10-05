@@ -57,23 +57,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextLoad" />
 
-    <TextView
-        android:id="@+id/textViewShear"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/containerLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/shear_label"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonCalculate" />
-
-    <TextView
-        android:id="@+id/textViewMoment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/moment_label"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewShear" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/buttonCalculate">
+        <!-- Other views can be here -->
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
