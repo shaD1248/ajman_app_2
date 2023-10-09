@@ -3,6 +3,7 @@ package ajman.shd.app1.models.requirements.limit_states.flexure
 import ajman.shd.app1.models.QuantityEvaluator
 import ajman.shd.app1.models.Requirement
 import ajman.shd.app1.models.RequirementApplication
+import ajman.shd.app1.models.joinLatexMessages
 import ajman.shd.app1.models.joinMessages
 import ajman.shd.app1.models.structure.LocatedCompositeSection
 
@@ -34,6 +35,7 @@ class FlexuralStrengthOfCompositeSection: Requirement<LocatedCompositeSection>()
 
         val ratio_b: Double = evaluator.dataSet["ratio_b"] ?: 0.0
         val messages = assignments.map { it.toString() }.toMutableList()
-        return RequirementApplication(ratio_b, joinMessages(messages))
+        val latexMessages = assignments.map { it.getLatex() }.toMutableList()
+        return RequirementApplication(ratio_b, joinLatexMessages(latexMessages), joinMessages(messages))
     }
 }

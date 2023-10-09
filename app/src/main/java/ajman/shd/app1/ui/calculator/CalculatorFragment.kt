@@ -11,11 +11,13 @@ import ajman.shd.app1.entities.JoistDesign
 import ajman.shd.app1.models.structure.kgf
 import ajman.shd.app1.models.structure.m
 import ajman.shd.app1.models.structure.m2
+import android.webkit.WebView
 
 class CalculatorFragment : Fragment() {
     private var joistDesign = JoistDesign(0.0, 0.0)
     private var _binding: FragmentCalculator1Binding? = null
     private var textViewMap = mutableMapOf<String, TextView>()
+    private var webView: WebView? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -44,6 +46,9 @@ class CalculatorFragment : Fragment() {
             textViewMap[item] = textView
         }
 
+        webView = WebView(requireContext())
+        binding.containerLayout.addView(webView)
+
         binding.buttonCalculate.setOnClickListener {
             joistDesign.span = (binding.editTextSpan.text.toString().toDoubleOrNull() ?: 0.0) * m
             joistDesign.load = (binding.editTextLoad.text.toString().toDoubleOrNull() ?: 0.0) * kgf / m2
@@ -59,11 +64,18 @@ class CalculatorFragment : Fragment() {
         loadTextView.text = (it.load / (kgf / m2)).toString()
         val displayItems = mutableMapOf(
             "ratio" to String.format("Ratio: %.2f", it.requirementApplication.ratio),
-            "details" to String.format("Details:\n%s", it.requirementApplication.message)
+//            "details" to String.format("Details:\n%s", it.requirementApplication.message)
         )
         for ((key, textView) in textViewMap) {
             textView.text = displayItems[key]
         }
+        renderLaTeX(it.requirementApplication.latexMessage)
+    }
+
+    private fun renderLaTeX(document: String) {
+        webView?.settings?.javaScriptEnabled = true
+        val html = "<html><head><script type='text/javascript' src='file:///android_asset/mathjax/Mathjax.js'></script></head><body>$$${document}$$</body></html>"
+        webView?.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "utf-8", null)
     }
 
     override fun onDestroyView() {

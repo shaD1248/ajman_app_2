@@ -25,19 +25,19 @@ class Mn: Quantity() {
         val formula: String?
         val Mn = if (hasConcreteWeb == 1.0) {
             val Qc: Double = if (a <= h) {
-                formula = "0.5 * a^2 * be"
+                formula = "\\frac{1}{2} a^2 b_e"
                 0.5 * a.pow(2) * be
             } else {
-                formula = "0.5 * a^2 * bw - 0.5 * (be - bw) * h^2"
+                formula = "\\frac{1}{2} a^2 b_w - \\frac{1}{2} (b_e - b_w) h^2"
                 0.5 * a.pow(2) * bw - 0.5 * (be - bw) * h.pow(2)
             }
-            assignments.add(Assignment("Qc", Qc, Unit.CM3, formula))
+            assignments.add(Assignment("Q_c", Qc, Unit.CM3, formula))
             val Mn = Mp - 0.85 * fc * Qc
-            assignments.add(Assignment("Mn", Mn, Unit.KGFM, "Mp - 0.85 * fc * Qc"))
+            assignments.add(Assignment("M_n", Mn, Unit.KGFM, "M_p - 0.85 f_c Q_c"))
             Mn
         } else {
             val Mn = min(Fy * Sb, -0.7 * fc * Sc)
-            assignments.add(Assignment("Mn", Mn, Unit.KGFM,  "min(Fy * Sb, 0.7 * fc * Sc)"))
+            assignments.add(Assignment("M_n", Mn, Unit.KGFM,  "min(F_y S_b, 0.7 f_c S_c)"))
             Mn
         }
         return Pair(Mn, assignments)

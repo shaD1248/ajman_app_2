@@ -17,13 +17,13 @@ class phi_b: Quantity() {
         val phi_b = if (hasConcreteWeb == 0.0 || epsilon_t >= 0.005) {
             0.9
         } else if (epsilon_t > Fy / Es) {
-            formula = "0.9 - (0.9 - 0.65) * (0.005 - epsilon_t) / (0.005 - Fy / Es)"
+            formula = "0.9 - (0.9 - 0.65) * (0.005 - epsilon_t) / (0.005 - F_y / E_s)"
             0.9 - (0.9 - 0.65) * (0.005 - epsilon_t) / (0.005 - Fy / Es)
         } else {
             0.65
         }
         val assignments = mutableListOf(
-            Assignment("phi_b", phi_b, Unit.UNIT, formula)
+            Assignment("\\phi_b", phi_b, Unit.UNIT, formula)
         )
         return Pair(phi_b, assignments)
     }

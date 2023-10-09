@@ -14,4 +14,5 @@ class Assignment(
         val formulaString = formula?.let { " = $it" } ?: ""
         return "$name$formulaString = $formattedValue$unit"
     }
+    fun getLatex() = toString()
 }

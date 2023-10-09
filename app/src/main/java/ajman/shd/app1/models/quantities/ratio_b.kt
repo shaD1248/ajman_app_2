@@ -14,7 +14,7 @@ class ratio_b: Quantity() {
         val Mn = dataSet["Mn"] ?: 0.0
         val ratio_b: Double = Mu / phi_b / Mn
         val assignments = mutableListOf(
-            Assignment("ratio_b", ratio_b, Unit.UNIT, "Mu / phi_b / Mn")
+            Assignment("ratio_b", ratio_b, Unit.UNIT, "\\frac{M_u}{\\phi_b M_n}")
         )
         return Pair(ratio_b, assignments)
     }
