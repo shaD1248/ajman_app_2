@@ -55,8 +55,8 @@ class CalculatorFragment : Fragment() {
     private fun getObserver(): (JoistDesign) -> Unit = {
         val spanTextView: TextView = binding.editTextSpan
         val loadTextView: TextView = binding.editTextLoad
-        spanTextView.text = it.span.toString()
-        loadTextView.text = it.load.toString()
+        spanTextView.text = (it.span / m).toString()
+        loadTextView.text = (it.load / (kgf / m2)).toString()
         val displayItems = mutableMapOf(
             "ratio" to String.format("Ratio: %.2f", it.requirementApplication.ratio),
             "details" to String.format("Details:\n%s", it.requirementApplication.message)

@@ -6,6 +6,7 @@ import ajman.shd.app1.models.requirements.limit_states.flexure.FlexuralStrengthO
 import ajman.shd.app1.models.structure.CompositeJoist
 
 class CompositeJoistRequirements: Requirement<CompositeJoist>() {
+    override val mappedQuantity = ""
     override fun apply(target: CompositeJoist): RequirementApplication {
         target.analyze()
         val requirement = FlexuralStrengthOfCompositeSection()
