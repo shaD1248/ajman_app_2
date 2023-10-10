@@ -69,12 +69,16 @@ class CalculatorFragment : Fragment() {
         for ((key, textView) in textViewMap) {
             textView.text = displayItems[key]
         }
-        renderLaTeX(it.requirementApplication.latexMessage)
+        renderLaTeX(it.requirementApplication.latexLines)
     }
 
-    private fun renderLaTeX(document: String) {
+    private fun renderLaTeX(latexLines: MutableList<String>) {
+        val document = latexLines.joinToString("\\\\") { latexLine ->
+            "\\displaystyle $latexLine"
+        }
         webView?.settings?.javaScriptEnabled = true
-        val html = "<html><head><script type='text/javascript' src='file:///android_asset/mathjax/Mathjax.js'></script></head><body>$$${document}$$</body></html>"
+        val html = "<!DOCTYPE html><html lang=\"en\"><head><script type=\"text/x-mathjax-config\">MathJax.Hub.Config({displayAlign:\"left\"});</script><script type=\"text/javascript\" async src=\"file:///android_asset/mathjax/Mathjax.js?config=TeX-AMS_CHTML\"></script></head><body>$$\\begin{array}{l}${document}\\end{array}$$</body></html>"
+//        val html = "<html><head><script type='text/javascript' src='file:///android_asset/mathjax/Mathjax.js'></script></head><body>${document}</body></html>"
         webView?.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "utf-8", null)
     }
 

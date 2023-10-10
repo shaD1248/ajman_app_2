@@ -14,7 +14,7 @@ class Mu: Quantity() {
         val L = dataSet["L"] ?: 0.0
         val Mu: Double = 0.5 * qu * x * (L - x)
         val assignments = mutableListOf(
-            Assignment("Mu", Mu, Unit.KGFM, "q_u x (L - x))")
+            Assignment("M_u", Mu, Unit.KGFM, "q_u x \\left(L - x\\right)")
         )
         return Pair(Mu, assignments)
     }

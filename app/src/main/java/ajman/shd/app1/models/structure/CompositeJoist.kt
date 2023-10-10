@@ -1,6 +1,6 @@
 package ajman.shd.app1.models.structure
 
-class CompositeJoist(var L: Double, areaLoading: AreaLoading, var hasConcreteWeb: Boolean = true) {
+class CompositeJoist(var L: Double, val areaLoading: AreaLoading, var hasConcreteWeb: Boolean = true) {
     var d: Double = 30 * cm
     var h: Double = 5 * cm
     var b: Double = 70 * cm

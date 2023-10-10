@@ -13,7 +13,7 @@ class qu: Quantity() {
         val b = dataSet["b"] ?: 0.0
         val qu: Double = wu * b
         val assignments = mutableListOf(
-            Assignment("qu", qu, Unit.KGF_OVER_M, "w_u b")
+            Assignment("q_u", qu, Unit.KGF_OVER_M, "w_u b")
         )
         return Pair(qu, assignments)
     }

@@ -28,7 +28,7 @@ class Mn: Quantity() {
                 formula = "\\frac{1}{2} a^2 b_e"
                 0.5 * a.pow(2) * be
             } else {
-                formula = "\\frac{1}{2} a^2 b_w - \\frac{1}{2} (b_e - b_w) h^2"
+                formula = "\\frac{1}{2} a^2 b_w - \\frac{1}{2} \\left(b_e - b_w\\right) h^2"
                 0.5 * a.pow(2) * bw - 0.5 * (be - bw) * h.pow(2)
             }
             assignments.add(Assignment("Q_c", Qc, Unit.CM3, formula))

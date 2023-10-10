@@ -1,12 +1,22 @@
 package ajman.shd.app1.models
 
 import ajman.shd.app1.enums.Unit
+import ajman.shd.app1.models.quantities.I_composite
 import ajman.shd.app1.models.quantities.Mn
+import ajman.shd.app1.models.quantities.Mp
 import ajman.shd.app1.models.quantities.Mu
+import ajman.shd.app1.models.quantities.Qsb
+import ajman.shd.app1.models.quantities.Qst
+import ajman.shd.app1.models.quantities.Sb
+import ajman.shd.app1.models.quantities.Sc
+import ajman.shd.app1.models.quantities.Tp
 import ajman.shd.app1.models.quantities.a
 import ajman.shd.app1.models.quantities.epsilon_t
+import ajman.shd.app1.models.quantities.ns
 import ajman.shd.app1.models.quantities.phi_b
+import ajman.shd.app1.models.quantities.qu
 import ajman.shd.app1.models.quantities.ratio_b
+import ajman.shd.app1.models.quantities.y_composite
 import ajman.shd.app1.models.templates.Assignment
 
 class QuantityEvaluator(
@@ -14,7 +24,8 @@ class QuantityEvaluator(
     private var quantitiesToBeEvaluated: MutableSet<String>
 ) {
     private val allQuantities: MutableSet<Quantity> = mutableSetOf(
-        a(), epsilon_t(), Mn(), Mu(), phi_b(), /*qu(),*/ ratio_b()
+        a(), epsilon_t(), I_composite(), Mn(), Mp(), Mu(), ns(), phi_b(), Qsb(), Qst(), qu(),
+        ratio_b(), Sb(), Sc(), Tp(), y_composite()
     )
     val assignments: MutableList<Assignment> = mutableListOf()
 

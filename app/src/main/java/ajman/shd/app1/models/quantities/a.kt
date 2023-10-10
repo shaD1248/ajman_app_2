@@ -16,10 +16,10 @@ class a: Quantity() {
         val bw = dataSet["bw"] ?: 0.0
         val assignments = mutableListOf<Assignment>()
         var a = Tp / 0.85 / fc / be
-        assignments.add(Assignment("a", a, Unit.CM, "\\frac{Tp}{0.85 f_c b_e}"))
+        assignments.add(Assignment("a", a, Unit.CM, "\\frac{T_p}{0.85 f_c b_e}"))
         if (a > h) {
             a = Tp / 0.85 / fc / bw - (be / bw - 1) * h
-            assignments.add(Assignment("a", a, Unit.CM, "\\frac{Tp}{0.85 f_c b_w} - (\\frac{be}{bw} - 1) h"))
+            assignments.add(Assignment("a", a, Unit.CM, "\\frac{T_p}{0.85 f_c b_w} - \\left(\\frac{b_e}{b_w} - 1\\right) h"))
         }
         return Pair(a, assignments)
     }
