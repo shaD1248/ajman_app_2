@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App 1</string>
+    <string name="app_name">Joist Design</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -18,4 +18,8 @@
     <string name="calculate_label">Calculate</string>
     <string name="shear_label">Shear:</string>
     <string name="moment_label">Moment:</string>
+    <string name="image_logo_content_description">Project Logo</string>
+    <string name="default_project_name">Project Name</string>
+    <string name="default_joist_info">6m - Residential</string>
+    <string name="default_steel_joist_details">Steel Details: ...</string>
 </resources>

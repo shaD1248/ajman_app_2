@@ -1,0 +1,89 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FFFFFF"
+    android:clickable="true">
+
+    <!-- ID, Project Name, Created At, Updated At -->
+    <TextView
+        android:id="@+id/textViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID: " />
+
+    <EditText
+        android:id="@+id/editTextProjectName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Project Name" />
+
+    <TextView
+        android:id="@+id/textViewCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Created At: " />
+
+    <TextView
+        android:id="@+id/textViewUpdatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Updated At: " />
+
+    <!-- Joist Length and Occupancy -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextJoistLength"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Joist Length (m)"
+            android:inputType="numberDecimal"/>
+
+        <Spinner
+            android:id="@+id/spinnerOccupancy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Show More / Show Less -->
+    <TextView
+        android:id="@+id/textViewShowMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show More"
+        android:clickable="true"
+        android:onClick="toggleAdditionalFields" />
+
+    <!-- Additional Fields -->
+    <LinearLayout
+        android:id="@+id/layoutAdditionalFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!-- Steel Joist, Support Details, Joist Arrangement, Ties, Concrete fields go here -->
+
+    </LinearLayout>
+
+    <!-- Analyze Button -->
+    <Button
+        android:id="@+id/buttonAnalyze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Analyze"
+        android:onClick="analyzeJoistDesign"/>
+
+    <!-- WebView for Table -->
+    <WebView
+        android:id="@+id/webViewResultTable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

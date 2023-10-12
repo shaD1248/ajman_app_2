@@ -6,9 +6,25 @@ import ajman.shd.app1.models.Violation
 import ajman.shd.app1.models.requirements.CompositeJoistRequirements
 import ajman.shd.app1.models.structure.CompositeJoist
 import ajman.shd.app1.models.structure.AreaLoading
+import ajman.shd.app1.models.structure.Occupancy
+import android.os.Build
+import android.os.Parcel
+import android.os.Parcelable
+import android.text.Editable
+import androidx.annotation.RequiresApi
+import java.time.LocalDateTime
 import kotlin.math.pow
 
-data class JoistDesign(var _span: Double, var _load: Double) {
+val editableFactory = Editable.Factory.getInstance()!!
+
+data class JoistDesign(var _span: Double, var _load: Double): Parcelable {
+    var id: Int = 0
+    var projectName: String = ""
+    @RequiresApi(Build.VERSION_CODES.O)
+    var createdAt: LocalDateTime = LocalDateTime.now()
+    var joistLength: Double = _span
+    var occupancy: Occupancy = Occupancy.RESIDENTIAL
+
     private var _shear: Double = 0.0
     private var _moment: Double = 0.0
     private var _requirementApplication: RequirementApplication = RequirementApplication(0.0)
@@ -25,13 +41,8 @@ data class JoistDesign(var _span: Double, var _load: Double) {
             _load = value
             analysisStatus = Status.NOT_STARTED
         }
-    var requirementApplication: RequirementApplication
+    val requirementApplication: RequirementApplication
         get() = _requirementApplication
-        set(value) {}
-
-    fun getAnalysisStatus(): Status {
-        return analysisStatus
-    }
 
     fun validate(): Array<Violation> {
         val violations = Array(0) { Violation("", "") }
@@ -53,5 +64,23 @@ data class JoistDesign(var _span: Double, var _load: Double) {
         val compositeJoistRequirements = CompositeJoistRequirements()
         _requirementApplication = compositeJoistRequirements.apply(compositeJoist)
         analysisStatus = Status.COMPLETED
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(p0: Parcel, p1: Int) {
+    }
+
+    companion object CREATOR : Parcelable.Creator<JoistDesign> {
+        override fun createFromParcel(parcel: Parcel): JoistDesign {
+            // Read the parcel and create an instance of JoistDesign
+            return JoistDesign(0.0, 0.0)
+        }
+
+        override fun newArray(size: Int): Array<JoistDesign?> {
+            return arrayOfNulls(size)
+        }
     }
 }

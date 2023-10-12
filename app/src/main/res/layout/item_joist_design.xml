@@ -1,0 +1,53 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Logo (You can replace this with your actual logo) -->
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_menu_calculator"
+        android:contentDescription="@string/image_logo_content_description" />
+
+    <!-- Chat Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp" >
+
+        <!-- Project Name -->
+        <TextView
+            android:id="@+id/textProjectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_project_name"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Joist Length and Occupancy -->
+        <TextView
+            android:id="@+id/textJoistInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_joist_info"
+            android:textSize="14sp" />
+
+        <!-- Steel Joist Details -->
+        <TextView
+            android:id="@+id/textSteelJoistDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_steel_joist_details"
+            android:textSize="12sp"
+            android:textColor="#808080" />
+
+    </LinearLayout>
+
+</LinearLayout>
