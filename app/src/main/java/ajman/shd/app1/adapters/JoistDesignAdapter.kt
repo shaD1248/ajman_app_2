@@ -2,9 +2,11 @@ package ajman.shd.app1.adapters
 
 import ajman.shd.app1.R
 import ajman.shd.app1.entities.JoistDesign
+import ajman.shd.app1.models.structure.m
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class JoistDesignAdapter(
@@ -28,10 +30,8 @@ class JoistDesignAdapter(
 
 class JoistDesignViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(joistDesign: JoistDesign) {
-//        itemView.findViewById<TextView>(R.id.editTextJoistLength).text = joistDesign.joistLength.toString()
-//        itemView.findViewById<TextView>(R.id.spinnerOccupancy).text = joistDesign.occupancy.toString()
-        // Bind data to your item layout here
-        // Example:
-        // itemView.findViewById<TextView>(R.id.textViewDesignName).text = joistDesign.name
+        itemView.findViewById<TextView>(R.id.textProjectName).text = joistDesign.projectName
+        itemView.findViewById<TextView>(R.id.textJoistInfo).text = (joistDesign.joistLength / m).toString() + "m - " + joistDesign.occupancy
+//        itemView.findViewById<TextView>(R.id.textSteelJoistDetails).text = "Joist Details"
     }
 }

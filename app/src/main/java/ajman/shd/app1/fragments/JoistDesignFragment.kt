@@ -54,6 +54,13 @@ class JoistDesignFragment : Fragment() {
                 convertDataToFrom(it)
             }
         }
+        view.findViewById<TextView>(R.id.textViewShowMore).setOnClickListener {
+//            joistDesign?.let {
+//                convertFormToData(it)
+//                it.analyze()
+//                convertDataToFrom(it)
+//            }
+        }
     }
 
     private fun convertDataToFrom(joistDesign: JoistDesign) {

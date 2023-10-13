@@ -4,22 +4,19 @@ import ajman.shd.app1.enums.Status
 import ajman.shd.app1.models.RequirementApplication
 import ajman.shd.app1.models.Violation
 import ajman.shd.app1.models.requirements.CompositeJoistRequirements
-import ajman.shd.app1.models.structure.CompositeJoist
 import ajman.shd.app1.models.structure.AreaLoading
+import ajman.shd.app1.models.structure.CompositeJoist
 import ajman.shd.app1.models.structure.Occupancy
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
-import android.text.Editable
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 import kotlin.math.pow
 
-val editableFactory = Editable.Factory.getInstance()!!
-
 data class JoistDesign(var _span: Double, var _load: Double): Parcelable {
     var id: Int = 0
-    var projectName: String = ""
+    var projectName: String = "Project"
     @RequiresApi(Build.VERSION_CODES.O)
     var createdAt: LocalDateTime = LocalDateTime.now()
     var joistLength: Double = _span
