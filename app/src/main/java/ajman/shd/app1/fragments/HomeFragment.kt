@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import ajman.shd.app1.databinding.FragmentHomeBinding
 import ajman.shd.app1.entities.JoistDesign
 import ajman.shd.app1.adapters.JoistDesignAdapter
+import ajman.shd.app1.models.structure.Occupancy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,8 +23,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val joistDesigns = mutableListOf(
-        JoistDesign(1000.0, 0.02),
-        JoistDesign(600.0, 0.02),
+        JoistDesign(1000.0, Occupancy.RESIDENTIAL),
+        JoistDesign(600.0, Occupancy.RESIDENTIAL),
     )
 
     override fun onCreateView(
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
 
     private fun addListenerForCreateButton() {
         binding.root.findViewById<FloatingActionButton?>(R.id.fabAddJoist).setOnClickListener {
-            val joistDesign = JoistDesign(600.0, 0.02)
+            val joistDesign = JoistDesign(600.0, Occupancy.RESIDENTIAL)
             joistDesigns.add(0, joistDesign)
             loadJoistDetailFragment(joistDesign)
         }

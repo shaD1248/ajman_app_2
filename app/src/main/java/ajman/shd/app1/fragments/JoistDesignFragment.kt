@@ -67,7 +67,7 @@ class JoistDesignFragment : Fragment() {
         val root: View = binding.root
         root.findViewById<TextView?>(R.id.editTextProjectName).text = joistDesign.projectName
         root.findViewById<TextView?>(R.id.editTextJoistLength).text =
-            (joistDesign.joistLength / m).toString()
+            (joistDesign.L / m).toString()
         root.findViewById<Spinner?>(R.id.spinnerOccupancy)
             .setSelection(joistDesign.occupancy.ordinal)
         renderLaTeX(joistDesign.requirementApplication.latexLines)
@@ -86,7 +86,7 @@ class JoistDesignFragment : Fragment() {
 
     private fun convertFormToData(joistDesign: JoistDesign) {
         joistDesign.projectName = binding.editTextProjectName.text.toString()
-        joistDesign.joistLength =
+        joistDesign.L =
             (binding.editTextJoistLength.text.toString().toDoubleOrNull() ?: 0.0) * m
         joistDesign.occupancy = binding.spinnerOccupancy.selectedItem as Occupancy
     }

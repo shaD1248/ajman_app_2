@@ -31,7 +31,7 @@ class JoistDesignAdapter(
 class JoistDesignViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(joistDesign: JoistDesign) {
         itemView.findViewById<TextView>(R.id.textProjectName).text = joistDesign.projectName
-        itemView.findViewById<TextView>(R.id.textJoistInfo).text = (joistDesign.joistLength / m).toString() + "m - " + joistDesign.occupancy
+        itemView.findViewById<TextView>(R.id.textJoistInfo).text = (joistDesign.L / m).toString() + "m - " + joistDesign.occupancy
 //        itemView.findViewById<TextView>(R.id.textSteelJoistDetails).text = "Joist Details"
     }
 }

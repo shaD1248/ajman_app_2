@@ -12,38 +12,21 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
-import kotlin.math.pow
 
-data class JoistDesign(var _span: Double, var _load: Double): Parcelable {
+data class JoistDesign(var L: Double, var occupancy: Occupancy = Occupancy.RESIDENTIAL): Parcelable {
     var id: Int = 0
     var projectName: String = "Project"
     @RequiresApi(Build.VERSION_CODES.O)
     var createdAt: LocalDateTime = LocalDateTime.now()
-    var joistLength: Double = _span
-    var occupancy: Occupancy = Occupancy.RESIDENTIAL
 
-    private var _shear: Double = 0.0
-    private var _moment: Double = 0.0
     private var _requirementApplication: RequirementApplication = RequirementApplication(0.0)
     private var analysisStatus: Status = Status.NOT_STARTED
-    var span: Double
-        get() = _span
-        set(value) {
-            _span = value
-            analysisStatus = Status.NOT_STARTED
-        }
-    var load: Double
-        get() = _load
-        set(value) {
-            _load = value
-            analysisStatus = Status.NOT_STARTED
-        }
     val requirementApplication: RequirementApplication
         get() = _requirementApplication
 
     fun validate(): Array<Violation> {
         val violations = Array(0) { Violation("", "") }
-        if (_span <= 0) {
+        if (this.L <= 0) {
             violations.plus(Violation("span", "Span must be greater than 0."))
         }
         return violations
@@ -54,10 +37,8 @@ data class JoistDesign(var _span: Double, var _load: Double): Parcelable {
         if (violations.isNotEmpty()) {
             throw Exception(violations.map { it.message }.joinToString { "\n" })
         }
-        _shear = 0.5 * _load * _span
-        _moment = 0.125 * _load * _span.pow(2.0)
-        val loading = AreaLoading(0.0, _load)
-        val compositeJoist = CompositeJoist(_span, loading)
+        val loading = AreaLoading(occupancy.get_wD(), occupancy.get_wL())
+        val compositeJoist = CompositeJoist(L, loading)
         val compositeJoistRequirements = CompositeJoistRequirements()
         _requirementApplication = compositeJoistRequirements.apply(compositeJoist)
         analysisStatus = Status.COMPLETED
@@ -73,7 +54,7 @@ data class JoistDesign(var _span: Double, var _load: Double): Parcelable {
     companion object CREATOR : Parcelable.Creator<JoistDesign> {
         override fun createFromParcel(parcel: Parcel): JoistDesign {
             // Read the parcel and create an instance of JoistDesign
-            return JoistDesign(0.0, 0.0)
+            return JoistDesign(0.0, Occupancy.RESIDENTIAL)
         }
 
         override fun newArray(size: Int): Array<JoistDesign?> {
