@@ -19,10 +19,10 @@ class LocatedCompositeSection(val x: Double, private val compositeJoist: Composi
         get() = compositeJoist.h
         set(value) {}
     var b: Double
-        get() = compositeJoist.bw
+        get() = compositeJoist.b
         set(value) {}
     var bw: Double
-        get() = compositeJoist.b
+        get() = compositeJoist.bw
         set(value) {}
     var be: Double
         get() = min(compositeJoist.b, min(bw + L / 4, bw + 16 * h))
