@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="#FFFFFF"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
     <!-- ID, Project Name, Created At, Updated At -->
     <TextView
@@ -18,7 +19,8 @@
         android:id="@+id/editTextProjectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Project Name" />
+        android:hint="Project Name"
+        android:autofillHints="Project Name" />
 
     <TextView
         android:id="@+id/textViewCreatedAt"
@@ -44,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Joist Length (m)"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:autofillHints="Joist Length (m)" />
 
         <Spinner
             android:id="@+id/spinnerOccupancy"
@@ -59,9 +62,8 @@
         android:layout_height="wrap_content"
         android:text="Show More"
         android:clickable="true"
-        android:onClick="toggleAdditionalFields" />
+        android:focusable="true" />
 
-    <!-- Additional Fields -->
     <LinearLayout
         android:id="@+id/layoutAdditionalFields"
         android:layout_width="match_parent"
@@ -69,7 +71,147 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <!-- Steel Joist, Support Details, Joist Arrangement, Ties, Concrete fields go here -->
+        <!-- Fields for Joist Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joist Details"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerSteelSectionDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- Fields for Joist Height -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joist Height"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/editTextJoistHeight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Joist Height"/>
+        </LinearLayout>
+
+        <!-- Fields for Concrete Web -->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Concrete Web"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:paddingEnd="8dp"/>-->
+
+<!--            <CheckBox-->
+<!--                android:id="@+id/checkboxConcreteWeb"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
+
+        <!-- Fields for Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joist Arrangement"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerJoistArrangement"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- Fields for Slab Thickness -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slab Thickness"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/editTextSlabThickness"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Slab Thickness"/>
+        </LinearLayout>
+
+        <!-- Fields for Ceiling Height -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ceiling Height"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/editTextCeilingDepth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Ceiling Height"/>
+        </LinearLayout>
+
+        <!-- Fields for Concrete Grade -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Concrete Grade"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerConcreteGrade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
     </LinearLayout>
 
