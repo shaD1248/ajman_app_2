@@ -1,6 +1,7 @@
 package ajman.shd.app1.fragments
 
 import ajman.shd.app1.R
+import ajman.shd.app1.databases.JoistyDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ajman.shd.app1.entities.JoistDesign
 import ajman.shd.app1.databinding.FragmentJoistDesignBinding
+import ajman.shd.app1.models.JoistDesignParcelable
+import ajman.shd.app1.models.RequirementApplication
 import ajman.shd.app1.models.structure.ConcreteGrade
 import ajman.shd.app1.models.structure.SteelSectionDetails
 import ajman.shd.app1.models.structure.JoistArrangement
 import ajman.shd.app1.models.structure.Occupancy
 import ajman.shd.app1.models.structure.cm
 import ajman.shd.app1.models.structure.m
+import ajman.shd.app1.services.JoistDesignService
 import android.os.Build
 import android.webkit.WebView
 import android.widget.ArrayAdapter
@@ -23,10 +27,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 
+@RequiresApi(Build.VERSION_CODES.O)
 class JoistDesignFragment : Fragment() {
 
     private var _binding: FragmentJoistDesignBinding? = null
     private val binding get() = _binding!!
+    private var joisyDatabase: JoistyDatabase? = null
     private var joistDesign: JoistDesign? = null
     private var additionalFieldsVisible = false
 
@@ -36,9 +42,11 @@ class JoistDesignFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJoistDesignBinding.inflate(inflater, container, false)
-        joistDesign = arguments?.getParcelable("joistDesign", JoistDesign::class.java)
+        val joistDesignParcelable = arguments?.getParcelable("joistDesignParcelable", JoistDesignParcelable::class.java)
+        joisyDatabase = joistDesignParcelable?.joistyDatabase
+        joistDesign = joistDesignParcelable?.joistDesign
         setSpinnerValues()
-        joistDesign?.let { convertDataToFrom(it) }
+        joistDesign?.let { convertDataToFrom(it, RequirementApplication(0.0)) }
         return binding.root
     }
 
@@ -63,8 +71,9 @@ class JoistDesignFragment : Fragment() {
         view.findViewById<Button>(R.id.buttonAnalyze).setOnClickListener {
             joistDesign?.let {
                 convertFormToData(it)
-                it.analyze()
-                convertDataToFrom(it)
+                val joistDesignService = JoistDesignService()
+                val requirementApplication = joistDesignService.analyze(it)
+                convertDataToFrom(it, requirementApplication)
             }
         }
 
@@ -80,7 +89,7 @@ class JoistDesignFragment : Fragment() {
         }
     }
 
-    private fun convertDataToFrom(joistDesign: JoistDesign) {
+    private fun convertDataToFrom(joistDesign: JoistDesign, requirementApplication: RequirementApplication) {
         val root: View = binding.root
         val textViewFormData = mutableMapOf(
             R.id.editTextProjectName to joistDesign.projectName,
@@ -107,7 +116,7 @@ class JoistDesignFragment : Fragment() {
         for ((viewId, value) in spinnerFormData) {
             root.findViewById<Spinner?>(viewId).setSelection(value.ordinal)
         }
-        renderLaTeX(joistDesign.requirementApplication.latexLines)
+        renderLaTeX(requirementApplication.latexLines)
     }
 
     private fun renderLaTeX(latexLines: MutableList<String>) {
@@ -140,5 +149,6 @@ class JoistDesignFragment : Fragment() {
             field.isAccessible = true
             field.set(joistDesign, value)
         }
+        joisyDatabase?.joistDesignDao()?.update(joistDesign)
     }
 }

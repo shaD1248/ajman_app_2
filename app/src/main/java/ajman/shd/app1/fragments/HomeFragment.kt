@@ -9,11 +9,16 @@ import androidx.fragment.app.Fragment
 import ajman.shd.app1.databinding.FragmentHomeBinding
 import ajman.shd.app1.entities.JoistDesign
 import ajman.shd.app1.adapters.JoistDesignAdapter
-import ajman.shd.app1.models.structure.Occupancy
+import ajman.shd.app1.databases.JoistyDatabase
+import ajman.shd.app1.models.JoistDesignParcelable
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+@RequiresApi(Build.VERSION_CODES.O)
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -22,9 +27,10 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val joistDesigns = mutableListOf(
-        JoistDesign(1000.0, Occupancy.RESIDENTIAL),
-        JoistDesign(600.0, Occupancy.RESIDENTIAL),
+    private lateinit var joistyDatabase: JoistyDatabase
+    private var joistDesigns = mutableListOf(
+        JoistDesign(1000.0),
+        JoistDesign(600.0),
     )
 
     override fun onCreateView(
@@ -39,6 +45,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun showJoistDesigns() {
+        joistyDatabase = Room.databaseBuilder(
+            requireContext(),
+            JoistyDatabase::class.java, "joist-database"
+        ).build()
+        joistDesigns = joistyDatabase.joistDesignDao().getAll().toMutableList()
+
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = JoistDesignAdapter(joistDesigns) {
@@ -48,7 +60,7 @@ class HomeFragment : Fragment() {
 
     private fun addListenerForCreateButton() {
         binding.root.findViewById<FloatingActionButton?>(R.id.fabAddJoist).setOnClickListener {
-            val joistDesign = JoistDesign(600.0, Occupancy.RESIDENTIAL)
+            val joistDesign = JoistDesign(600.0)
             joistDesigns.add(0, joistDesign)
             loadJoistDetailFragment(joistDesign)
         }
@@ -57,7 +69,7 @@ class HomeFragment : Fragment() {
     private fun loadJoistDetailFragment(joistDesign: JoistDesign) {
         val joistDesignFragment = JoistDesignFragment()
         joistDesignFragment.arguments = Bundle().apply {
-            putParcelable("joistDesign", joistDesign)
+            putParcelable("joistDesignParcelable", JoistDesignParcelable(joistDesign, joistyDatabase))
         }
 
         // Perform fragment transaction to show JoistDesignFragment
