@@ -1,13 +1,12 @@
 package ajman.shd.app1.models
 
-import ajman.shd.app1.databases.JoistyDatabase
 import ajman.shd.app1.entities.JoistDesign
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.RequiresApi
 
-class JoistDesignParcelable(var joistDesign: JoistDesign, var joistyDatabase: JoistyDatabase): Parcelable {
+class JoistDesignParcelable(var joistDesign: JoistDesign): Parcelable {
     override fun describeContents(): Int {
         return 0
     }
