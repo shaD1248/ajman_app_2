@@ -1,5 +1,6 @@
 package ajman.shd.app1.fragments
 
+import ajman.shd.app1.view_models.JoistDesignViewModel
 import ajman.shd.app1.R
 import ajman.shd.app1.databases.JoistyDatabase
 import android.os.Bundle
@@ -32,7 +33,7 @@ class JoistDesignFragment : Fragment() {
 
     private var _binding: FragmentJoistDesignBinding? = null
     private val binding get() = _binding!!
-    private var joisyDatabase: JoistyDatabase? = null
+    private var joistyDatabase: JoistyDatabase? = null
     private var joistDesign: JoistDesign? = null
     private var additionalFieldsVisible = false
 
@@ -43,7 +44,7 @@ class JoistDesignFragment : Fragment() {
     ): View {
         _binding = FragmentJoistDesignBinding.inflate(inflater, container, false)
         val joistDesignParcelable = arguments?.getParcelable("joistDesignParcelable", JoistDesignParcelable::class.java)
-        joisyDatabase = joistDesignParcelable?.joistyDatabase
+        joistyDatabase = joistDesignParcelable?.joistyDatabase
         joistDesign = joistDesignParcelable?.joistDesign
         setSpinnerValues()
         joistDesign?.let { convertDataToFrom(it, RequirementApplication(0.0)) }
@@ -149,6 +150,11 @@ class JoistDesignFragment : Fragment() {
             field.isAccessible = true
             field.set(joistDesign, value)
         }
-        joisyDatabase?.joistDesignDao()?.update(joistDesign)
+
+        joistyDatabase?.let{
+            val viewModel = JoistDesignViewModel(it.joistDesignDao())
+            viewModel.update(joistDesign)
+        }
+
     }
 }

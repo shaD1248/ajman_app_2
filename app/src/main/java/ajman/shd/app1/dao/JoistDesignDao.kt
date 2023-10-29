@@ -1,6 +1,7 @@
 package ajman.shd.app1.dao
 
 import ajman.shd.app1.entities.JoistDesign
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -15,5 +16,5 @@ interface JoistDesignDao {
     fun update(joistDesign: JoistDesign)
 
     @Query("SELECT * FROM joist_design")
-    fun getAll(): List<JoistDesign>
+    fun getAll(): LiveData<List<JoistDesign>>
 }

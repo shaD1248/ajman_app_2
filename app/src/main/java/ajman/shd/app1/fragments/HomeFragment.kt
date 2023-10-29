@@ -1,5 +1,6 @@
 package ajman.shd.app1.fragments
 
+import ajman.shd.app1.view_models.JoistDesignViewModel
 import ajman.shd.app1.R
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -49,7 +50,8 @@ class HomeFragment : Fragment() {
             requireContext(),
             JoistyDatabase::class.java, "joist-database"
         ).build()
-        joistDesigns = joistyDatabase.joistDesignDao().getAll().toMutableList()
+        val viewModel = JoistDesignViewModel(joistyDatabase.joistDesignDao())
+        joistDesigns = viewModel.allJoistDesigns.value?.toMutableList() ?: joistDesigns
 
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
