@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "ajman.shd.app1"
+    namespace = "ajman.shayan.joisty"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "ajman.shd.app1"
+        applicationId = "ajman.shayan.joisty"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
