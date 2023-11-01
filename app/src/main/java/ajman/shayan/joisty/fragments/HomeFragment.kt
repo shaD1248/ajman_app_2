@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import ajman.shayan.joisty.databinding.FragmentHomeBinding
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.adapters.JoistDesignAdapter
+import ajman.shayan.joisty.adapters.JoistDesignViewHolder
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,16 +44,31 @@ class HomeFragment : Fragment() {
     }
 
     private fun showJoistDesigns() {
-        val joistyApplication = requireActivity().application as JoistyApplication
-        val dao = joistyApplication.database.joistDesignDao()
+        val application = requireActivity().application as JoistyApplication
+        val dao = application.database.joistDesignDao()
         val viewModel = JoistDesignViewModel(dao)
         joistDesigns = viewModel.allJoistDesigns.value?.toMutableList() ?: joistDesigns
 
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = JoistDesignAdapter(joistDesigns) {
-            loadJoistDetailFragment(it)
+        recyclerView.adapter =
+            JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
+    }
+
+    private fun getOnItemClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
+        if (joistDesign.selected) {
+            joistDesign.selected = false
+        } else {
+            loadJoistDetailFragment(joistDesign)
         }
+        holder.checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
+    }
+
+    private fun getOnItemLongClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
+        if (!joistDesign.selected) {
+            joistDesign.selected = true
+        }
+        holder.checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
     }
 
     private fun addListenerForCreateButton() {

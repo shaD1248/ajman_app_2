@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 
@@ -26,6 +27,7 @@ data class JoistDesign(@ColumnInfo(name = "L") var L: Double) {
     @ColumnInfo(name = "steel_section_details") var steelSectionDetails = SteelSectionDetails.P_120_3
     @ColumnInfo(name = "joist_arrangement") var joistArrangement = JoistArrangement.SINGLE_70_WITH_CONCRETE_WEB
     @ColumnInfo(name = "concrete_grade") var concreteGrade = ConcreteGrade.C20
+    @Ignore var selected = false
 
     fun validate(): Array<Violation> {
         val violations = Array(0) { Violation("", "") }

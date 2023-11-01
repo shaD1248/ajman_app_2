@@ -1,26 +1,42 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp">
 
-    <!-- Logo (You can replace this with your actual logo) -->
-    <ImageView
-        android:id="@+id/imageLogo"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_joist"
-        android:contentDescription="@string/image_logo_content_description" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp">
+        <!-- Logo (You can replace this with your actual logo) -->
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image_logo_content_description"
+            android:src="@drawable/ic_joist" />
 
-    <!-- Chat Info -->
+        <!-- Check Icon (Initially set to GONE) -->
+
+        <!-- Chat Info -->
+        <ImageView
+            android:id="@+id/checkIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_check"
+            android:visibility="gone"/>
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp" >
+        android:paddingEnd="16dp">
 
         <!-- Project Name -->
         <TextView
@@ -45,8 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_steel_joist_details"
-            android:textSize="12sp"
-            android:textColor="#808080" />
+            android:textColor="#808080"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
