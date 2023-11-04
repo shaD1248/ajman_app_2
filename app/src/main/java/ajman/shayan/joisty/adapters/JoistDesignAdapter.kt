@@ -46,5 +46,6 @@ class JoistDesignViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         itemView.findViewById<TextView>(R.id.textProjectName).text = joistDesign.projectName
         itemView.findViewById<TextView>(R.id.textJoistInfo).text = (joistDesign.L / m).toString() + "m - " + joistDesign.occupancy
         itemView.findViewById<TextView>(R.id.textSteelJoistDetails).text = joistDesign.joistArrangement.toString() + ", " + joistDesign.steelSectionDetails
+        checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
     }
 }

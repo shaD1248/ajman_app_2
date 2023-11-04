@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Joist Design</string>
+    <string name="app_name">Joisty</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Joisty</string>
@@ -22,4 +22,5 @@
     <string name="default_joist_info">6m - Residential</string>
     <string name="default_steel_joist_details">Joist Details: …</string>
     <string name="create">Create</string>
+    <string name="action_delete">Delete</string>
 </resources>

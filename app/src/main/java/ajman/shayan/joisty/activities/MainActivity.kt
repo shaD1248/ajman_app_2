@@ -2,7 +2,6 @@ package ajman.shayan.joisty.activities
 
 import ajman.shayan.joisty.R
 import ajman.shayan.joisty.databinding.ActivityMainBinding
-import ajman.shayan.joisty.fragments.HomeFragment
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -49,11 +48,11 @@ class MainActivity : AppCompatActivity() {
 
 //        setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_content_main, HomeFragment())
-                .commit()
-        }
+//        if (savedInstanceState == null) {
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.nav_host_fragment_content_main, HomeFragment())
+//                .commit()
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -13,7 +13,13 @@ import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.adapters.JoistDesignAdapter
 import ajman.shayan.joisty.adapters.JoistDesignViewHolder
 import android.os.Build
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.annotation.RequiresApi
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,6 +32,8 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var recyclerView: RecyclerView? = null
+    private var deleteAction: MenuItem? = null
 
     private var joistDesigns = mutableListOf(
         JoistDesign(1000.0),
@@ -38,37 +46,67 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        showJoistDesigns()
+        addMenuProvider()
+        setJoistDesignAdapter()
         addListenerForCreateButton()
         return binding.root
     }
 
-    private fun showJoistDesigns() {
+    private fun addMenuProvider() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                if (menu.findItem(R.id.action_delete) == null) {
+                    menuInflater.inflate(R.menu.main, menu)
+                }
+                deleteAction = menu.findItem(R.id.action_delete)
+                updateDeleteActionVisibility()
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                joistDesigns.removeIf { it.selected }
+                updateDeleteActionVisibility()
+                recyclerView?.adapter?.notifyDataSetChanged()
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun setJoistDesignAdapter() {
         val application = requireActivity().application as JoistyApplication
         val dao = application.database.joistDesignDao()
         val viewModel = JoistDesignViewModel(dao)
         joistDesigns = viewModel.allJoistDesigns.value?.toMutableList() ?: joistDesigns
 
-        val recyclerView: RecyclerView = binding.root.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter =
+        recyclerView = binding.root.findViewById(R.id.recyclerView)
+        recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView?.adapter =
             JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
     }
 
     private fun getOnItemClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
         if (joistDesign.selected) {
             joistDesign.selected = false
+            onItemSelectionChanged(joistDesign, holder)
         } else {
             loadJoistDetailFragment(joistDesign)
         }
-        holder.checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
     }
 
     private fun getOnItemLongClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
         if (!joistDesign.selected) {
             joistDesign.selected = true
+            onItemSelectionChanged(joistDesign, holder)
         }
+    }
+
+    private fun onItemSelectionChanged(joistDesign: JoistDesign, holder: JoistDesignViewHolder) {
         holder.checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
+        updateDeleteActionVisibility()
+    }
+
+    private fun updateDeleteActionVisibility() {
+        deleteAction?.isVisible = joistDesigns.count { it.selected } > 0
     }
 
     private fun addListenerForCreateButton() {
@@ -92,6 +130,7 @@ class HomeFragment : Fragment() {
             .replace(R.id.nav_host_fragment_content_main, joistDesignFragment)
             .addToBackStack(null) // Optional: Add to back stack for navigation
             .commit()
+        onDestroyView()
     }
 
     override fun onDestroyView() {
