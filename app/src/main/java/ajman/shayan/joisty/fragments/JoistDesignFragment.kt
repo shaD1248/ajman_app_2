@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.databinding.FragmentJoistDesignBinding
+import ajman.shayan.joisty.services.HtmlGenerator
 import ajman.shayan.joisty.models.RequirementApplication
 import ajman.shayan.joisty.models.structure.ConcreteGrade
 import ajman.shayan.joisty.models.structure.SteelSectionDetails
@@ -44,7 +45,10 @@ class JoistDesignFragment : Fragment() {
     ): View {
         _binding = FragmentJoistDesignBinding.inflate(inflater, container, false)
         val joistDesignParcelable =
-            arguments?.getParcelable("joistDesignParcelable", ajman.shayan.joisty.models.JoistDesignParcelable::class.java)
+            arguments?.getParcelable(
+                "joistDesignParcelable",
+                ajman.shayan.joisty.models.JoistDesignParcelable::class.java
+            )
         database = (requireActivity().application as JoistyApplication).database
         joistDesign = joistDesignParcelable?.joistDesign
         setSpinnerValues()
@@ -62,7 +66,8 @@ class JoistDesignFragment : Fragment() {
 
         for ((viewId, values) in spinnerSetups) {
             val spinner: Spinner = binding.root.findViewById(viewId)
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, values)
+            val adapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, values)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         }
@@ -91,7 +96,10 @@ class JoistDesignFragment : Fragment() {
         }
     }
 
-    private fun convertDataToFrom(joistDesign: JoistDesign, requirementApplication: RequirementApplication) {
+    private fun convertDataToFrom(
+        joistDesign: JoistDesign,
+        requirementApplication: RequirementApplication
+    ) {
         val root: View = binding.root
         val textViewFormData = mutableMapOf(
             R.id.editTextProjectName to joistDesign.projectName,
@@ -118,15 +126,16 @@ class JoistDesignFragment : Fragment() {
         for ((viewId, value) in spinnerFormData) {
             root.findViewById<Spinner?>(viewId).setSelection(value.ordinal)
         }
-        renderLaTeX(requirementApplication.latexLines)
+        renderHtml(joistDesign, requirementApplication.latexLines)
     }
 
-    private fun renderLaTeX(latexLines: MutableList<String>) {
-        val document = latexLines.joinToString("\\\\") { latexLine ->
-            "\\displaystyle $latexLine"
-        }
-        val html =
-            "<!DOCTYPE html><html lang=\"en\"><head><script type=\"text/x-mathjax-config\">MathJax.Hub.Config({displayAlign:\"left\"});</script><script type=\"text/javascript\" async src=\"file:///android_asset/mathjax/Mathjax.js?config=TeX-AMS_CHTML\"></script></head><body>$$\\begin{array}{l}${document}\\end{array}$$</body></html>"
+    private fun renderHtml(joistDesign: JoistDesign, latexLines: MutableList<String>) {
+        val htmlGenerator = HtmlGenerator()
+        val html = htmlGenerator.generateHtml(joistDesign, latexLines)
+        loadWebView(html)
+    }
+
+    private fun loadWebView(html: String) {
         val webView = binding.root.findViewById<WebView>(R.id.webViewResultTable)
         webView?.settings?.javaScriptEnabled = true
         webView?.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "utf-8", null)
@@ -152,7 +161,7 @@ class JoistDesignFragment : Fragment() {
             field.set(joistDesign, value)
         }
 
-        database?.let{
+        database?.let {
             val viewModel = JoistDesignViewModel(it.joistDesignDao())
             viewModel.update(joistDesign)
         }

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+    kotlin("plugin.serialization") version "1.6.0"
 }
 
 android {
@@ -59,4 +60,5 @@ dependencies {
     implementation("androidx.room:room-runtime:2.4.1")
     kapt("androidx.room:room-compiler:2.4.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 }

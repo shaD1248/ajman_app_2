@@ -12,4 +12,10 @@ enum class SteelSectionDetails {
     }
 
     fun get_Ast(): Double = 0.18 * cm2
+
+    fun get_t1(): Double = when (this) {
+        P_120_3 -> 0.3 * cm
+        P_120_4 -> 0.4 * cm
+        P_120_3_P_3_120 -> 0.3 * cm
+    }
 }
