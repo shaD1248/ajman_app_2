@@ -1,19 +1,20 @@
 package ajman.shayan.joisty.models.quantities
 
 import ajman.shayan.joisty.enums.Unit
-import ajman.shayan.joisty.models.Quantity
+import ajman.shayan.joisty.models.quantity_models.EvaluatableQuantity
+import ajman.shayan.joisty.models.datasets.DataSet
 import ajman.shayan.joisty.models.templates.Assignment
 
-class Qsb: Quantity() {
+class Qsb(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val name = "Qsb"
     override val dependencies = mutableSetOf("Asb", "d")
 
-    override fun evaluate(dataSet: MutableMap<String, Double>): Pair<Double, MutableList<Assignment>> {
-        val Asb = dataSet["Asb"] ?: 0.0
-        val d = dataSet["d"] ?: 0.0
+    override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
+        val Asb = dataSet.Asb
+        val d = dataSet.d
         val assignments = mutableListOf<Assignment>()
         val Qsb = Asb * d
         assignments.add(Assignment("Q_{sb}", Qsb, Unit.CM3, "A_{sb} d"))
-        return Pair(Qsb, assignments)
+        return Triple(Qsb, assignments, mutableSetOf())
     }
 }

@@ -1,27 +1,31 @@
 package ajman.shayan.joisty.models.quantities
 
 import ajman.shayan.joisty.enums.Unit
-import ajman.shayan.joisty.models.Quantity
+import ajman.shayan.joisty.models.quantity_models.EvaluatableQuantity
+import ajman.shayan.joisty.models.datasets.DataSet
+import ajman.shayan.joisty.models.quantity_models.div
+import ajman.shayan.joisty.models.quantity_models.minus
 import ajman.shayan.joisty.models.templates.Assignment
+import ajman.shayan.joisty.models.quantity_models.times
 import kotlin.math.pow
 
-class I_composite: Quantity() {
+class I_composite(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val name = "I_composite"
     override val dependencies = mutableSetOf(
         "be", "ns", "y_composite", "Asb", "Qsb", "bw", "h", "d", "Ast", "Qst"
     )
 
-    override fun evaluate(dataSet: MutableMap<String, Double>): Pair<Double, MutableList<Assignment>> {
-        val be = dataSet["be"] ?: 0.0
-        val ns = dataSet["ns"] ?: 0.0
-        val y_composite = dataSet["y_composite"] ?: 0.0
-        val Asb = dataSet["Asb"] ?: 0.0
-        val Qsb = dataSet["Qsb"] ?: 0.0
-        val bw = dataSet["bw"] ?: 0.0
-        val h = dataSet["h"] ?: 0.0
-        val d = dataSet["d"] ?: 0.0
-        val Ast = dataSet["Ast"] ?: 0.0
-        val Qst = dataSet["Qst"] ?: 0.0
+    override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
+        val be = dataSet.be
+        val ns = dataSet.ns
+        val y_composite = dataSet.y_composite
+        val Asb = dataSet.Asb
+        val Qsb = dataSet.Qsb
+        val bw = dataSet.bw
+        val h = dataSet.h
+        val d = dataSet.d
+        val Ast = dataSet.Ast
+        val Qst = dataSet.Qst
         val assignments = mutableListOf<Assignment>()
         var Ic = be / 3 / ns * y_composite.pow(3) + Asb * (Qsb / Asb - y_composite).pow(2)
         var formula = "\\frac{b_e}{3 n_s} y_{composite}^3 + A_{sb} \\left(\\frac{Q_{sb}}{A_{sb}} - y_{composite}\\right)^2"
@@ -35,6 +39,6 @@ class I_composite: Quantity() {
         formula += " + A_{st} d^2 - 2 Q_{st} y_{composite} + A_{st} y_{composite}^2"
         val I_composite = Ic + Isb + Ist
         assignments.add(Assignment("I_{composite}", I_composite, Unit.CM4, formula))
-        return Pair(I_composite, assignments)
+        return Triple(I_composite, assignments, mutableSetOf())
     }
 }

@@ -1,29 +1,31 @@
 package ajman.shayan.joisty.models.quantities
 
 import ajman.shayan.joisty.enums.Unit
-import ajman.shayan.joisty.models.Quantity
+import ajman.shayan.joisty.models.quantity_models.EvaluatableQuantity
+import ajman.shayan.joisty.models.datasets.DataSet
 import ajman.shayan.joisty.models.templates.Assignment
+import ajman.shayan.joisty.models.quantity_models.times
 import kotlin.math.min
 import kotlin.math.pow
 
-class Mn: Quantity() {
+class Mn(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val name = "Mn"
     override val dependencies = mutableSetOf("h", "a", "be", "bw", "Mp", "fc", "Fy", "Sb", "Sc")
 
-    override fun evaluate(dataSet: MutableMap<String, Double>): Pair<Double, MutableList<Assignment>> {
+    override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
         val assignments = mutableListOf<Assignment>()
-        val hasConcreteWeb = dataSet["hasConcreteWeb"] ?: 1.0
-        val h = dataSet["h"] ?: 0.0
-        val a = dataSet["a"] ?: 0.0
-        val be = dataSet["be"] ?: 0.0
-        val bw = dataSet["bw"] ?: 0.0
-        val Mp = dataSet["Mp"] ?: 0.0
-        val fc = dataSet["fc"] ?: 0.0
-        val Fy = dataSet["Fy"] ?: 0.0
-        val Sb = dataSet["Sb"] ?: 0.0
-        val Sc = dataSet["Sc"] ?: 0.0
+        val hasConcreteWeb = dataSet.hasConcreteWeb
+        val h = dataSet.h
+        val a = dataSet.a
+        val be = dataSet.be
+        val bw = dataSet.bw
+        val Mp = dataSet.Mp
+        val fc = dataSet.fc
+        val Fy = dataSet.Fy
+        val Sb = dataSet.Sb
+        val Sc = dataSet.Sc
         val formula: String?
-        val Mn = if (hasConcreteWeb == 1.0) {
+        val Mn = if (hasConcreteWeb) {
             val Qc: Double = if (a <= h) {
                 formula = "\\frac{1}{2} a^2 b_e"
                 0.5 * a.pow(2) * be
@@ -40,6 +42,6 @@ class Mn: Quantity() {
             assignments.add(Assignment("M_n", Mn, Unit.KGFM,  "min(F_y S_b, 0.7 f_c S_c)"))
             Mn
         }
-        return Pair(Mn, assignments)
+        return Triple(Mn, assignments, mutableSetOf())
     }
 }
