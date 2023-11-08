@@ -10,11 +10,12 @@ class Tp(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val dependencies = mutableSetOf("Asb", "Fy")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val Asb = dataSet.Asb
-        val Fy = dataSet.Fy
         val assignments = mutableListOf<Assignment>()
-        val Tp = Asb * Fy
+        actualDependencies = mutableSetOf(dataSet.Asb, dataSet.Fy)
+        val Tp = dataSet.Asb * dataSet.Fy
         assignments.add(Assignment("T_p", Tp, Unit.TF, "A_{sb} F_y"))
+        value = Tp
+        this.assignments = assignments
         return Triple(Tp, assignments, mutableSetOf())
     }
 }

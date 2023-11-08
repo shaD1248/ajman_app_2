@@ -11,13 +11,13 @@ class ratio_b(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val dependencies = mutableSetOf("Mu", "phi_b", "Mn")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val Mu = dataSet.Mu
-        val phi_b = dataSet.phi_b
-        val Mn = dataSet.Mn
-        val ratio_b: Double = Mu / phi_b / Mn
+        actualDependencies = mutableSetOf(dataSet.Mu, dataSet.phi_b, dataSet.Mn)
+        val ratio_b: Double = dataSet.Mu / dataSet.phi_b / dataSet.Mn
         val assignments = mutableListOf(
             Assignment("ratio_b", ratio_b, Unit.UNIT, "\\frac{M_u}{\\phi_b M_n}")
         )
+        value = ratio_b
+        this.assignments = assignments
         return Triple(ratio_b, assignments, mutableSetOf())
     }
 }

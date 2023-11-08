@@ -10,12 +10,12 @@ class Qst(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val dependencies = mutableSetOf("Ast", "d", "dj")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val Ast = dataSet.Ast
-        val d = dataSet.d
-        val dj = dataSet.dj
         val assignments = mutableListOf<Assignment>()
-        val Qst = Ast * (d - dj)
+        actualDependencies = mutableSetOf(dataSet.Ast, dataSet.d, dataSet.dj)
+        val Qst = dataSet.Ast * (dataSet.d - dataSet.dj)
         assignments.add(Assignment("Q_{st}", Qst, Unit.CM3, "A_{st} \\left(d - d_j\\right)"))
+        value = Qst
+        this.assignments = assignments
         return Triple(Qst, assignments, mutableSetOf())
     }
 }

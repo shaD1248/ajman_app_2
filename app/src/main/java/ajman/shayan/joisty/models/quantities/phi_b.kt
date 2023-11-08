@@ -11,22 +11,28 @@ class phi_b(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val dependencies = mutableSetOf("hasConcreteWeb", "epsilon_t", "Fy", "Es")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val hasConcreteWeb = dataSet.hasConcreteWeb
-        val epsilon_t = dataSet.epsilon_t
-        val Fy = dataSet.Fy
-        val Es = dataSet.Es
         var formula: String? = null
-        val phi_b = if (!hasConcreteWeb || epsilon_t >= 0.005) {
+        val phi_b = if (!dataSet.hasConcreteWeb) {
             0.9
-        } else if (epsilon_t > Fy / Es) {
-            formula = "0.9 - (0.9 - 0.65) * (0.005 - epsilon_t) / (0.005 - F_y / E_s)"
-            0.9 - (0.9 - 0.65) * (0.005 - epsilon_t) / (0.005 - Fy / Es)
         } else {
-            0.65
+            actualDependencies.add(dataSet.epsilon_t)
+            if (dataSet.epsilon_t >= 0.005) {
+                0.9
+            } else {
+                actualDependencies += mutableSetOf(dataSet.Fy, dataSet.Es)
+                if (dataSet.epsilon_t > dataSet.Fy / dataSet.Es) {
+                    formula = "0.9 - (0.9 - 0.65) * (0.005 - epsilon_t) / (0.005 - F_y / E_s)"
+                    0.9 - (0.9 - 0.65) * (0.005 - dataSet.epsilon_t) / (0.005 - dataSet.Fy / dataSet.Es)
+                } else {
+                    0.65
+                }
+            }
         }
         val assignments = mutableListOf(
             Assignment("\\phi_b", phi_b, Unit.UNIT, formula)
         )
+        value = phi_b
+        this.assignments = assignments
         return Triple(phi_b, assignments, mutableSetOf())
     }
 }

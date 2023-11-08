@@ -17,26 +17,29 @@ import ajman.shayan.joisty.models.quantities.phi_b
 import ajman.shayan.joisty.models.quantities.qu
 import ajman.shayan.joisty.models.quantities.ratio_b
 import ajman.shayan.joisty.models.quantities.y_composite
+import ajman.shayan.joisty.models.quantity_models.GivenQuantity
 import ajman.shayan.joisty.models.quantity_models.NamedQuantity
 import ajman.shayan.joisty.models.structure.LocatedCompositeSection
 
 class DataSet(locatedCompositeSection: LocatedCompositeSection) {
-    val b = locatedCompositeSection.b
-    val Asb = locatedCompositeSection.Asb
-    val Ast = locatedCompositeSection.Ast
-    val be = locatedCompositeSection.be
-    val bw = locatedCompositeSection.bw
-    val d = locatedCompositeSection.d
-    val dj = locatedCompositeSection.dj
-    val Ec = locatedCompositeSection.Ec
-    val Es = locatedCompositeSection.Es
-    val fc = locatedCompositeSection.fc
-    val Fy = locatedCompositeSection.Fy
-    val h = locatedCompositeSection.h
-    val L = locatedCompositeSection.L
-    val wu = locatedCompositeSection.wu
-    val x = locatedCompositeSection.x
     val hasConcreteWeb = true
+
+    val Asb = GivenQuantity("Asb", locatedCompositeSection.Asb)
+    val Ast = GivenQuantity("Ast", locatedCompositeSection.Ast)
+    val Ec = GivenQuantity("Ec", locatedCompositeSection.Ec)
+    val Es = GivenQuantity("Es", locatedCompositeSection.Es)
+    val Fy = GivenQuantity("Fy", locatedCompositeSection.Fy)
+    val L = GivenQuantity("L", locatedCompositeSection.L)
+    val b = GivenQuantity("b", locatedCompositeSection.b)
+    val be = GivenQuantity("be", locatedCompositeSection.be)
+    val bw = GivenQuantity("bw", locatedCompositeSection.bw)
+    val d = GivenQuantity("d", locatedCompositeSection.d)
+    val dj = GivenQuantity("dj", locatedCompositeSection.dj)
+    val fc = GivenQuantity("fc", locatedCompositeSection.fc)
+    val h = GivenQuantity("h", locatedCompositeSection.h)
+    val wu = GivenQuantity("wu", locatedCompositeSection.wu)
+    val x = GivenQuantity("x", locatedCompositeSection.x)
+    private fun getGivenQuantities(): Set<GivenQuantity> = setOf(Asb, Ast, Ec, Es, Fy, L, b, be, bw, d, dj, fc, h, wu, x)
 
     val a = a(this)
     val epsilon_t = epsilon_t(this)
@@ -54,7 +57,8 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val Sc = Sc(this)
     val Tp = Tp(this)
     val y_composite = y_composite(this)
+    fun getEvaluatableQuantities(): Set<EvaluatableQuantity> = setOf(a, epsilon_t, I_composite, Mn, Mp, Mu, ns, phi_b, Qsb, Qst, qu, ratio_b, Sb, Sc, Tp, y_composite)
 
-    fun getAllEvaluatableQuantities(): MutableSet<EvaluatableQuantity> = mutableSetOf(a, epsilon_t, I_composite, Mn, Mp, Mu, ns, phi_b, Qsb, Qst, qu, ratio_b, Sb, Sc, Tp, y_composite)
-    fun get(quantityName: String): NamedQuantity? = getAllEvaluatableQuantities().find { it.name == quantityName }
+    private fun getAllQuantities() = getGivenQuantities() + getEvaluatableQuantities()
+    fun get(quantityName: String): NamedQuantity? = getAllQuantities().find { it.name == quantityName }
 }

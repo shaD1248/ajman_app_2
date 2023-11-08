@@ -10,11 +10,12 @@ class ns(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val dependencies = mutableSetOf("Es", "Ec")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val Es = dataSet.Es
-        val Ec = dataSet.Ec
         val assignments = mutableListOf<Assignment>()
-        val ns = Es / Ec
+        actualDependencies = mutableSetOf(dataSet.Es, dataSet.Ec)
+        val ns = dataSet.Es / dataSet.Ec
         assignments.add(Assignment("n_s", ns, Unit.UNIT, "\\frac{E_s}{E_c}"))
+        value = ns
+        this.assignments = assignments
         return Triple(ns, assignments, mutableSetOf())
     }
 }

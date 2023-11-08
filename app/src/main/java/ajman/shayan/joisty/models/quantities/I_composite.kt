@@ -27,9 +27,11 @@ class I_composite(dataSet: DataSet): EvaluatableQuantity(dataSet) {
         val Ast = dataSet.Ast
         val Qst = dataSet.Qst
         val assignments = mutableListOf<Assignment>()
+        actualDependencies = mutableSetOf(be, ns, y_composite, Asb, Qsb, h, d, Ast, Qst)
         var Ic = be / 3 / ns * y_composite.pow(3) + Asb * (Qsb / Asb - y_composite).pow(2)
         var formula = "\\frac{b_e}{3 n_s} y_{composite}^3 + A_{sb} \\left(\\frac{Q_{sb}}{A_{sb}} - y_{composite}\\right)^2"
         if (y_composite > h) {
+            actualDependencies += mutableSetOf(bw)
             Ic += -(be - bw) / 3 / ns * (y_composite - h).pow(3)
             formula += " - \\frac{\\left(b_e - b_w\\right)}{3 n_s} \\left(y_{composite} - h\\right)^3"
         }
@@ -39,6 +41,8 @@ class I_composite(dataSet: DataSet): EvaluatableQuantity(dataSet) {
         formula += " + A_{st} d^2 - 2 Q_{st} y_{composite} + A_{st} y_{composite}^2"
         val I_composite = Ic + Isb + Ist
         assignments.add(Assignment("I_{composite}", I_composite, Unit.CM4, formula))
+        value = I_composite
+        this.assignments = assignments
         return Triple(I_composite, assignments, mutableSetOf())
     }
 }

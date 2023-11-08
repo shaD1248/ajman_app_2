@@ -11,13 +11,13 @@ class Mu(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val dependencies = mutableSetOf("qu", "x", "L")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val qu = dataSet.qu
-        val x = dataSet.x
-        val L = dataSet.L
-        val Mu: Double = 0.5 * qu * x * (L - x)
+        actualDependencies = mutableSetOf(dataSet.qu, dataSet.x, dataSet.L)
+        val Mu: Double = 0.5 * dataSet.qu * dataSet.x * (dataSet.L - dataSet.x)
         val assignments = mutableListOf(
             Assignment("M_u", Mu, Unit.KGFM, "q_u x \\left(L - x\\right)")
         )
+        value = Mu
+        this.assignments = assignments
         return Triple(Mu, assignments, mutableSetOf())
     }
 }

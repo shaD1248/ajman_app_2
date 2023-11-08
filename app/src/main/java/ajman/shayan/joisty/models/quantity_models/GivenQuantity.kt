@@ -1,3 +1,3 @@
 package ajman.shayan.joisty.models.quantity_models
 
-abstract class GivenQuantity(value: Double) : NamedQuantity(value)
+class GivenQuantity(override val name: String, value: Double) : NamedQuantity(value)

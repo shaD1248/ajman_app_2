@@ -10,11 +10,12 @@ class Qsb(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val dependencies = mutableSetOf("Asb", "d")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val Asb = dataSet.Asb
-        val d = dataSet.d
         val assignments = mutableListOf<Assignment>()
-        val Qsb = Asb * d
+        actualDependencies = mutableSetOf(dataSet.Asb, dataSet.d)
+        val Qsb = dataSet.Asb * dataSet.d
         assignments.add(Assignment("Q_{sb}", Qsb, Unit.CM3, "A_{sb} d"))
+        value = Qsb
+        this.assignments = assignments
         return Triple(Qsb, assignments, mutableSetOf())
     }
 }
