@@ -19,7 +19,10 @@ import ajman.shayan.joisty.models.structure.JoistArrangement
 import ajman.shayan.joisty.models.structure.Occupancy
 import ajman.shayan.joisty.models.structure.cm
 import ajman.shayan.joisty.models.structure.m
+import ajman.shayan.joisty.services.convertHtmlToPdf
 import ajman.shayan.joisty.services.JoistDesignService
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.webkit.WebView
 import android.widget.ArrayAdapter
@@ -27,6 +30,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -73,6 +77,7 @@ class JoistDesignFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<Button>(R.id.buttonAnalyze).setOnClickListener {
@@ -82,6 +87,28 @@ class JoistDesignFragment : Fragment() {
                 val requirementApplication = joistDesignService.analyze(it)
                 convertDataToFrom(it, requirementApplication)
             }
+        }
+
+        val contract = ActivityResultContracts.StartActivityForResult()
+        val resultLauncher = registerForActivityResult(contract) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                val data: Intent? = result.data
+                data?.also { uri ->
+                    val outputPath = uri.toString() // The chosen directory's URI
+                    joistDesign?.let {
+                        val joistDesignService = JoistDesignService()
+                        val requirementApplication = joistDesignService.analyze(it)
+                        val htmlGenerator = HtmlGenerator()
+                        val html = htmlGenerator.generateHtml(it, requirementApplication.latexLines)
+                        convertHtmlToPdf(html, outputPath)
+                    }
+                }
+            }
+        }
+        view.findViewById<Button>(R.id.buttonExportAsPdf).setOnClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+            resultLauncher.launch(intent)
         }
 
         view.findViewById<TextView>(R.id.textViewShowMore).setOnClickListener {
