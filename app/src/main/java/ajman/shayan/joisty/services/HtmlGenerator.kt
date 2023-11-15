@@ -44,9 +44,9 @@ class HtmlGenerator {
         val t1 = joistDesign.steelSectionDetails.get_t1()
         val D = 1.2 * cm
         val bottomChord = when (joistDesign.steelSectionDetails) {
-            SteelSectionDetails.P_120_3 -> CanvasDataModel(Rectangle(-6 * cm, 0.0, 12 * cm, t1))
-            SteelSectionDetails.P_120_4 -> CanvasDataModel(Rectangle(-6 * cm, 0.0, 12 * cm, 0.4 * cm))
-            SteelSectionDetails.P_120_3_P_3_120 -> CanvasDataModel(
+            SteelSectionDetails.PL_120_3 -> CanvasDataModel(Rectangle(-6 * cm, 0.0, 12 * cm, t1))
+            SteelSectionDetails.PL_120_4 -> CanvasDataModel(Rectangle(-6 * cm, 0.0, 12 * cm, 0.4 * cm))
+            SteelSectionDetails.PL_120_3_PL_3_120 -> CanvasDataModel(
                 listOf(
                     Rectangle(-6 * cm, 0.0, 12 * cm, t1),
                     Rectangle(-D / 2, t1, -0.3 * cm, 12 * cm),

@@ -24,7 +24,7 @@ data class JoistDesign(@ColumnInfo(name = "L") var L: Double) {
     @ColumnInfo(name = "dj") var dj: Double = 25.0 * cm
     @ColumnInfo(name = "h") var h: Double = 5.0 * cm
     @ColumnInfo(name = "d") var d: Double = 30.0 * cm
-    @ColumnInfo(name = "steel_section_details") var steelSectionDetails = SteelSectionDetails.P_120_3
+    @ColumnInfo(name = "steel_section_details") var steelSectionDetails = SteelSectionDetails.PL_120_3
     @ColumnInfo(name = "joist_arrangement") var joistArrangement = JoistArrangement.SINGLE_70_WITH_CONCRETE_WEB
     @ColumnInfo(name = "concrete_grade") var concreteGrade = ConcreteGrade.C20
     @Ignore var selected = false
