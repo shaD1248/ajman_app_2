@@ -3,21 +3,22 @@ package ajman.shayan.joisty.models.quantities
 import ajman.shayan.joisty.enums.Unit
 import ajman.shayan.joisty.models.quantity_models.EvaluatableQuantity
 import ajman.shayan.joisty.models.datasets.DataSet
+import ajman.shayan.joisty.models.quantity_models.max
 import ajman.shayan.joisty.models.templates.Assignment
 import ajman.shayan.joisty.models.quantity_models.times
 
-class Mu(dataSet: DataSet): EvaluatableQuantity(dataSet) {
-    override val name = "Mu"
+class Vu(dataSet: DataSet): EvaluatableQuantity(dataSet) {
+    override val name = "Vu"
     override val dependencies = mutableSetOf("qu", "x", "L")
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
         actualDependencies = mutableSetOf(dataSet.qu, dataSet.x, dataSet.L)
-        val Mu: Double = 0.5 * dataSet.qu * dataSet.x * (dataSet.L - dataSet.x)
+        val Vu: Double = 0.5 * dataSet.qu * max(dataSet.x, dataSet.L - dataSet.x)
         val assignments = mutableListOf(
-            Assignment("M_u", Mu, Unit.KGFM, "\\frac{1}{2} q_u x \\left(L - x\\right)")
+            Assignment("V_u", Vu, Unit.TF, "\\frac{1}{2} q_u \\max\\left(x, L - x\\right)")
         )
-        value = Mu
+        value = Vu
         this.assignments = assignments
-        return Triple(Mu, assignments, mutableSetOf())
+        return Triple(Vu, assignments, mutableSetOf())
     }
 }

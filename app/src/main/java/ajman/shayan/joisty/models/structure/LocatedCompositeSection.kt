@@ -3,48 +3,23 @@ package ajman.shayan.joisty.models.structure
 import kotlin.math.min
 
 class LocatedCompositeSection(val x: Double, private val compositeJoist: CompositeJoist) {
-    var L: Double
-        get() = compositeJoist.L
-        set(value) {}
-    var wu: Double
-        get() = compositeJoist.areaLoading.wu
-        set(value) {}
-    var d: Double
-        get() = compositeJoist.d
-        set(value) {}
-    var dj: Double
-        get() = compositeJoist.steelJoist.dj
-        set(value) {}
-    var h: Double
-        get() = compositeJoist.h
-        set(value) {}
-    var b: Double
-        get() = compositeJoist.b
-        set(value) {}
-    var bw: Double
-        get() = compositeJoist.bw
-        set(value) {}
-    var be: Double
-        get() = min(compositeJoist.b, min(bw + L / 4, bw + 16 * h))
-        set(value) {}
-    var Asb: Double
-        get() = compositeJoist.steelJoist.bottomComponent.A
-        set(value) {}
-    var Ast: Double
-        get() = compositeJoist.steelJoist.topComponent.A
-        set(value) {}
+    val L: Double get() = compositeJoist.L
+    val wu: Double get() = compositeJoist.areaLoading.wu
+    val d: Double get() = compositeJoist.d
+    val dj: Double get() = compositeJoist.steelJoist.dj
+    val h: Double get() = compositeJoist.h
+    val b: Double get() = compositeJoist.b
+    val bw: Double get() = compositeJoist.bw
+    val be: Double get() = min(compositeJoist.b, min(bw + L / 4, bw + 16 * h))
+    val Asb: Double get() = compositeJoist.steelJoist.bottomComponent.A
+    val Ast: Double get() = compositeJoist.steelJoist.topComponent.A
+    val Asw: Double get() = compositeJoist.steelJoist.webComponent.A
+    val s: Double get() = compositeJoist.steelJoist.webComponent.s
+    val n: Int get() = compositeJoist.steelJoist.n
 
-    var fc: Double
-        get() = compositeJoist.concreteMaterial.F
-        set(value) {}
-    var Fy: Double
-        get() = compositeJoist.steelJoist.bottomComponent.material.F
-        set(value) {}
-    var Es: Double
-        get() = compositeJoist.steelJoist.bottomComponent.material.E
-        set(value) {}
-    var Ec: Double
-        get() = compositeJoist.concreteMaterial.E
-        set(value) {}
-
+    val fc: Double get() = compositeJoist.concreteMaterial.F
+    val Fy: Double get() = compositeJoist.steelJoist.bottomComponent.material.F
+    val Fyw: Double get() = compositeJoist.steelJoist.bottomComponent.material.F
+    val Es: Double get() = compositeJoist.steelJoist.bottomComponent.material.E
+    val Ec: Double get() = compositeJoist.concreteMaterial.E
 }

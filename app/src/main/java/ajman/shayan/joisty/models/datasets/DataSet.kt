@@ -2,6 +2,7 @@ package ajman.shayan.joisty.models.datasets
 
 import ajman.shayan.joisty.models.quantity_models.EvaluatableQuantity
 import ajman.shayan.joisty.models.quantities.a
+import ajman.shayan.joisty.models.quantities.alpha
 import ajman.shayan.joisty.models.quantities.I_composite
 import ajman.shayan.joisty.models.quantities.Mn
 import ajman.shayan.joisty.models.quantities.Mp
@@ -14,8 +15,14 @@ import ajman.shayan.joisty.models.quantities.Tp
 import ajman.shayan.joisty.models.quantities.epsilon_t
 import ajman.shayan.joisty.models.quantities.ns
 import ajman.shayan.joisty.models.quantities.phi_b
+import ajman.shayan.joisty.models.quantities.phi_v
 import ajman.shayan.joisty.models.quantities.qu
 import ajman.shayan.joisty.models.quantities.ratio_b
+import ajman.shayan.joisty.models.quantities.ratio_v
+import ajman.shayan.joisty.models.quantities.Vc
+import ajman.shayan.joisty.models.quantities.Vn
+import ajman.shayan.joisty.models.quantities.Vs
+import ajman.shayan.joisty.models.quantities.Vu
 import ajman.shayan.joisty.models.quantities.y_composite
 import ajman.shayan.joisty.models.quantity_models.GivenQuantity
 import ajman.shayan.joisty.models.quantity_models.NamedQuantity
@@ -26,9 +33,11 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
 
     val Asb = GivenQuantity("Asb", locatedCompositeSection.Asb)
     val Ast = GivenQuantity("Ast", locatedCompositeSection.Ast)
+    val Asw = GivenQuantity("Asw", locatedCompositeSection.Asw)
     val Ec = GivenQuantity("Ec", locatedCompositeSection.Ec)
     val Es = GivenQuantity("Es", locatedCompositeSection.Es)
     val Fy = GivenQuantity("Fy", locatedCompositeSection.Fy)
+    val Fyw = GivenQuantity("Fyw", locatedCompositeSection.Fyw)
     val L = GivenQuantity("L", locatedCompositeSection.L)
     val b = GivenQuantity("b", locatedCompositeSection.b)
     val be = GivenQuantity("be", locatedCompositeSection.be)
@@ -37,11 +46,14 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val dj = GivenQuantity("dj", locatedCompositeSection.dj)
     val fc = GivenQuantity("fc", locatedCompositeSection.fc)
     val h = GivenQuantity("h", locatedCompositeSection.h)
+    val n = GivenQuantity("n", locatedCompositeSection.n.toDouble())
+    val s = GivenQuantity("s", locatedCompositeSection.s)
     val wu = GivenQuantity("wu", locatedCompositeSection.wu)
     val x = GivenQuantity("x", locatedCompositeSection.x)
     private fun getGivenQuantities(): Set<GivenQuantity> = setOf(Asb, Ast, Ec, Es, Fy, L, b, be, bw, d, dj, fc, h, wu, x)
 
     val a = a(this)
+    val alpha = alpha(this)
     val epsilon_t = epsilon_t(this)
     val I_composite = I_composite(this)
     val Mn = Mn(this)
@@ -49,13 +61,19 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val Mu = Mu(this)
     val ns = ns(this)
     val phi_b = phi_b(this)
+    val phi_v = phi_v(this)
     val Qsb = Qsb(this)
     val Qst = Qst(this)
     val qu = qu(this)
     val ratio_b = ratio_b(this)
+    val ratio_v = ratio_v(this)
     val Sb = Sb(this)
     val Sc = Sc(this)
     val Tp = Tp(this)
+    val Vc = Vc(this)
+    val Vs = Vs(this)
+    val Vn = Vn(this)
+    val Vu = Vu(this)
     val y_composite = y_composite(this)
     fun getEvaluatableQuantities(): Set<EvaluatableQuantity> = setOf(a, epsilon_t, I_composite, Mn, Mp, Mu, ns, phi_b, Qsb, Qst, qu, ratio_b, Sb, Sc, Tp, y_composite)
 

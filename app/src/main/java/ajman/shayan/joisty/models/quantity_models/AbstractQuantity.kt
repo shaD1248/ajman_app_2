@@ -25,6 +25,10 @@ abstract class AbstractQuantity(var value: Double? = null) {
     fun pow(operand: Int): Double = (value ?: 0.0).pow(operand)
 }
 
+fun max(a: AbstractQuantity, b: Double): Double = if (a > b) a.value ?: 0.0 else b
+fun max(a: Double, b: AbstractQuantity): Double = max(b, a)
+fun max(a: AbstractQuantity, b: AbstractQuantity): Double = max(a, b.value ?: 0.0)
+
 operator fun Double.plus(operand: AbstractQuantity) = this + (operand.value ?: 0.0)
 operator fun Double.minus(operand: AbstractQuantity) = this - (operand.value ?: 0.0)
 operator fun Double.times(operand: AbstractQuantity) = this * (operand.value ?: 0.0)

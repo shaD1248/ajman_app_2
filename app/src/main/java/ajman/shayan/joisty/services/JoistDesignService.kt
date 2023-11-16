@@ -7,6 +7,7 @@ import ajman.shayan.joisty.models.requirements.CompositeJoistRequirements
 import ajman.shayan.joisty.models.structure.AreaLoading
 import ajman.shayan.joisty.models.structure.CompositeJoist
 import ajman.shayan.joisty.models.structure.SteelJoist
+import ajman.shayan.joisty.models.structure.SteelWebDetails
 import android.os.Build
 import androidx.annotation.RequiresApi
 
@@ -20,7 +21,13 @@ class JoistDesignService {
             throw Exception(violations.map { it.message }.joinToString { "\n" })
         }
         val loading = AreaLoading(joistDesign.occupancy.get_wD(), joistDesign.occupancy.get_wL())
-        val steelJoist = SteelJoist(joistDesign.L, joistDesign.dj, joistDesign.steelSectionDetails, joistDesign.joistArrangement.get_n())
+        val steelJoist = SteelJoist(
+            joistDesign.L,
+            joistDesign.dj,
+            joistDesign.steelSectionDetails,
+            SteelWebDetails.T14_20,
+            joistDesign.joistArrangement.get_n()
+        )
         val compositeJoist = CompositeJoist(
             joistDesign.L,
             steelJoist,
