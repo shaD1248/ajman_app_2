@@ -9,15 +9,16 @@ class QuantityEvaluator(
     private var quantitiesToBeEvaluated: MutableSet<String>
 ) {
     val assignments: MutableList<Assignment> = mutableListOf()
+    val mappedAssignments: MutableMap<String, MutableList<Assignment>> = mutableMapOf()
 
     fun evaluate() {
         evaluateRecursively()
         addAssignmentsRecursively()
+        addMappedAssignmentsRecursively()
     }
 
-    private fun evaluateRecursively(): List<EvaluatableQuantity> {
+    private fun evaluateRecursively() {
         val visited = mutableSetOf<String>()
-        val result = mutableListOf<EvaluatableQuantity>()
 
         fun visit(quantityName: String) {
             if (quantityName in visited) return
@@ -26,28 +27,38 @@ class QuantityEvaluator(
                 visited.add(quantityName)
                 it.dependencies.forEach(::visit)
                 it.evaluate()
-                result.add(it)
             }
         }
 
         quantitiesToBeEvaluated.forEach { visit(it) }
-        return result
     }
 
-    private fun addAssignmentsRecursively(): List<EvaluatableQuantity> {
+    private fun addAssignmentsRecursively() {
         val visited = mutableSetOf<EvaluatableQuantity>()
-        val result = mutableListOf<EvaluatableQuantity>()
 
         fun visit(quantity: EvaluatableQuantity) {
             if (quantity in visited) return
             visited.add(quantity)
             quantity.actualDependencies.filterIsInstance<EvaluatableQuantity>().forEach(::visit)
             assignments.addAll(quantity.assignments)
-            result.add(quantity)
         }
 
         quantitiesToBeEvaluated.mapNotNull { dataSet.get(it) as? EvaluatableQuantity }
             .forEach(::visit)
-        return result
+    }
+
+    private fun addMappedAssignmentsRecursively() {
+        val visited = mutableSetOf<EvaluatableQuantity>()
+
+        fun visit(key: String, quantity: EvaluatableQuantity) {
+            if (quantity in visited) return
+            visited.add(quantity)
+            quantity.actualDependencies.filterIsInstance<EvaluatableQuantity>()
+                .forEach { visit(key, it) }
+            mappedAssignments.computeIfAbsent(key) { mutableListOf() }.addAll(quantity.assignments)
+        }
+
+        quantitiesToBeEvaluated.mapNotNull { dataSet.get(it) as? EvaluatableQuantity }
+            .forEach { visit(it.name, it) }
     }
 }
