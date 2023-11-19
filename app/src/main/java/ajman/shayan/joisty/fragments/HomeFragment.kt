@@ -1,8 +1,8 @@
 package ajman.shayan.joisty.fragments
 
-import ajman.shayan.joisty.JoistyApplication
-import ajman.shayan.joisty.view_models.JoistDesignViewModel
 import ajman.shayan.joisty.R
+import ajman.shayan.joisty.activities.JoistDesignActivity
+import ajman.shayan.joisty.activities.MainActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +12,8 @@ import ajman.shayan.joisty.databinding.FragmentHomeBinding
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.adapters.JoistDesignAdapter
 import ajman.shayan.joisty.adapters.JoistDesignViewHolder
+import ajman.shayan.joisty.models.JoistDesignParcelable
+import android.content.Intent
 import android.os.Build
 import android.view.Menu
 import android.view.MenuInflater
@@ -35,10 +37,9 @@ class HomeFragment : Fragment() {
     private var recyclerView: RecyclerView? = null
     private var deleteAction: MenuItem? = null
 
-    private var joistDesigns = mutableListOf(
-        JoistDesign(1000.0),
-        JoistDesign(600.0),
-    )
+    private val activity: MainActivity? get() = requireActivity() as? MainActivity
+
+    private val joistDesigns: MutableList<JoistDesign> get() = activity?.joistDesigns ?: mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,10 +74,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setJoistDesignAdapter() {
-        val application = requireActivity().application as JoistyApplication
-        val dao = application.database.joistDesignDao()
-        val viewModel = JoistDesignViewModel(dao)
-        joistDesigns = viewModel.allJoistDesigns.value?.toMutableList() ?: joistDesigns
+//        val application = requireActivity().application as JoistyApplication
+//        val dao = application.database.joistDesignDao()
+//        val viewModel = JoistDesignViewModel(dao)
+//        joistDesigns = viewModel.allJoistDesigns.value?.toMutableList() ?: joistDesigns
 
         recyclerView = binding.root.findViewById(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
@@ -89,7 +90,7 @@ class HomeFragment : Fragment() {
             joistDesign.selected = false
             onItemSelectionChanged(joistDesign, holder)
         } else {
-            loadJoistDetailFragment(joistDesign)
+            loadJoistDesignActivity(joistDesign)
         }
     }
 
@@ -113,25 +114,31 @@ class HomeFragment : Fragment() {
         binding.root.findViewById<FloatingActionButton?>(R.id.fabAddJoist).setOnClickListener {
             val joistDesign = JoistDesign(600.0)
             joistDesigns.add(0, joistDesign)
-            loadJoistDetailFragment(joistDesign)
+            loadJoistDesignActivity(joistDesign)
         }
     }
 
-    private fun loadJoistDetailFragment(joistDesign: JoistDesign) {
-        val joistDesignFragment = JoistDesignFragment()
-        joistDesignFragment.arguments = Bundle().apply {
-            putParcelable("joistDesignParcelable",
-                ajman.shayan.joisty.models.JoistDesignParcelable(joistDesign)
-            )
-        }
-
-        // Perform fragment transaction to show JoistDesignFragment
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main, joistDesignFragment)
-            .addToBackStack(null) // Optional: Add to back stack for navigation
-            .commit()
-        onDestroyView()
+    private fun loadJoistDesignActivity(joistDesign: JoistDesign) {
+        val intent = Intent(requireActivity(), JoistDesignActivity::class.java)
+        intent.putExtra("joistDesignParcelable", JoistDesignParcelable(joistDesign))
+        startActivity(intent)
     }
+
+//    private fun loadJoistDetailFragment(joistDesign: JoistDesign) {
+//        val joistDesignFragment = JoistDesignFragment()
+//        joistDesignFragment.arguments = Bundle().apply {
+//            putParcelable("joistDesignParcelable",
+//                ajman.shayan.joisty.models.JoistDesignParcelable(joistDesign)
+//            )
+//        }
+//
+//        // Perform fragment transaction to show JoistDesignFragment
+//        activity?.supportFragmentManager?.beginTransaction()
+//            ?.replace(R.id.nav_host_fragment_content_main, joistDesignFragment)
+//            ?.addToBackStack(null)
+//            ?.commit()
+//        onDestroyView()
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
