@@ -1,26 +1,41 @@
 package ajman.shayan.joisty.activities
 
 import ajman.shayan.joisty.R
+import ajman.shayan.joisty.adapters.JoistDesignAdapter
+import ajman.shayan.joisty.adapters.JoistDesignViewHolder
 import ajman.shayan.joisty.entities.JoistDesign
+import ajman.shayan.joisty.models.JoistDesignParcelable
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuProvider
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-//    private lateinit var binding: ActivityMainBinding
+    private var recyclerView: RecyclerView? = null
+    private var deleteAction: MenuItem? = null
+    private var toggle: ActionBarDrawerToggle? = null
 
     var joistDesigns = mutableListOf(
         JoistDesign(1000.0),
@@ -29,38 +44,119 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        binding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
         setContentView(R.layout.activity_main)
+        setUpDrawer()
+        setJoistDesignAdapter()
+        addListenerForCreateButton()
+    }
 
+    private fun setUpDrawer() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-//        binding.appBarMain.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        setSupportActionBar(toolbar)
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.nav_host_fragment_content_main, HomeFragment())
-//                .commit()
-//        }
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        this.toggle = toggle
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        val id = item.itemId
+        return if (toggle?.onOptionsItemSelected(item) == true) {
+            true
+        } else super.onOptionsItemSelected(item)
+    }
+
+    private fun setJoistDesignAdapter() {
+//        val application = requireActivity().application as JoistyApplication
+//        val dao = application.database.joistDesignDao()
+//        val viewModel = JoistDesignViewModel(dao)
+//        joistDesigns = viewModel.allJoistDesigns.value?.toMutableList() ?: joistDesigns
+
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerView?.adapter =
+            JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
+    }
+
+    private fun getOnItemClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
+        if (joistDesign.selected) {
+            joistDesign.selected = false
+            onItemSelectionChanged(joistDesign, holder)
+        } else {
+            loadJoistDesignActivity(joistDesign)
+        }
+    }
+
+    private fun loadJoistDesignActivity(joistDesign: JoistDesign) {
+        val intent = Intent(this, JoistDesignActivity::class.java)
+        intent.putExtra("joistDesignParcelable", JoistDesignParcelable(joistDesign))
+        startActivity(intent)
+    }
+
+    private fun getOnItemLongClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
+        if (!joistDesign.selected) {
+            joistDesign.selected = true
+            onItemSelectionChanged(joistDesign, holder)
+        }
+    }
+
+    private fun onItemSelectionChanged(joistDesign: JoistDesign, holder: JoistDesignViewHolder) {
+        holder.checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
+        updateDeleteActionVisibility()
+    }
+
+    private fun addListenerForCreateButton() {
+        findViewById<FloatingActionButton?>(R.id.fabAddJoist).setOnClickListener {
+            val joistDesign = JoistDesign(600.0)
+            joistDesigns.add(0, joistDesign)
+            loadJoistDesignActivity(joistDesign)
+            recyclerView?.adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.main, menu)
+        addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                if (menu.findItem(R.id.action_delete) == null) {
+                    menuInflater.inflate(R.menu.main, menu)
+                }
+                deleteAction = menu.findItem(R.id.action_delete)
+                updateDeleteActionVisibility()
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                var changed = false
+                joistDesigns.removeIf {
+                    changed = changed or it.selected
+                    it.selected
+                }
+                if (changed) {
+                    updateDeleteActionVisibility()
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+                return true
+            }
+        }, this, Lifecycle.State.RESUMED)
         return true
+    }
+
+    private fun updateDeleteActionVisibility() {
+        deleteAction?.isVisible = joistDesigns.count { it.selected } > 0
     }
 
     override fun onSupportNavigateUp(): Boolean {
