@@ -229,7 +229,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Export as PDF"
-        android:onClick="exportAsPdf"/>
+        android:onClick="exportAsPdf"
+        android:visibility="gone" />
 
     <!-- WebView for Table -->
     <WebView
