@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_joist_design"
+        android:name="ajman.shayan.joisty.fragments.JoistDesignFragment"
+        android:label="@string/menu_joist_design"
+        tools:layout="@layout/fragment_joist_design" />
+
+    <fragment
         android:id="@+id/nav_gallery"
         android:name="ajman.shayan.joisty.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
