@@ -1,29 +1,26 @@
 package ajman.shayan.joisty.fragments
 
 import ajman.shayan.joisty.JoistyApplication
-import ajman.shayan.joisty.view_models.JoistDesignViewModel
 import ajman.shayan.joisty.R
-import ajman.shayan.joisty.databases.JoistyDatabase
+import ajman.shayan.joisty.databinding.FragmentJoistDesignBinding
+import ajman.shayan.joisty.entities.JoistDesign
+import ajman.shayan.joisty.models.RequirementApplication
+import ajman.shayan.joisty.models.structure.ConcreteGrade
+import ajman.shayan.joisty.models.structure.JoistArrangement
+import ajman.shayan.joisty.models.structure.Occupancy
+import ajman.shayan.joisty.models.structure.SteelSectionDetails
+import ajman.shayan.joisty.models.structure.cm
+import ajman.shayan.joisty.models.structure.m
+import ajman.shayan.joisty.services.HtmlGenerator
+import ajman.shayan.joisty.services.JoistDesignService
+import ajman.shayan.joisty.services.convertHtmlToPdf
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import ajman.shayan.joisty.entities.JoistDesign
-import ajman.shayan.joisty.databinding.FragmentJoistDesignBinding
-import ajman.shayan.joisty.services.HtmlGenerator
-import ajman.shayan.joisty.models.RequirementApplication
-import ajman.shayan.joisty.models.structure.ConcreteGrade
-import ajman.shayan.joisty.models.structure.SteelSectionDetails
-import ajman.shayan.joisty.models.structure.JoistArrangement
-import ajman.shayan.joisty.models.structure.Occupancy
-import ajman.shayan.joisty.models.structure.cm
-import ajman.shayan.joisty.models.structure.m
-import ajman.shayan.joisty.services.convertHtmlToPdf
-import ajman.shayan.joisty.services.JoistDesignService
-import android.app.Activity
-import android.content.Intent
-import android.os.Build
 import android.webkit.WebView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -32,13 +29,13 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 
 @RequiresApi(Build.VERSION_CODES.O)
 class JoistDesignFragment : Fragment() {
 
     private var _binding: FragmentJoistDesignBinding? = null
     private val binding get() = _binding!!
-    private var database: JoistyDatabase? = null
     private var joistDesign: JoistDesign? = null
     private var additionalFieldsVisible = false
 
@@ -53,7 +50,6 @@ class JoistDesignFragment : Fragment() {
                 "joistDesignParcelable",
                 ajman.shayan.joisty.models.JoistDesignParcelable::class.java
             )
-        database = (requireActivity().application as JoistyApplication).database
         joistDesign = joistDesignParcelable?.joistDesign
         setSpinnerValues()
         joistDesign?.let { convertDataToFrom(it, RequirementApplication(0.0)) }
@@ -188,10 +184,9 @@ class JoistDesignFragment : Fragment() {
             field.set(joistDesign, value)
         }
 
-        database?.let {
-            val viewModel = JoistDesignViewModel(it.joistDesignDao())
-            viewModel.update(joistDesign)
+        val application = requireActivity().application as JoistyApplication
+        application.repo.run {
+            if (joistDesign.id == 0L) insert(joistDesign) else update(joistDesign)
         }
-
     }
 }

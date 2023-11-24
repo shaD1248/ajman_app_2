@@ -1,10 +1,12 @@
 package ajman.shayan.joisty.activities
 
+import ajman.shayan.joisty.JoistyApplication
 import ajman.shayan.joisty.R
 import ajman.shayan.joisty.adapters.JoistDesignAdapter
 import ajman.shayan.joisty.adapters.JoistDesignViewHolder
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.models.JoistDesignParcelable
+import ajman.shayan.joisty.view_models.JoistDesignViewModel
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -33,6 +35,7 @@ import com.google.android.material.navigation.NavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var repo: JoistDesignViewModel
     private var recyclerView: RecyclerView? = null
     private var deleteAction: MenuItem? = null
     private var toggle: ActionBarDrawerToggle? = null
@@ -82,15 +85,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setJoistDesignAdapter() {
-//        val application = requireActivity().application as JoistyApplication
-//        val dao = application.database.joistDesignDao()
-//        val viewModel = JoistDesignViewModel(dao)
-//        joistDesigns = viewModel.allJoistDesigns.value?.toMutableList() ?: joistDesigns
+        val application = this.application as JoistyApplication
+        repo = application.repo
+//        joistDesigns = viewModel.allJoistDesigns.toMutableList()
 
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView?.layoutManager = LinearLayoutManager(this)
-        recyclerView?.adapter =
-            JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
+        val updateRecyclerView = {joistDesigns: MutableList<JoistDesign> ->
+            this.joistDesigns = joistDesigns
+            recyclerView = findViewById(R.id.recyclerView)
+            recyclerView?.layoutManager = LinearLayoutManager(this)
+            recyclerView?.adapter =
+                JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
+        }
+
+        repo.loadAllJoists(updateRecyclerView)
     }
 
     private fun getOnItemClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
@@ -143,6 +150,7 @@ class MainActivity : AppCompatActivity() {
                 var changed = false
                 joistDesigns.removeIf {
                     changed = changed or it.selected
+                    if (it.selected) repo.delete(it)
                     it.selected
                 }
                 if (changed) {
