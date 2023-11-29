@@ -8,6 +8,7 @@ import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.models.JoistDesignParcelable
 import ajman.shayan.joisty.view_models.JoistDesignViewModel
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
@@ -47,10 +49,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        setUpLocale()
         setContentView(R.layout.activity_main)
         setUpDrawer()
         setJoistDesignAdapter()
         addListenerForCreateButton()
+    }
+
+    private fun setUpLocale() {
+        val locale = Locale("fa")
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 
     private fun setUpDrawer() {
@@ -130,6 +141,7 @@ class MainActivity : AppCompatActivity() {
     private fun addListenerForCreateButton() {
         findViewById<FloatingActionButton?>(R.id.fabAddJoist).setOnClickListener {
             val joistDesign = JoistDesign(600.0)
+            joistDesign.projectName = getString(R.string.default_project_name)
             joistDesigns.add(0, joistDesign)
             loadJoistDesignActivity(joistDesign)
             recyclerView?.adapter?.notifyDataSetChanged()

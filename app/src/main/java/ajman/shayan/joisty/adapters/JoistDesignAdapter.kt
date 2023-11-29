@@ -3,6 +3,8 @@ package ajman.shayan.joisty.adapters
 import ajman.shayan.joisty.R
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.models.structure.m
+import ajman.shayan.joisty.services.getResourceIdForEnum
+import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +22,7 @@ class JoistDesignAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JoistDesignViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_joist_design, parent, false)
-        return JoistDesignViewHolder(view)
+        return JoistDesignViewHolder(view, parent.context)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -38,14 +40,14 @@ class JoistDesignAdapter(
     override fun getItemCount(): Int = joistDesigns.size
 }
 
-class JoistDesignViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class JoistDesignViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
     val checkIcon: ImageView = itemView.findViewById(R.id.checkIcon)
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun bind(joistDesign: JoistDesign) {
         itemView.findViewById<TextView>(R.id.textProjectName).text = joistDesign.projectName
-        itemView.findViewById<TextView>(R.id.textJoistInfo).text = (joistDesign.L / m).toString() + "m - " + joistDesign.occupancy
-        itemView.findViewById<TextView>(R.id.textSteelJoistDetails).text = joistDesign.joistArrangement.toString() + ", " + joistDesign.steelSectionDetails
+        itemView.findViewById<TextView>(R.id.textJoistInfo).text = (joistDesign.L / m).toString() + "m - " + context.getString(getResourceIdForEnum(joistDesign.occupancy))
+        itemView.findViewById<TextView>(R.id.textSteelJoistDetails).text = context.getString(getResourceIdForEnum(joistDesign.joistArrangement)) + ", " + joistDesign.steelSectionDetails
         checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
     }
 }

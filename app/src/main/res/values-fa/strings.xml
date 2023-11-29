@@ -1,13 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Joisty</string>
+    <string name="app_name">{{ نام نرم‌افزار }}</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Joisty</string>
-    <string name="nav_header_subtitle">Joist Designer Application, Ajman Inc.</string>
+    <string name="nav_header_title">{{ نام نرم‌افزار }}</string>
+    <string name="nav_header_subtitle">نرم‌افزار طرّاحی تیرچه، مجموعهٔ صنعتی آژمان</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Joist Designs</string>
+    <string name="menu_home">طرح‌های تیرچه</string>
     <string name="menu_joist_design">Joist Design Details</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -25,18 +26,18 @@
     <string name="create">Create</string>
     <string name="action_delete">Delete</string>
 
-    <string name="id">ID</string>
-    <string name="created_at">Created at</string>
-    <string name="updated_at">Updated at</string>
+    <string name="id">شناسه</string>
+    <string name="created_at">ساخته در</string>
+    <string name="updated_at">ویراسته در</string>
 
-    <string name="occupancy_commercial">Commercial</string>
-    <string name="occupancy_parking">Parking</string>
-    <string name="occupancy_residential">Residential</string>
-    <string name="occupancy_roof">Roof</string>
+    <string name="occupancy_commercial">تجاری</string>
+    <string name="occupancy_parking">پارکینگ</string>
+    <string name="occupancy_residential">مسکونی</string>
+    <string name="occupancy_roof">بام</string>
 
-    <string name="joist_arrangement_single_50_with_concrete_web">1 @ 50 cm + Concrete Web</string>
+    <string name="joist_arrangement_single_50_with_concrete_web">1 @ 50 cm + جان بتنی</string>
     <string name="joist_arrangement_single_50_without_concrete_web">1 @ 50 cm</string>
-    <string name="joist_arrangement_single_70_with_concrete_web">1 @ 70 cm + Concrete Web</string>
+    <string name="joist_arrangement_single_70_with_concrete_web">1 @ 70 cm + جان بتنی</string>
     <string name="joist_arrangement_single_70_without_concrete_web">1 @ 70 cm</string>
-    <string name="joist_arrangement_single_85_with_concrete_web">2 @ 85 cm + Concrete Web</string>
+    <string name="joist_arrangement_single_85_with_concrete_web">2 @ 85 cm + جان بتنی</string>
 </resources>

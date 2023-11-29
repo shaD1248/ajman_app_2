@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 data class JoistDesign(@ColumnInfo(name = "L") var L: Double) {
     @PrimaryKey(autoGenerate = true) var id: Long = 0
     @ColumnInfo(name = "occupancy") var occupancy: Occupancy = Occupancy.RESIDENTIAL
-    @ColumnInfo(name = "project_name") var projectName: String = "Project"
+    @ColumnInfo(name = "project_name") var projectName: String = ""
     @ColumnInfo(name = "created_at") var createdAt: LocalDateTime = LocalDateTime.now()
     @ColumnInfo(name = "dj") var dj: Double = 25.0 * cm
     @ColumnInfo(name = "h") var h: Double = 5.0 * cm

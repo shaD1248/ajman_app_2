@@ -12,7 +12,7 @@
         android:id="@+id/textViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID: " />
+        android:text="@string/id" />
 
     <EditText
         android:id="@+id/editTextProjectName"
@@ -25,13 +25,13 @@
         android:id="@+id/textViewCreatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Created At: " />
+        android:text="@string/created_at" />
 
     <TextView
         android:id="@+id/textViewUpdatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Updated At: " />
+        android:text="@string/updated_at" />
 
     <!-- Joist Length and Occupancy -->
     <LinearLayout

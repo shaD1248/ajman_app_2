@@ -2,6 +2,7 @@ package ajman.shayan.joisty.fragments
 
 import ajman.shayan.joisty.JoistyApplication
 import ajman.shayan.joisty.R
+import ajman.shayan.joisty.adapters.SpinnerAdapter
 import ajman.shayan.joisty.databinding.FragmentJoistDesignBinding
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.models.RequirementApplication
@@ -22,7 +23,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Spinner
@@ -66,10 +66,7 @@ class JoistDesignFragment : Fragment() {
 
         for ((viewId, values) in spinnerSetups) {
             val spinner: Spinner = binding.root.findViewById(viewId)
-            val adapter =
-                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, values)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
+            spinner.adapter = SpinnerAdapter(requireContext(), values)
         }
     }
 
