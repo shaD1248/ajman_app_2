@@ -1,38 +1,48 @@
 package ajman.shayan.joisty.services
 
 import ajman.shayan.joisty.entities.JoistDesign
+import ajman.shayan.joisty.models.report.Report
 import ajman.shayan.joisty.models.shapes.CanvasDataModel
 import ajman.shayan.joisty.models.shapes.Point
 import ajman.shayan.joisty.models.shapes.Rectangle
 import ajman.shayan.joisty.models.structure.SteelSectionDetails
 import ajman.shayan.joisty.models.structure.cm
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @RequiresApi(Build.VERSION_CODES.O)
-class HtmlGenerator {
-    fun generateHtml(joistDesign: JoistDesign, latexLines: MutableList<String>): String {
-        val latexDocument = "$$\\begin{array}{l}" + latexLines.joinToString("\\\\") { latexLine ->
-            "\\displaystyle $latexLine"
-        } + "\\end{array}$$"
-        val canvasJson = getCanvasJson(joistDesign)
-        val html = """<!DOCTYPE html>
-            <html lang="en">
-              <head>
-                <script type="text/x-mathjax-config">MathJax.Hub.Config({displayAlign:"left"});</script>
-                <script type="text/javascript" async src="file:///android_asset/mathjax/Mathjax.js?config=TeX-AMS_CHTML"></script>
-                <script type="text/javascript" async src="file:///android_asset/joisty/canvas.js"></script>
-              </head>
-              <body>
-                <canvas id="joistCanvas" width="200" height="200" data='$canvasJson'></canvas>
-                <div id="errorLog"></div>
-                <div>$latexDocument</div>
-              </body>
-            </html>
-        """
-        return html.trimIndent()
+class HtmlGenerator(val context: Context) {
+    fun generateHtml(report: Report): String = """<!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <script type="text/javascript" async src="file:///android_asset/joisty/canvas.js"></script>
+            ${HtmlLatexRenderer().getScriptTags()}
+          </head>
+          <body>
+            <canvas id="joistCanvas" width="200" height="200" data='${getCanvasJson(report.joistDesign)}'></canvas>
+            <div id="errorLog"></div>
+            ${generateLatexDocument(report)}
+          </body>
+        </html>
+        """.trimIndent()
+
+    private fun generateLatexDocument(report: Report): String {
+        val latexRenderer = HtmlLatexRenderer()
+        return report.sections.map {
+            val title = try {
+                context.getString(it.titleResourceId)
+            } catch (e: Exception) {
+                ""
+            }
+            "<div>$title</div>${
+                it.paragraphs.map {
+                    "<div>${it.text}</div>${latexRenderer.getBodyTags(it.latexLines)}"
+                }.joinToString(separator = "")
+            }"
+        }.joinToString(separator = "")
     }
 
     private fun getCanvasJson(

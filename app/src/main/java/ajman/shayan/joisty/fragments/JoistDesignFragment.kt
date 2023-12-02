@@ -5,7 +5,7 @@ import ajman.shayan.joisty.R
 import ajman.shayan.joisty.adapters.SpinnerAdapter
 import ajman.shayan.joisty.databinding.FragmentJoistDesignBinding
 import ajman.shayan.joisty.entities.JoistDesign
-import ajman.shayan.joisty.models.RequirementApplication
+import ajman.shayan.joisty.models.report.Report
 import ajman.shayan.joisty.models.structure.ConcreteGrade
 import ajman.shayan.joisty.models.structure.JoistArrangement
 import ajman.shayan.joisty.models.structure.Occupancy
@@ -52,7 +52,7 @@ class JoistDesignFragment : Fragment() {
             )
         joistDesign = joistDesignParcelable?.joistDesign
         setSpinnerValues()
-        joistDesign?.let { convertDataToFrom(it, RequirementApplication(0.0)) }
+        joistDesign?.let { convertDataToFrom(it) }
         return binding.root
     }
 
@@ -77,8 +77,8 @@ class JoistDesignFragment : Fragment() {
             joistDesign?.let {
                 convertFormToData(it)
                 val joistDesignService = JoistDesignService()
-                val requirementApplication = joistDesignService.analyze(it)
-                convertDataToFrom(it, requirementApplication)
+                val report = joistDesignService.analyze(it)
+                convertDataToFrom(it, report)
             }
         }
 
@@ -91,9 +91,9 @@ class JoistDesignFragment : Fragment() {
                     val outputPath = uri.toString() // The chosen directory's URI
                     joistDesign?.let {
                         val joistDesignService = JoistDesignService()
-                        val requirementApplication = joistDesignService.analyze(it)
-                        val htmlGenerator = HtmlGenerator()
-                        val html = htmlGenerator.generateHtml(it, requirementApplication.latexLines)
+                        val report = joistDesignService.analyze(it)
+                        val htmlGenerator = HtmlGenerator(requireContext())
+                        val html = htmlGenerator.generateHtml(report)
                         convertHtmlToPdf(html, outputPath)
                     }
                 }
@@ -117,7 +117,7 @@ class JoistDesignFragment : Fragment() {
 
     private fun convertDataToFrom(
         joistDesign: JoistDesign,
-        requirementApplication: RequirementApplication
+        report: Report = Report(listOf(), joistDesign)
     ) {
         val root: View = binding.root
         val textViewFormData = mutableMapOf(
@@ -145,12 +145,12 @@ class JoistDesignFragment : Fragment() {
         for ((viewId, value) in spinnerFormData) {
             root.findViewById<Spinner?>(viewId).setSelection(value.ordinal)
         }
-        renderHtml(joistDesign, requirementApplication.latexLines)
+        renderHtml(report)
     }
 
-    private fun renderHtml(joistDesign: JoistDesign, latexLines: MutableList<String>) {
-        val htmlGenerator = HtmlGenerator()
-        val html = htmlGenerator.generateHtml(joistDesign, latexLines)
+    private fun renderHtml(report: Report) {
+        val htmlGenerator = HtmlGenerator(requireContext())
+        val html = htmlGenerator.generateHtml(report)
         loadWebView(html)
     }
 
