@@ -107,12 +107,11 @@ class JoistDesignFragment : Fragment() {
         view.findViewById<TextView>(R.id.textViewShowMore).setOnClickListener {
             val additionalFieldsLayout =
                 view.findViewById<LinearLayout>(R.id.layoutAdditionalFields)
-            additionalFieldsLayout?.visibility = View.GONE
             additionalFieldsVisible = !additionalFieldsVisible
             additionalFieldsLayout?.visibility =
                 if (additionalFieldsVisible) View.VISIBLE else View.GONE
-            val showMoreText = if (additionalFieldsVisible) "Show Less" else "Show More"
-            view.findViewById<TextView>(R.id.textViewShowMore)?.text = showMoreText
+            view.findViewById<TextView>(R.id.textViewShowMore)?.text =
+                requireContext().getString(if (additionalFieldsVisible) R.string.label_show_less else R.string.label_show_more)
         }
     }
 

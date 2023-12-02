@@ -25,9 +25,25 @@
     <string name="create">Create</string>
     <string name="action_delete">Delete</string>
 
-    <string name="id">ID</string>
-    <string name="created_at">Created at</string>
-    <string name="updated_at">Updated at</string>
+    <string name="field_id">ID</string>
+    <string name="field_created_at">Created at</string>
+    <string name="field_updated_at">Updated at</string>
+    <string name="field_joist_details">Joist Details</string>
+    <string name="field_joist_height">Joist Height</string>
+    <string name="field_joist_arrangement">Joist Arrangement</string>
+    <string name="field_slab_thickness">Slab Thickness</string>
+    <string name="field_ceiling_height">Ceiling Height</string>
+    <string name="field_concrete_grade">Concrete Grade</string>
+
+    <string name="hint_project_name">Project Name</string>
+    <string name="hint_joist_length">Joist Length (m)</string>
+    <string name="hint_joist_height">Joist Height (cm)</string>
+    <string name="hint_slab_thickness">Slab Thickness (cm)</string>
+    <string name="hint_ceiling_height">Ceiling Height (cm)</string>
+
+    <string name="label_show_more">Show More</string>
+    <string name="label_show_less">Show Less</string>
+    <string name="label_analyze">Analyze</string>
 
     <string name="occupancy_commercial">Commercial</string>
     <string name="occupancy_parking">Parking</string>

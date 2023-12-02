@@ -12,26 +12,26 @@
         android:id="@+id/textViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/id" />
+        android:text="@string/field_id" />
 
     <EditText
         android:id="@+id/editTextProjectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Project Name"
+        android:hint="@string/hint_project_name"
         android:autofillHints="Project Name" />
 
     <TextView
         android:id="@+id/textViewCreatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/created_at" />
+        android:text="@string/field_created_at" />
 
     <TextView
         android:id="@+id/textViewUpdatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/updated_at" />
+        android:text="@string/field_updated_at" />
 
     <!-- Joist Length and Occupancy -->
     <LinearLayout
@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Joist Length (m)"
+            android:hint="@string/hint_joist_length"
             android:inputType="numberDecimal"
             android:autofillHints="Joist Length (m)" />
 
@@ -59,7 +59,7 @@
         android:id="@+id/textViewShowMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show More"
+        android:text="@string/label_show_more"
         android:clickable="true"
         android:focusable="true" />
 
@@ -79,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Joist Details"
+                android:text="@string/field_joist_details"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="8dp"/>
 
@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Joist Height"
+                android:text="@string/field_joist_height"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="8dp"/>
 
@@ -108,7 +108,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter Joist Height"/>
+                android:hint="@string/hint_joist_height"/>
         </LinearLayout>
 
         <!-- Fields for Concrete Web -->
@@ -139,7 +139,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Joist Arrangement"
+                android:text="@string/field_joist_arrangement"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="8dp"/>
 
@@ -159,7 +159,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Slab Thickness"
+                android:text="@string/field_slab_thickness"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="8dp"/>
 
@@ -168,7 +168,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter Slab Thickness"/>
+                android:hint="@string/hint_slab_thickness"/>
         </LinearLayout>
 
         <!-- Fields for Ceiling Height -->
@@ -180,7 +180,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ceiling Height"
+                android:text="@string/field_ceiling_height"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="8dp"/>
 
@@ -189,7 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter Ceiling Height"/>
+                android:hint="@string/hint_ceiling_height"/>
         </LinearLayout>
 
         <!-- Fields for Concrete Grade -->
@@ -201,7 +201,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Concrete Grade"
+                android:text="@string/field_concrete_grade"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="8dp"/>
 
@@ -219,7 +219,7 @@
         android:id="@+id/buttonAnalyze"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Analyze"
+        android:text="@string/label_analyze"
         android:textColor="#FFFFFFFF"
         android:onClick="analyzeJoistDesign"/>
 

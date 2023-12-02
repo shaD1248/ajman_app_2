@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">{{ نام نرم‌افزار }}</string>
-    <string name="nav_header_subtitle">نرم‌افزار طرّاحی تیرچه، مجموعهٔ صنعتی آژمان</string>
+    <string name="nav_header_subtitle">نرم‌افزار طرّاحی تیرچه، شرکت مهندسی آژمان</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -26,9 +26,25 @@
     <string name="create">Create</string>
     <string name="action_delete">Delete</string>
 
-    <string name="id">شناسه</string>
-    <string name="created_at">ساخته در</string>
-    <string name="updated_at">ویراسته در</string>
+    <string name="field_id">شناسه</string>
+    <string name="field_created_at">ساخته در</string>
+    <string name="field_updated_at">ویراسته در</string>
+    <string name="field_joist_details">جزئیّات تیرچه</string>
+    <string name="field_joist_height">ارتفاع تیرچه</string>
+    <string name="field_joist_arrangement">آرایش تیرچه‌ها</string>
+    <string name="field_slab_thickness">ضخامت دال</string>
+    <string name="field_ceiling_height">ضخامت سقف</string>
+    <string name="field_concrete_grade">درجهٔ بتن</string>
+
+    <string name="hint_project_name">نام پروژه</string>
+    <string name="hint_joist_length">طول تیرچه (m)</string>
+    <string name="hint_joist_height">ارتفاع تیرچه (cm)</string>
+    <string name="hint_slab_thickness">ضخامت دال (cm)</string>
+    <string name="hint_ceiling_height">ضخامت سقف (cm)</string>
+
+    <string name="label_show_more">جزئیّات بیشتر</string>
+    <string name="label_show_less">جزئیّات کمتر</string>
+    <string name="label_analyze">ارزیابی</string>
 
     <string name="occupancy_commercial">تجاری</string>
     <string name="occupancy_parking">پارکینگ</string>
