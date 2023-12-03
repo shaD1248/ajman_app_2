@@ -76,9 +76,7 @@ class JoistDesignFragment : Fragment() {
         view.findViewById<Button>(R.id.buttonAnalyze).setOnClickListener {
             joistDesign?.let {
                 convertFormToData(it)
-                val joistDesignService = JoistDesignService()
-                val report = joistDesignService.analyze(it)
-                convertDataToFrom(it, report)
+                convertDataToFrom(it, analyze(it))
             }
         }
 
@@ -90,11 +88,7 @@ class JoistDesignFragment : Fragment() {
                 data?.also { uri ->
                     val outputPath = uri.toString() // The chosen directory's URI
                     joistDesign?.let {
-                        val joistDesignService = JoistDesignService()
-                        val report = joistDesignService.analyze(it)
-                        val htmlGenerator = HtmlGenerator(requireContext())
-                        val html = htmlGenerator.generateHtml(report)
-                        convertHtmlToPdf(html, outputPath)
+                        convertHtmlToPdf(generateHtml(analyze(it)), outputPath)
                     }
                 }
             }
@@ -113,6 +107,11 @@ class JoistDesignFragment : Fragment() {
             view.findViewById<TextView>(R.id.textViewShowMore)?.text =
                 requireContext().getString(if (additionalFieldsVisible) R.string.label_show_less else R.string.label_show_more)
         }
+    }
+
+    private fun analyze(joistDesign: JoistDesign): Report {
+        val joistDesignService = JoistDesignService()
+        return joistDesignService.analyze(joistDesign)
     }
 
     private fun convertDataToFrom(
@@ -145,13 +144,12 @@ class JoistDesignFragment : Fragment() {
         for ((viewId, value) in spinnerFormData) {
             root.findViewById<Spinner?>(viewId).setSelection(value.ordinal)
         }
-        renderHtml(report)
+        loadWebView(generateHtml(report))
     }
 
-    private fun renderHtml(report: Report) {
-        val htmlGenerator = HtmlGenerator(requireContext())
-        val html = htmlGenerator.generateHtml(report)
-        loadWebView(html)
+    private fun generateHtml(report: Report): String {
+        val htmlGenerator = HtmlGenerator(requireContext(), binding.root)
+        return htmlGenerator.generateHtml(report)
     }
 
     private fun loadWebView(html: String) {

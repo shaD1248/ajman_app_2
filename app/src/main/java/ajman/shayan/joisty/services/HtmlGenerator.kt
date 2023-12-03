@@ -9,14 +9,16 @@ import ajman.shayan.joisty.models.structure.SteelSectionDetails
 import ajman.shayan.joisty.models.structure.cm
 import android.content.Context
 import android.os.Build
+import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @RequiresApi(Build.VERSION_CODES.O)
-class HtmlGenerator(val context: Context) {
+class HtmlGenerator(val context: Context, val view: View) {
     fun generateHtml(report: Report): String = """<!DOCTYPE html>
-        <html lang="en">
+        <html lang="en"${if (isRtl()) """ dir="rtl"""" else ""}>
           <head>
             <script type="text/javascript" async src="file:///android_asset/joisty/canvas.js"></script>
             ${HtmlLatexRenderer().getScriptTags()}
@@ -29,20 +31,21 @@ class HtmlGenerator(val context: Context) {
         </html>
         """.trimIndent()
 
+    private fun isRtl(): Boolean = ViewCompat.getLayoutDirection(view) == ViewCompat.LAYOUT_DIRECTION_RTL
     private fun generateLatexDocument(report: Report): String {
         val latexRenderer = HtmlLatexRenderer()
-        return report.sections.map {
+        return report.sections.joinToString(separator = "<p>&nbsp;</p>") { reportSection ->
             val title = try {
-                context.getString(it.titleResourceId)
+                context.getString(reportSection.titleResourceId)
             } catch (e: Exception) {
                 ""
             }
-            "<div>$title</div>${
-                it.paragraphs.map {
-                    "<div>${it.text}</div>${latexRenderer.getBodyTags(it.latexLines)}"
-                }.joinToString(separator = "")
+            "<h3>$title</h3>${
+                reportSection.paragraphs.joinToString(separator = "") {
+                    "<p>${it.text}</p>${latexRenderer.getBodyTags(it.latexLines)}"
+                }
             }"
-        }.joinToString(separator = "")
+        }
     }
 
     private fun getCanvasJson(
@@ -55,7 +58,15 @@ class HtmlGenerator(val context: Context) {
         val D = 1.2 * cm
         val bottomChord = when (joistDesign.steelSectionDetails) {
             SteelSectionDetails.PL_120_3 -> CanvasDataModel(Rectangle(-6 * cm, 0.0, 12 * cm, t1))
-            SteelSectionDetails.PL_120_4 -> CanvasDataModel(Rectangle(-6 * cm, 0.0, 12 * cm, 0.4 * cm))
+            SteelSectionDetails.PL_120_4 -> CanvasDataModel(
+                Rectangle(
+                    -6 * cm,
+                    0.0,
+                    12 * cm,
+                    0.4 * cm
+                )
+            )
+
             SteelSectionDetails.PL_120_3_PL_3_120 -> CanvasDataModel(
                 listOf(
                     Rectangle(-6 * cm, 0.0, 12 * cm, t1),
