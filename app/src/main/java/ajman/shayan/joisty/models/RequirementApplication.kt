@@ -1,6 +1,8 @@
 package ajman.shayan.joisty.models
 
 import ajman.shayan.joisty.models.datasets.DataSet
+import ajman.shayan.joisty.models.report.Paragraph
+import ajman.shayan.joisty.models.report.ReportSection
 import ajman.shayan.joisty.models.requirements.limit_states.flexure.FlexuralStrengthOfCompositeSection
 import ajman.shayan.joisty.models.requirements.limit_states.shear.TransverseShearStrengthOfCompositeSection
 import ajman.shayan.joisty.models.structure.CompositeJoist
@@ -8,17 +10,14 @@ import ajman.shayan.joisty.models.structure.LocatedCompositeSection
 
 class RequirementApplication(
     private var _ratio: Double,
-    private var _latexLines: MutableList<String> = mutableListOf(),
-    private var _message: String = ""
+    private var _reportSections: MutableList<ReportSection> = mutableListOf()
 ) {
-    val ratio: Double get() = _ratio
-    val latexLines: MutableList<String> get() = _latexLines
-    val message: String get() = _message
+    private val ratio: Double get() = _ratio
+    val reportSections: MutableList<ReportSection> get() = _reportSections
 
     constructor(applications: List<RequirementApplication>) : this(0.0) {
         _ratio = applications.maxByOrNull { it.ratio }?.ratio ?: 0.0
-        _message = applications.joinToString(separator = "\n") { it.message }
-        _latexLines = applications.flatMap { it.latexLines }.toMutableList()
+        _reportSections = applications.flatMap { it.reportSections }.toMutableList()
     }
 
     constructor(compositeJoist: CompositeJoist) : this(0.0) {
@@ -36,14 +35,12 @@ class RequirementApplication(
                 val mappedQuantity = requirement.mappedQuantity
                 val assignments = evaluator.mappedAssignments[mappedQuantity] ?: mutableListOf()
                 val ratio = evaluator.dataSet.get(mappedQuantity)?.value ?: 0.0
-                val latexLines = assignments.map { it.getLatex() }.toMutableList()
-                val message = joinMessages(assignments.map { it.toString() }.toMutableList())
-                RequirementApplication(ratio, latexLines, message)
+                val reportSections = mutableListOf(ReportSection(requirement.titleResourceId, listOf(Paragraph("", assignments.map { it.getLatex() }))))
+                RequirementApplication(ratio, reportSections)
             }
         }
         val application = RequirementApplication(applications)
         _ratio = application.ratio
-        _latexLines = application.latexLines
-        _message = application.message
+        _reportSections = application.reportSections
     }
 }

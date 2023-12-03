@@ -3,9 +3,7 @@ package ajman.shayan.joisty.services
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.enums.Status
 import ajman.shayan.joisty.models.RequirementApplication
-import ajman.shayan.joisty.models.report.Paragraph
 import ajman.shayan.joisty.models.report.Report
-import ajman.shayan.joisty.models.report.ReportSection
 import ajman.shayan.joisty.models.structure.AreaLoading
 import ajman.shayan.joisty.models.structure.CompositeJoist
 import ajman.shayan.joisty.models.structure.SteelJoist
@@ -41,9 +39,6 @@ class JoistDesignService {
         )
         val requirementApplication = RequirementApplication(compositeJoist)
         analysisStatus = Status.COMPLETED
-        return Report(
-            listOf(ReportSection(0, listOf(Paragraph("", requirementApplication.latexLines)))),
-            joistDesign
-        )
+        return Report(requirementApplication.reportSections, joistDesign)
     }
 }

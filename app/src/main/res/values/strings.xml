@@ -55,4 +55,7 @@
     <string name="joist_arrangement_single_70_with_concrete_web">1 @ 70 cm + Concrete Web</string>
     <string name="joist_arrangement_single_70_without_concrete_web">1 @ 70 cm</string>
     <string name="joist_arrangement_single_85_with_concrete_web">2 @ 85 cm + Concrete Web</string>
+
+    <string name="report_section_flexural_strength_of_composite_section">Flexural Strength of Composite Section</string>
+    <string name="report_section_transverse_shear_strength_of_composite_section">Transverse Shear Strength of Composite Section</string>
 </resources>
