@@ -5,7 +5,6 @@ import ajman.shayan.joisty.R
 import ajman.shayan.joisty.adapters.JoistDesignAdapter
 import ajman.shayan.joisty.adapters.JoistDesignViewHolder
 import ajman.shayan.joisty.entities.JoistDesign
-import ajman.shayan.joisty.models.JoistDesignParcelable
 import ajman.shayan.joisty.view_models.JoistDesignViewModel
 import android.content.Intent
 import android.content.res.Configuration
@@ -122,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadJoistDesignActivity(joistDesign: JoistDesign) {
         val intent = Intent(this, JoistDesignActivity::class.java)
-        intent.putExtra("joistDesignParcelable", JoistDesignParcelable(joistDesign))
+        intent.putExtra("joistDesignId", joistDesign.id)
         startActivity(intent)
     }
 

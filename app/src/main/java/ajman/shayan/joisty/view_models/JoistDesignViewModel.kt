@@ -29,6 +29,14 @@ class JoistDesignViewModel(private val joistDesignDao: JoistDesignDao) : ViewMod
         }
     }
 
+    fun get(id: Long?, handler: (JoistDesign?) -> Unit) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                handler(joistDesignDao.get(id))
+            }
+        }
+    }
+
     fun update(joistDesign: JoistDesign) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

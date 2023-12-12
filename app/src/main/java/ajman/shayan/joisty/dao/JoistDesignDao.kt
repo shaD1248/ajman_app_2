@@ -12,6 +12,9 @@ interface JoistDesignDao {
     @Insert
     fun insert(joistDesign: JoistDesign): Long
 
+    @Query("SELECT * FROM joist_design WHERE id = :joistDesignId")
+    fun get(joistDesignId: Long?): JoistDesign?
+
     @Update
     fun update(joistDesign: JoistDesign)
 

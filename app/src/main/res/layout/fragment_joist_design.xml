@@ -1,37 +1,84 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- ID, Project Name, Created At, Updated At -->
-    <TextView
-        android:id="@+id/textViewId"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/field_id" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/field_id" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/colon" />
+
+        <TextView
+            android:id="@+id/textViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editTextProjectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints="Project Name"
         android:hint="@string/hint_project_name"
-        android:autofillHints="Project Name" />
+        android:inputType="text" />
 
-    <TextView
-        android:id="@+id/textViewCreatedAt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/field_created_at" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textViewUpdatedAt"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/field_created_at" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/colon" />
+
+        <TextView
+            android:id="@+id/textViewCreatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/field_updated_at" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/field_updated_at" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/colon" />
+
+        <TextView
+            android:id="@+id/textViewUpdatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
 
     <!-- Joist Length and Occupancy -->
     <LinearLayout
@@ -44,9 +91,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:autofillHints="Joist Length (m)"
             android:hint="@string/hint_joist_length"
-            android:inputType="numberDecimal"
-            android:autofillHints="Joist Length (m)" />
+            android:inputType="numberDecimal" />
 
         <Spinner
             android:id="@+id/spinnerOccupancy"
@@ -59,9 +106,9 @@
         android:id="@+id/textViewShowMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_show_more"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:text="@string/label_show_more" />
 
     <LinearLayout
         android:id="@+id/layoutAdditionalFields"
@@ -79,15 +126,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/field_joist_details"
                 android:layout_gravity="center_vertical"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:text="@string/field_joist_details" />
 
             <Spinner
                 android:id="@+id/spinnerSteelSectionDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Fields for Joist Height -->
@@ -99,36 +146,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/field_joist_height"
                 android:layout_gravity="center_vertical"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:text="@string/field_joist_height" />
 
             <EditText
                 android:id="@+id/editTextJoistHeight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/hint_joist_height"/>
+                android:autofillHints=""
+                android:hint="@string/hint_joist_height"
+                android:inputType="numberDecimal" />
         </LinearLayout>
-
-        <!-- Fields for Concrete Web -->
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Concrete Web"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:paddingEnd="8dp"/>-->
-
-<!--            <CheckBox-->
-<!--                android:id="@+id/checkboxConcreteWeb"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"/>-->
-<!--        </LinearLayout>-->
 
         <!-- Fields for Layout -->
         <LinearLayout
@@ -139,15 +169,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/field_joist_arrangement"
                 android:layout_gravity="center_vertical"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:text="@string/field_joist_arrangement" />
 
             <Spinner
                 android:id="@+id/spinnerJoistArrangement"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Fields for Slab Thickness -->
@@ -159,16 +189,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/field_slab_thickness"
                 android:layout_gravity="center_vertical"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:text="@string/field_slab_thickness" />
 
             <EditText
                 android:id="@+id/editTextSlabThickness"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/hint_slab_thickness"/>
+                android:autofillHints=""
+                android:hint="@string/hint_slab_thickness"
+                android:inputType="numberDecimal" />
         </LinearLayout>
 
         <!-- Fields for Ceiling Height -->
@@ -180,16 +212,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/field_ceiling_height"
                 android:layout_gravity="center_vertical"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:text="@string/field_ceiling_height" />
 
             <EditText
                 android:id="@+id/editTextCeilingDepth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/hint_ceiling_height"/>
+                android:autofillHints=""
+                android:hint="@string/hint_ceiling_height"
+                android:inputType="numberDecimal" />
         </LinearLayout>
 
         <!-- Fields for Concrete Grade -->
@@ -201,15 +235,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/field_concrete_grade"
                 android:layout_gravity="center_vertical"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:text="@string/field_concrete_grade" />
 
             <Spinner
                 android:id="@+id/spinnerConcreteGrade"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
     </LinearLayout>
@@ -220,16 +254,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_analyze"
-        android:textColor="#FFFFFFFF"
-        android:onClick="analyzeJoistDesign"/>
+        android:textColor="#FFFFFFFF" />
 
     <!-- Analyze Button -->
     <Button
         android:id="@+id/buttonExportAsPdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Export as PDF"
-        android:onClick="exportAsPdf"
+        android:text="@string/export_as_pdf"
         android:visibility="gone" />
 
     <!-- WebView for Table -->

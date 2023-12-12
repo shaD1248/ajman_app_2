@@ -19,6 +19,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +32,10 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class JoistDesignFragment : Fragment() {
@@ -38,6 +44,7 @@ class JoistDesignFragment : Fragment() {
     private val binding get() = _binding!!
     private var joistDesign: JoistDesign? = null
     private var additionalFieldsVisible = false
+    private var updateView = false
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
@@ -45,14 +52,14 @@ class JoistDesignFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJoistDesignBinding.inflate(inflater, container, false)
-        val joistDesignParcelable =
-            arguments?.getParcelable(
-                "joistDesignParcelable",
-                ajman.shayan.joisty.models.JoistDesignParcelable::class.java
-            )
-        joistDesign = joistDesignParcelable?.joistDesign
         setSpinnerValues()
-        joistDesign?.let { convertDataToFrom(it) }
+        val joistDesignId = arguments?.getLong("joistDesignId")
+        val application = requireActivity().application as JoistyApplication
+        application.repo.get(joistDesignId, fun (joistDesign: JoistDesign?) {
+            this.joistDesign = joistDesign
+            updateView = true
+        })
+        postDelayed()
         return binding.root
     }
 
@@ -68,6 +75,20 @@ class JoistDesignFragment : Fragment() {
             val spinner: Spinner = binding.root.findViewById(viewId)
             spinner.adapter = SpinnerAdapter(requireContext(), values)
         }
+    }
+
+    private fun postDelayed() {
+        val mainHandler = Handler(Looper.getMainLooper())
+
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (updateView) {
+                    joistDesign?.let { convertDataToFrom(it) }
+                    updateView = false
+                }
+                mainHandler.postDelayed(this, 1000)
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -120,7 +141,10 @@ class JoistDesignFragment : Fragment() {
     ) {
         val root: View = binding.root
         val textViewFormData = mutableMapOf(
+            R.id.textViewId to joistDesign.id.toString(),
             R.id.editTextProjectName to joistDesign.projectName,
+            R.id.textViewCreatedAt to formatLocalDateTime(joistDesign.createdAt),
+            R.id.textViewUpdatedAt to formatLocalDateTime(joistDesign.updatedAt),
             R.id.editTextJoistLength to (joistDesign.L / m).toString(),
             R.id.editTextJoistHeight to (joistDesign.dj / cm).toString(),
             R.id.editTextSlabThickness to (joistDesign.h / cm).toString(),
@@ -145,6 +169,15 @@ class JoistDesignFragment : Fragment() {
             root.findViewById<Spinner?>(viewId).setSelection(value.ordinal)
         }
         loadWebView(generateHtml(report))
+    }
+
+    private fun formatLocalDateTime(localDateTime: LocalDateTime): String {
+        val dayOfMonth = localDateTime.dayOfMonth
+        val month = localDateTime.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        val year = localDateTime.year
+        val hour = localDateTime.format(DateTimeFormatter.ofPattern("HH"))
+        val minute = localDateTime.format(DateTimeFormatter.ofPattern("mm"))
+        return "$dayOfMonth $month $year, $hour:$minute"
     }
 
     private fun generateHtml(report: Report): String {

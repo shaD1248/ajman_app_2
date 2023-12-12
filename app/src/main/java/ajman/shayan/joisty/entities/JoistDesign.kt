@@ -21,6 +21,8 @@ data class JoistDesign(@ColumnInfo(name = "L") var L: Double) {
     @ColumnInfo(name = "occupancy") var occupancy: Occupancy = Occupancy.RESIDENTIAL
     @ColumnInfo(name = "project_name") var projectName: String = ""
     @ColumnInfo(name = "created_at") var createdAt: LocalDateTime = LocalDateTime.now()
+//    @ColumnInfo(name = "updated_at") var updatedAt: LocalDateTime = LocalDateTime.now()
+    @Ignore var updatedAt: LocalDateTime = LocalDateTime.now()
     @ColumnInfo(name = "dj") var dj: Double = 25.0 * cm
     @ColumnInfo(name = "h") var h: Double = 5.0 * cm
     @ColumnInfo(name = "d") var d: Double = 30.0 * cm
