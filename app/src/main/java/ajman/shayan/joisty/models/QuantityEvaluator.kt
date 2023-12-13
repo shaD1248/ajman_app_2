@@ -8,12 +8,10 @@ class QuantityEvaluator(
     var dataSet: DataSet,
     private var quantitiesToBeEvaluated: MutableSet<String>
 ) {
-    val assignments: MutableList<Assignment> = mutableListOf()
     val mappedAssignments: MutableMap<String, MutableList<Assignment>> = mutableMapOf()
 
     fun evaluate() {
         evaluateRecursively()
-        addAssignmentsRecursively()
         addMappedAssignmentsRecursively()
     }
 
@@ -31,20 +29,6 @@ class QuantityEvaluator(
         }
 
         quantitiesToBeEvaluated.forEach { visit(it) }
-    }
-
-    private fun addAssignmentsRecursively() {
-        val visited = mutableSetOf<EvaluatableQuantity>()
-
-        fun visit(quantity: EvaluatableQuantity) {
-            if (quantity in visited) return
-            visited.add(quantity)
-            quantity.actualDependencies.filterIsInstance<EvaluatableQuantity>().forEach(::visit)
-            assignments.addAll(quantity.assignments)
-        }
-
-        quantitiesToBeEvaluated.mapNotNull { dataSet.get(it) as? EvaluatableQuantity }
-            .forEach(::visit)
     }
 
     private fun addMappedAssignmentsRecursively() {

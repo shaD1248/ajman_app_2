@@ -29,12 +29,12 @@ class Mn(dataSet: DataSet): EvaluatableQuantity(dataSet) {
             }
             assignments.add(Assignment("Q_c", Qc, Unit.CM3, formula))
             val Mn = dataSet.Mp - 0.85 * dataSet.fc * Qc
-            assignments.add(Assignment("M_n", Mn, Unit.KGFM, "M_p - 0.85 f_c Q_c"))
+            assignments.add(Assignment("M_n", Mn, Unit.TFM, "M_p - 0.85 f_c Q_c"))
             Mn
         } else {
             actualDependencies += mutableSetOf(dataSet.Fy, dataSet.Sb, dataSet.fc, dataSet.Sc)
             val Mn = min(dataSet.Fy * dataSet.Sb, -0.7 * dataSet.fc * dataSet.Sc)
-            assignments.add(Assignment("M_n", Mn, Unit.KGFM,  "min(F_y S_b, 0.7 f_c S_c)"))
+            assignments.add(Assignment("M_n", Mn, Unit.TFM,  "min(F_y S_b, 0.7 f_c S_c)"))
             Mn
         }
         value = Mn

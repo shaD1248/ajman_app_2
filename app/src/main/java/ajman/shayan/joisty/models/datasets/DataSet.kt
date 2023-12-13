@@ -49,9 +49,10 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val n = GivenQuantity("n", locatedCompositeSection.n.toDouble())
     val s = GivenQuantity("s", locatedCompositeSection.s)
     val wu = GivenQuantity("wu", locatedCompositeSection.wu)
-    val x = GivenQuantity("x", locatedCompositeSection.x)
+    val xb = GivenQuantity("xb", locatedCompositeSection.L / 2)
+    val xv = GivenQuantity("xv", 0.0)
     private fun getGivenQuantities(): Set<GivenQuantity> = setOf(
-        Asb, Ast, Asw, Ec, Es, Fy, Fyw, L, b, be, bw, d, dj, fc, h, n, s, wu, x
+        Asb, Ast, Asw, Ec, Es, Fy, Fyw, L, b, be, bw, d, dj, fc, h, n, s, wu, xb, xv
     )
 
     val I_composite = I_composite(this)

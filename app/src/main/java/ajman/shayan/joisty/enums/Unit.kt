@@ -4,7 +4,7 @@ import ajman.shayan.joisty.models.structure.kgf
 import ajman.shayan.joisty.models.structure.m
 
 enum class Unit {
-    CM, CM3, CM4, KGFM, KGF_OVER_M, M, M3, TF, UNIT;
+    CM, CM3, CM4, KGFM, KGF_OVER_M, M, M3, TF, TFM, UNIT;
 
     override fun toString(): String = when (this) {
         CM -> "cm"
@@ -15,6 +15,7 @@ enum class Unit {
         M -> "m"
         M3 -> "m³"
         TF -> "Tf"
+        TFM -> "Tfm"
         else -> ""
     }
     fun getValue(): Double = when (this) {
@@ -26,6 +27,7 @@ enum class Unit {
         M -> m
         M3 -> m * m * m
         TF -> 1000 * kgf
+        TFM -> 1000 * kgf * m
         UNIT -> 1.0
     }
 }

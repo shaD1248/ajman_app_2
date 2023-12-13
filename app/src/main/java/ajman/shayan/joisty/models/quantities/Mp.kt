@@ -14,7 +14,7 @@ class Mp(dataSet: DataSet): EvaluatableQuantity(dataSet) {
         val assignments = mutableListOf<Assignment>()
         actualDependencies = mutableSetOf(dataSet.Asb, dataSet.Fy, dataSet.d)
         val Mp = dataSet.Asb * dataSet.Fy * dataSet.d
-        assignments.add(Assignment("M_p", Mp, Unit.KGFM, "A_{sb} F_y d"))
+        assignments.add(Assignment("M_p", Mp, Unit.TFM, "A_{sb} F_y d"))
         value = Mp
         this.assignments = assignments
         return Triple(Mp, assignments, mutableSetOf())
