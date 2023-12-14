@@ -7,6 +7,6 @@ const val m2 = m * m
 const val cm = 0.01 * m
 const val cm2 = cm * cm
 const val MPa = 1000000 * N / m2
-const val Es = 2000 * MPa
+const val Es = 200000 * MPa
 const val S235JR = 235 * MPa
 const val C20 = 20 * MPa

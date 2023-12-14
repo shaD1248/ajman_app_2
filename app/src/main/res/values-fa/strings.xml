@@ -59,6 +59,7 @@
 
     <string name="report_section_flexural_strength_of_composite_section">مقاومت خمشی مقطع مختلط</string>
     <string name="report_section_transverse_shear_strength_of_composite_section">مقاومت برشی عرضی مقطع مختلط</string>
+    <string name="report_section_deflection">تغییرشکل</string>
     <string name="colon">: </string>
     <string name="export_as_pdf">ذخیرهٔ PDF</string>
 </resources>

@@ -4,7 +4,8 @@ import kotlin.math.min
 
 class LocatedCompositeSection(val x: Double, private val compositeJoist: CompositeJoist) {
     val L: Double get() = compositeJoist.L
-    val wu: Double get() = compositeJoist.areaLoading.wu
+    val wD: Double get() = compositeJoist.areaLoading.wD
+    val wL: Double get() = compositeJoist.areaLoading.wL
     val d: Double get() = compositeJoist.d
     val dj: Double get() = compositeJoist.steelJoist.dj
     val h: Double get() = compositeJoist.h

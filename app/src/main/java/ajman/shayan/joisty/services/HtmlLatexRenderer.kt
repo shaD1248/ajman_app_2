@@ -6,5 +6,5 @@ class HtmlLatexRenderer {
         <script type="text/javascript" async src="file:///android_asset/mathjax/Mathjax.js?config=TeX-AMS_CHTML"></script>
         """
     fun getBodyTags(latexLines: List<String>): String =
-        "<div>$$\\begin{array}{l}" + latexLines.joinToString("\\\\") { "\\displaystyle $it" } + "\\end{array}$$</div>"
+        "<div style=\"direction: ltr; overflow: auto; white-space: nowrap;\">$$\\begin{array}{l}" + latexLines.joinToString("\\\\") { "\\displaystyle $it" } + "\\end{array}$$</div>"
 }

@@ -3,6 +3,7 @@ package ajman.shayan.joisty.models
 import ajman.shayan.joisty.models.datasets.DataSet
 import ajman.shayan.joisty.models.report.Paragraph
 import ajman.shayan.joisty.models.report.ReportSection
+import ajman.shayan.joisty.models.requirements.limit_states.deflection.Deflection
 import ajman.shayan.joisty.models.requirements.limit_states.flexure.FlexuralStrengthOfCompositeSection
 import ajman.shayan.joisty.models.requirements.limit_states.shear.TransverseShearStrengthOfCompositeSection
 import ajman.shayan.joisty.models.structure.CompositeJoist
@@ -24,6 +25,7 @@ class RequirementApplication(
         val requirements: List<Requirement<LocatedCompositeSection>> = listOf(
             FlexuralStrengthOfCompositeSection(),
             TransverseShearStrengthOfCompositeSection(),
+            Deflection(),
         )
         compositeJoist.analyze()
         val applications = compositeJoist.locatedSections.flatMap { locatedCompositeSection ->
