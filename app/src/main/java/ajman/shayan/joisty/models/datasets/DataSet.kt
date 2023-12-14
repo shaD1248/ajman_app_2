@@ -29,9 +29,11 @@ import ajman.shayan.joisty.models.quantities.Vn
 import ajman.shayan.joisty.models.quantities.Vs
 import ajman.shayan.joisty.models.quantities.Vu
 import ajman.shayan.joisty.models.quantities.fn
+import ajman.shayan.joisty.models.quantities.fn_min
 import ajman.shayan.joisty.models.quantities.q
 import ajman.shayan.joisty.models.quantities.qD
 import ajman.shayan.joisty.models.quantities.ratio_Delta
+import ajman.shayan.joisty.models.quantities.ratio_f
 import ajman.shayan.joisty.models.quantities.w
 import ajman.shayan.joisty.models.quantities.wu
 import ajman.shayan.joisty.models.quantities.y_composite
@@ -89,6 +91,7 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val alpha = alpha(this)
     val epsilon_t = epsilon_t(this)
     val fn = fn(this)
+    val fn_min = fn_min(this)
     val ns = ns(this)
     val phi_b = phi_b(this)
     val phi_v = phi_v(this)
@@ -101,12 +104,13 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val y_composite = y_composite(this)
 
     private val ratio_b = ratio_b(this)
+    private val ratio_f = ratio_f(this)
     private val ratio_Delta = ratio_Delta(this)
     private val ratio_v = ratio_v(this)
     private fun getEvaluatableQuantities(): Set<EvaluatableQuantity> = setOf(
         Delta_aDL, Delta_aL, Delta_DL, Delta_L, I_composite, Mn, Mp, Mu, Qsb, Qst, Sb, Sc, Tp, Vc,
-        Vn, Vs, Vu, a, alpha, epsilon_t, fn, ns, phi_b, phi_v, q, qD, qL, qu, w, wu, y_composite,
-        ratio_b, ratio_Delta, ratio_v,
+        Vn, Vs, Vu, a, alpha, epsilon_t, fn, fn_min, ns, phi_b, phi_v, q, qD, qL, qu, w, wu,
+        y_composite, ratio_b, ratio_Delta, ratio_f, ratio_v,
     )
 
     private fun getAllQuantities() = getGivenQuantities() + getEvaluatableQuantities()

@@ -6,6 +6,7 @@ import ajman.shayan.joisty.models.report.ReportSection
 import ajman.shayan.joisty.models.requirements.limit_states.deflection.Deflection
 import ajman.shayan.joisty.models.requirements.limit_states.flexure.FlexuralStrengthOfCompositeSection
 import ajman.shayan.joisty.models.requirements.limit_states.shear.TransverseShearStrengthOfCompositeSection
+import ajman.shayan.joisty.models.requirements.limit_states.vibration.NaturalFrequency
 import ajman.shayan.joisty.models.structure.CompositeJoist
 import ajman.shayan.joisty.models.structure.LocatedCompositeSection
 
@@ -26,6 +27,7 @@ class RequirementApplication(
             FlexuralStrengthOfCompositeSection(),
             TransverseShearStrengthOfCompositeSection(),
             Deflection(),
+            NaturalFrequency(),
         )
         compositeJoist.analyze()
         val applications = compositeJoist.locatedSections.flatMap { locatedCompositeSection ->
