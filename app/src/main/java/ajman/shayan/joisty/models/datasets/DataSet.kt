@@ -28,7 +28,9 @@ import ajman.shayan.joisty.models.quantities.Vc
 import ajman.shayan.joisty.models.quantities.Vn
 import ajman.shayan.joisty.models.quantities.Vs
 import ajman.shayan.joisty.models.quantities.Vu
+import ajman.shayan.joisty.models.quantities.fn
 import ajman.shayan.joisty.models.quantities.q
+import ajman.shayan.joisty.models.quantities.qD
 import ajman.shayan.joisty.models.quantities.ratio_Delta
 import ajman.shayan.joisty.models.quantities.w
 import ajman.shayan.joisty.models.quantities.wu
@@ -54,6 +56,7 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val d = GivenQuantity("d", locatedCompositeSection.d)
     val dj = GivenQuantity("dj", locatedCompositeSection.dj)
     val fc = GivenQuantity("fc", locatedCompositeSection.fc)
+    val g = GivenQuantity("g", ajman.shayan.joisty.models.structure.g)
     val h = GivenQuantity("h", locatedCompositeSection.h)
     val n = GivenQuantity("n", locatedCompositeSection.n.toDouble())
     val s = GivenQuantity("s", locatedCompositeSection.s)
@@ -85,10 +88,12 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val a = a(this)
     val alpha = alpha(this)
     val epsilon_t = epsilon_t(this)
+    val fn = fn(this)
     val ns = ns(this)
     val phi_b = phi_b(this)
     val phi_v = phi_v(this)
     val q = q(this)
+    val qD = qD(this)
     val qL = qL(this)
     val qu = qu(this)
     val w = w(this)
@@ -100,8 +105,8 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     private val ratio_v = ratio_v(this)
     private fun getEvaluatableQuantities(): Set<EvaluatableQuantity> = setOf(
         Delta_aDL, Delta_aL, Delta_DL, Delta_L, I_composite, Mn, Mp, Mu, Qsb, Qst, Sb, Sc, Tp, Vc,
-        Vn, Vs, Vu, a, alpha, epsilon_t, ns, phi_b, phi_v, q, qL, qu, ratio_b, ratio_Delta, ratio_v,
-        w, wu, y_composite
+        Vn, Vs, Vu, a, alpha, epsilon_t, fn, ns, phi_b, phi_v, q, qD, qL, qu, w, wu, y_composite,
+        ratio_b, ratio_Delta, ratio_v,
     )
 
     private fun getAllQuantities() = getGivenQuantities() + getEvaluatableQuantities()
