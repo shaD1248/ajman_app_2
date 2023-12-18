@@ -26,7 +26,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -41,17 +40,13 @@ class MainActivity : AppCompatActivity() {
     private var deleteAction: MenuItem? = null
     private var toggle: ActionBarDrawerToggle? = null
 
-    var joistDesigns = mutableListOf(
-        JoistDesign(1000.0),
-        JoistDesign(600.0),
-    )
+    var joistDesigns = mutableListOf<JoistDesign>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setUpLocale()
         setContentView(R.layout.activity_main)
-        setUpDrawer()
-        setJoistDesignAdapter()
+        setUpToolbar()
         addListenerForCreateButton()
     }
 
@@ -63,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
-    private fun setUpDrawer() {
+    private fun setUpToolbar() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -94,6 +89,11 @@ class MainActivity : AppCompatActivity() {
         } else super.onOptionsItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+        setJoistDesignAdapter()
+    }
+
     private fun setJoistDesignAdapter() {
         val application = this.application as JoistyApplication
         repo = application.repo
@@ -102,9 +102,14 @@ class MainActivity : AppCompatActivity() {
         val updateRecyclerView = {joistDesigns: MutableList<JoistDesign> ->
             this.joistDesigns = joistDesigns
             recyclerView = findViewById(R.id.recyclerView)
-            recyclerView?.layoutManager = LinearLayoutManager(this)
-            recyclerView?.adapter =
-                JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
+//            recyclerView?.layoutManager = LinearLayoutManager(this)
+            val adapter = recyclerView?.adapter as JoistDesignAdapter?
+            if (adapter == null) {
+                recyclerView?.adapter =
+                    JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
+            } else {
+                adapter.updateJoistDesigns(joistDesigns)
+            }
         }
 
         repo.loadAllJoists(updateRecyclerView)
@@ -122,6 +127,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadJoistDesignActivity(joistDesign: JoistDesign) {
         val intent = Intent(this, JoistDesignActivity::class.java)
         intent.putExtra("joistDesignId", joistDesign.id)
+        intent.putExtra("projectName", joistDesign.projectName)
         startActivity(intent)
     }
 

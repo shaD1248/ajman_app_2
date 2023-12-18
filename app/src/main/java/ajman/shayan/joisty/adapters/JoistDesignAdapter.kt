@@ -6,6 +6,8 @@ import ajman.shayan.joisty.models.structure.m
 import ajman.shayan.joisty.services.getResourceIdForEnum
 import android.content.Context
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +17,38 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 
 class JoistDesignAdapter(
-    private val joistDesigns: List<JoistDesign>,
+    private var joistDesigns: List<JoistDesign>,
     private val onItemClick: (JoistDesign, JoistDesignViewHolder) -> Unit,
     private val onItemLongClick: (JoistDesign, JoistDesignViewHolder) -> Unit
 ) : RecyclerView.Adapter<JoistDesignViewHolder>() {
+    private var updateView = false
+
+    init {
+        postDelayed()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JoistDesignViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_joist_design, parent, false)
         return JoistDesignViewHolder(view, parent.context)
+    }
+
+    fun updateJoistDesigns(joistDesigns: List<JoistDesign>) {
+        this.joistDesigns = joistDesigns
+        updateView = true
+    }
+
+    private fun postDelayed() {
+        val mainHandler = Handler(Looper.getMainLooper())
+
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (updateView) {
+                    notifyDataSetChanged()
+                    updateView = false
+                }
+                mainHandler.postDelayed(this, 1000)
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

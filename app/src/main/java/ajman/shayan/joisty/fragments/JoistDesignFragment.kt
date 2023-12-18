@@ -56,7 +56,9 @@ class JoistDesignFragment : Fragment() {
         val joistDesignId = arguments?.getLong("joistDesignId")
         val application = requireActivity().application as JoistyApplication
         application.repo.get(joistDesignId, fun (joistDesign: JoistDesign?) {
-            this.joistDesign = joistDesign
+            this.joistDesign = joistDesign ?: JoistDesign(600.0).apply {
+                projectName = getString(R.string.default_project_name)
+            }
             updateView = true
         })
         postDelayed()

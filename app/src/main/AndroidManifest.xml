@@ -23,7 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.JoistDesignActivity">
+        <activity
+            android:name=".activities.JoistDesignActivity"
+            android:theme="@style/Theme.App1.NoActionBar">
             <!-- Add any intent filters if needed -->
         </activity>
 
