@@ -5,7 +5,7 @@ class CompositeJoist(
     val steelJoist: SteelJoist,
     var d: Double,
     var h: Double,
-    joistArrangement: JoistArrangement,
+    var joistArrangement: JoistArrangement,
     concreteGrade: ConcreteGrade,
     val areaLoading: AreaLoading
 ) {
@@ -14,6 +14,10 @@ class CompositeJoist(
     var bw: Double = if (joistArrangement.hasConcreteWeb()) b - bb else 0.0
     var concreteMaterial = concreteGrade.getConcrete()
     var locatedSections = mutableListOf<LocatedCompositeSection>()
+
+    init {
+        areaLoading.calculateSelfWeight(this)
+    }
     fun analyze() {
         val section = LocatedCompositeSection(L / 2, this)
         locatedSections.add(section)

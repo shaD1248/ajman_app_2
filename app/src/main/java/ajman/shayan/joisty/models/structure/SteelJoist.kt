@@ -9,5 +9,5 @@ class SteelJoist(
 ) {
     var bottomComponent: JoistLongitudinalComponent = JoistLongitudinalComponent(n * steelSectionDetails.get_Asb(), L)
     var topComponent: JoistLongitudinalComponent = JoistLongitudinalComponent(n * steelSectionDetails.get_Ast(), L)
-    var webComponent: JoistTransverseComponent = JoistTransverseComponent(n * steelWebDetails.get_Asw(), steelWebDetails.get_s())
+    var webComponent: JoistTransverseComponent = JoistTransverseComponent(n * steelWebDetails.get_Asw(), steelWebDetails.get_s(), dj)
 }

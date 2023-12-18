@@ -20,7 +20,7 @@ class JoistDesignService {
         if (violations.isNotEmpty()) {
             throw Exception(violations.map { it.message }.joinToString { "\n" })
         }
-        val loading = AreaLoading(joistDesign.occupancy.get_wD(), joistDesign.occupancy.get_wL())
+        val loading = AreaLoading(joistDesign.occupancy)
         val steelJoist = SteelJoist(
             joistDesign.L,
             joistDesign.dj,
