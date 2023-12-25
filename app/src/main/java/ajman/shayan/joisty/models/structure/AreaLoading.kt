@@ -1,14 +1,33 @@
 package ajman.shayan.joisty.models.structure
 
+import ajman.shayan.joisty.entities.Loading
 import kotlin.math.ceil
 import kotlin.math.cos
 import kotlin.math.pow
 
-class AreaLoading(var occupancy: Occupancy) {
-    private var shouldAddSelfWeight: Boolean = occupancy.shouldAddSelfWeight
-    private var wsD: Double = occupancy.wsD
-    var wL: Double = occupancy.wL
+class AreaLoading() {
+    private var shouldAddSelfWeight: Boolean = true
+    private var wsD: Double = 0.0
+    var wL: Double = 0.0
     private var wcD: Double = 0.0
+
+//    constructor(occupancy: Occupancy) : this() {
+//        shouldAddSelfWeight = occupancy.shouldAddSelfWeight
+//        wsD = occupancy.wsD
+//        wL = occupancy.wL
+//    }
+
+    constructor(loading: Loading?, occupancy: Occupancy) : this() {
+        if (loading != null) {
+            shouldAddSelfWeight = !loading.includingSelfWeight
+            wsD = loading.wD
+            wL = loading.wL
+        } else {
+            shouldAddSelfWeight = occupancy.shouldAddSelfWeight
+            wsD = occupancy.wsD
+            wL = occupancy.wL
+        }
+    }
     fun calculateSelfWeight(compositeJoist: CompositeJoist) {
         val steelJoist = compositeJoist.steelJoist
         val Mj = gamma_s * (

@@ -1,12 +1,10 @@
 package ajman.shayan.joisty
 
-import ajman.shayan.joisty.dao.JoistDesignDao
 import ajman.shayan.joisty.databases.JoistyDatabase
 import ajman.shayan.joisty.view_models.JoistDesignViewModel
 import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.room.Room
 
 class JoistyApplication : Application() {
     lateinit var database: JoistyDatabase
@@ -15,12 +13,7 @@ class JoistyApplication : Application() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
-        val databaseBuilder = Room.databaseBuilder(
-            applicationContext,
-            JoistyDatabase::class.java,
-            "joisty-database"
-        )
-        database = databaseBuilder.build()
+        database = JoistyDatabase.getDatabase(applicationContext)
         val dao = database.joistDesignDao()
         repo = JoistDesignViewModel(dao)
     }
