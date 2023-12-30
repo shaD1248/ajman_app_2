@@ -2,10 +2,12 @@ package ajman.shayan.joisty.databases
 
 import ajman.shayan.joisty.dao.JoistDesignDao
 import ajman.shayan.joisty.entities.JoistDesign
+import ajman.shayan.joisty.entities.PriceList
 import ajman.shayan.joisty.migrations.Migration2To1
 import ajman.shayan.joisty.migrations.Migration2To3
 import ajman.shayan.joisty.migrations.Migration3To2
 import ajman.shayan.joisty.migrations.Migration4To3
+import ajman.shayan.joisty.migrations.Migration5To6
 import ajman.shayan.joisty.type_converters.EnumConverter
 import ajman.shayan.joisty.type_converters.LocalDateTimeConverter
 import android.content.Context
@@ -13,8 +15,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.DeleteColumn
-import androidx.room.DeleteTable
 import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -23,10 +23,11 @@ import androidx.room.migration.AutoMigrationSpec
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Database(
-    entities = [JoistDesign::class],
-    version = 1,
+    entities = [JoistDesign::class, PriceList::class],
+    version = 6,
     exportSchema = true,
     autoMigrations = [
+        AutoMigration(from = 1, to = 5),
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 3, to = 4, spec = JoistyDatabase.Migration3To4Spec::class),
     ],
@@ -51,6 +52,7 @@ abstract class JoistyDatabase : RoomDatabase() {
                     Migration2To3(),
                     Migration3To2(),
                     Migration4To3(),
+                    Migration5To6(),
                 )
                 val instance = databaseBuilder.build()
                 INSTANCE = instance
