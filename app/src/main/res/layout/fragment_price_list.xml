@@ -6,68 +6,143 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/field_price_list_code"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <EditText
         android:id="@+id/editTextPriceListCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Price List Code"
+        android:hint="@string/hint_price_list_code"
         android:inputType="numberDecimal"
-        android:autofillHints="" />
+        android:autofillHints=""
+        android:visibility="gone" />
 
-    <EditText
-        android:id="@+id/editTextCurrency"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPriceListCode"
-        android:layout_marginTop="16dp"
-        android:hint="Currency" />
+        android:layout_marginTop="16dp">
 
-    <EditText
-        android:id="@+id/editTextPlate"
+        <TableRow>
+            <TextView
+                android:layout_column="0"
+                android:text="@string/label_no"
+                android:textStyle="bold"
+                android:padding="5dp" />
+            <TextView
+                android:layout_column="1"
+                android:text="@string/label_description"
+                android:textStyle="bold"
+                android:padding="5dp" />
+            <TextView
+                android:layout_column="2"
+                android:text="@string/label_unit"
+                android:textStyle="bold"
+                android:padding="5dp" />
+            <TextView
+                android:layout_column="3"
+                android:text="@string/label_unit_price"
+                android:textStyle="bold"
+                android:padding="5dp" />
+        </TableRow>
+        <TableRow>
+            <TextView android:text="1" android:padding="5dp" />
+            <TextView android:text="@string/label_plate" android:padding="5dp" />
+            <TextView android:text="@string/label_kgf" android:padding="5dp" />
+            <EditText
+                android:id="@+id/editTextPlate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_plate"
+                android:inputType="numberDecimal"
+                android:padding="5dp"
+                android:autofillHints="" />
+        </TableRow>
+        <TableRow>
+            <TextView android:text="2" android:padding="5dp" />
+            <TextView android:text="@string/label_rebar" android:padding="5dp" />
+            <TextView android:text="@string/label_kgf" android:padding="5dp" />
+            <EditText
+                android:id="@+id/editTextRebar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_rebar"
+                android:inputType="numberDecimal"
+                android:padding="5dp"
+                android:autofillHints="" />
+        </TableRow>
+        <TableRow>
+            <TextView android:text="3" android:padding="5dp" />
+            <TextView android:text="@string/label_angle" android:padding="5dp" />
+            <TextView android:text="@string/label_kgf" android:padding="5dp" />
+            <EditText
+                android:id="@+id/editTextAngle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_angle"
+                android:inputType="numberDecimal"
+                android:padding="5dp"
+                android:autofillHints="" />
+        </TableRow>
+        <TableRow>
+            <TextView android:text="4" android:padding="5dp" />
+            <TextView android:text="@string/label_concrete" android:padding="5dp" />
+            <TextView android:text="@string/label_m3" android:padding="5dp" />
+            <EditText
+                android:id="@+id/editTextConcrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_concrete"
+                android:inputType="numberDecimal"
+                android:padding="5dp"
+                android:autofillHints="" />
+        </TableRow>
+        <TableRow>
+            <TextView android:text="5" android:padding="5dp" />
+            <TextView android:text="@string/label_block" android:padding="5dp" />
+            <TextView android:text="@string/label_unit" android:padding="5dp" />
+            <EditText
+                android:id="@+id/editTextBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_block"
+                android:inputType="numberDecimal"
+                android:padding="5dp"
+                android:autofillHints="" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextCurrency"
-        android:layout_marginTop="16dp"
-        android:hint="Plate" />
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
 
-    <EditText
-        android:id="@+id/editTextRebar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPlate"
-        android:layout_marginTop="16dp"
-        android:hint="Rebar" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/field_currency"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTextAngle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextRebar"
-        android:layout_marginTop="16dp"
-        android:hint="Angle" />
+        <EditText
+            android:id="@+id/editTextCurrency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_currency"
+            android:autofillHints=""
+            android:inputType="numberDecimal" />
 
-    <EditText
-        android:id="@+id/editTextConcrete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextAngle"
-        android:layout_marginTop="16dp"
-        android:hint="Concrete" />
-
-    <EditText
-        android:id="@+id/editTextBlock"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextConcrete"
-        android:layout_marginTop="16dp"
-        android:hint="Block" />
+    </LinearLayout>
 
     <Button
-        android:id="@+id/btnSave"
+        android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextConcrete"
         android:layout_marginTop="16dp"
-        android:text="Save" />
+        android:text="@string/label_save" />
 
 </LinearLayout>

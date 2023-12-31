@@ -63,5 +63,30 @@
     <string name="report_section_natural_frequency">بسامد طبیعی</string>
     <string name="colon">: </string>
     <string name="export_as_pdf">ذخیرهٔ PDF</string>
+
     <string name="menu_price_list">فهرست بها</string>
+
+    <string name="field_price_list_code">شماره</string>
+    <string name="field_currency">واحد پول</string>
+
+    <string name="hint_price_list_code">شمارهٔ فهرست بها را وارد کنید.</string>
+    <string name="hint_currency">واحد پول را وارد کنید.</string>
+    <string name="hint_plate">بهای ورق</string>
+    <string name="hint_rebar">بهای میلگرد</string>
+    <string name="hint_angle">بهای نبشی</string>
+    <string name="hint_concrete">بهای بتن</string>
+    <string name="hint_block">بهای بلوک</string>
+
+    <string name="label_no">ردیف</string>
+    <string name="label_description">شرح</string>
+    <string name="label_unit">واحد</string>
+    <string name="label_unit_price">قیمت واحد</string>
+    <string name="label_plate">ورق</string>
+    <string name="label_rebar">میلگرد</string>
+    <string name="label_angle">نبشی</string>
+    <string name="label_concrete">بتن</string>
+    <string name="label_block">بلوک</string>
+    <string name="label_kgf">کیلوگرم‌نیرو</string>
+    <string name="label_m3">متر مکعّب</string>
+    <string name="label_save">ذخیره</string>
 </resources>

@@ -59,7 +59,7 @@ class PriceListFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<Button>(R.id.btnSave).setOnClickListener {
+        view.findViewById<Button>(R.id.buttonSave).setOnClickListener {
             priceList?.let {
                 convertFormToData(it)
                 convertDataToFrom(it)
@@ -85,7 +85,7 @@ class PriceListFragment : Fragment() {
 
     private fun convertFormToData(priceList: PriceList) {
         val formData = mutableMapOf(
-            "priceList" to binding.editTextPriceListCode.text.toString(),
+            "priceListCode" to (binding.editTextPriceListCode.text.toString().toDoubleOrNull() ?: 0.0),
             "currency" to binding.editTextCurrency.text.toString(),
             "plate" to (binding.editTextPlate.text.toString().toDoubleOrNull() ?: 0.0) / kgf,
             "rebar" to (binding.editTextRebar.text.toString().toDoubleOrNull() ?: 0.0) / kgf,

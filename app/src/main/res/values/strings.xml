@@ -62,5 +62,30 @@
     <string name="report_section_natural_frequency">Natural Frequency</string>
     <string name="colon">: </string>
     <string name="export_as_pdf">Export as PDF</string>
+
     <string name="menu_price_list">Price List</string>
+
+    <string name="field_price_list_code">Price List Code</string>
+    <string name="field_currency">Currency</string>
+
+    <string name="hint_price_list_code">Enter Price List Code</string>
+    <string name="hint_currency">Enter Currency</string>
+    <string name="hint_plate">Plate Price</string>
+    <string name="hint_rebar">Rebar Price</string>
+    <string name="hint_angle">Angle Price</string>
+    <string name="hint_concrete">Concrete Price</string>
+    <string name="hint_block">Block Price</string>
+
+    <string name="label_no">No.</string>
+    <string name="label_description">Description</string>
+    <string name="label_unit">Unit</string>
+    <string name="label_unit_price">Unit Price</string>
+    <string name="label_plate">Plate</string>
+    <string name="label_rebar">Rebar</string>
+    <string name="label_angle">Angle</string>
+    <string name="label_concrete">Concrete</string>
+    <string name="label_block">Block</string>
+    <string name="label_kgf">kgf</string>
+    <string name="label_m3">m³</string>
+    <string name="label_save">Save</string>
 </resources>
