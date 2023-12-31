@@ -63,4 +63,5 @@
     <string name="report_section_natural_frequency">بسامد طبیعی</string>
     <string name="colon">: </string>
     <string name="export_as_pdf">ذخیرهٔ PDF</string>
+    <string name="menu_price_list">فهرست بها</string>
 </resources>

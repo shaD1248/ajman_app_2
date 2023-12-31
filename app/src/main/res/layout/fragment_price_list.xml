@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextPriceListCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Price List Code"
+        android:inputType="numberDecimal"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/editTextCurrency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextPriceListCode"
+        android:layout_marginTop="16dp"
+        android:hint="Currency" />
+
+    <EditText
+        android:id="@+id/editTextPlate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextCurrency"
+        android:layout_marginTop="16dp"
+        android:hint="Plate" />
+
+    <EditText
+        android:id="@+id/editTextRebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextPlate"
+        android:layout_marginTop="16dp"
+        android:hint="Rebar" />
+
+    <EditText
+        android:id="@+id/editTextAngle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextRebar"
+        android:layout_marginTop="16dp"
+        android:hint="Angle" />
+
+    <EditText
+        android:id="@+id/editTextConcrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextAngle"
+        android:layout_marginTop="16dp"
+        android:hint="Concrete" />
+
+    <EditText
+        android:id="@+id/editTextBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextConcrete"
+        android:layout_marginTop="16dp"
+        android:hint="Block" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextConcrete"
+        android:layout_marginTop="16dp"
+        android:text="Save" />
+
+</LinearLayout>

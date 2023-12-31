@@ -1,6 +1,7 @@
 package ajman.shayan.joisty.databases
 
 import ajman.shayan.joisty.dao.JoistDesignDao
+import ajman.shayan.joisty.dao.PriceListDao
 import ajman.shayan.joisty.entities.JoistDesign
 import ajman.shayan.joisty.entities.PriceList
 import ajman.shayan.joisty.migrations.Migration2To1
@@ -35,6 +36,7 @@ import androidx.room.migration.AutoMigrationSpec
 @TypeConverters(LocalDateTimeConverter::class, EnumConverter::class)
 abstract class JoistyDatabase : RoomDatabase() {
     abstract fun joistDesignDao(): JoistDesignDao
+    abstract fun priceListDao(): PriceListDao
 
     companion object {
         @Volatile
