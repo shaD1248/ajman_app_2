@@ -1,33 +1,20 @@
 package ajman.shayan.joisty.activities
 
-import ajman.shayan.joisty.JoistyApplication
 import ajman.shayan.joisty.R
-import ajman.shayan.joisty.adapters.JoistDesignAdapter
-import ajman.shayan.joisty.adapters.JoistDesignViewHolder
-import ajman.shayan.joisty.entities.JoistDesign
-import ajman.shayan.joisty.view_models.JoistDesignViewModel
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuProvider
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import java.util.Locale
 
@@ -35,19 +22,13 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var repo: JoistDesignViewModel
-    private var recyclerView: RecyclerView? = null
-    private var deleteAction: MenuItem? = null
     private var toggle: ActionBarDrawerToggle? = null
-
-    var joistDesigns = mutableListOf<JoistDesign>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setUpLocale()
         setContentView(R.layout.activity_main)
         setUpToolbar()
-        addListenerForCreateButton()
     }
 
     private fun setUpLocale() {
@@ -68,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
         val toggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -80,108 +60,15 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         this.toggle = toggle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setHomeAsUpIndicator(androidx.appcompat.graphics.drawable.DrawerArrowDrawable(applicationContext))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        val id = item.itemId
-        return if (toggle?.onOptionsItemSelected(item) == true) {
-            true
-        } else super.onOptionsItemSelected(item)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setJoistDesignAdapter()
-    }
-
-    private fun setJoistDesignAdapter() {
-        val application = this.application as JoistyApplication
-        repo = application.repo
-//        joistDesigns = viewModel.allJoistDesigns.toMutableList()
-
-        val updateRecyclerView = {joistDesigns: MutableList<JoistDesign> ->
-            this.joistDesigns = joistDesigns
-            recyclerView = findViewById(R.id.recyclerView)
-//            recyclerView?.layoutManager = LinearLayoutManager(this)
-            val adapter = recyclerView?.adapter as JoistDesignAdapter?
-            if (adapter == null) {
-                recyclerView?.adapter =
-                    JoistDesignAdapter(joistDesigns, getOnItemClick(), getOnItemLongClick())
-            } else {
-                adapter.updateJoistDesigns(joistDesigns)
-            }
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true
         }
-
-        repo.loadAllJoists(updateRecyclerView)
-    }
-
-    private fun getOnItemClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
-        if (joistDesign.selected) {
-            joistDesign.selected = false
-            onItemSelectionChanged(joistDesign, holder)
-        } else {
-            loadJoistDesignActivity(joistDesign)
-        }
-    }
-
-    private fun loadJoistDesignActivity(joistDesign: JoistDesign) {
-        val intent = Intent(this, JoistDesignActivity::class.java)
-        intent.putExtra("joistDesignId", joistDesign.id)
-        intent.putExtra("projectName", joistDesign.projectName)
-        startActivity(intent)
-    }
-
-    private fun getOnItemLongClick() = { joistDesign: JoistDesign, holder: JoistDesignViewHolder ->
-        if (!joistDesign.selected) {
-            joistDesign.selected = true
-            onItemSelectionChanged(joistDesign, holder)
-        }
-    }
-
-    private fun onItemSelectionChanged(joistDesign: JoistDesign, holder: JoistDesignViewHolder) {
-        holder.checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
-        updateDeleteActionVisibility()
-    }
-
-    private fun addListenerForCreateButton() {
-        findViewById<FloatingActionButton?>(R.id.fabAddJoist).setOnClickListener {
-            val joistDesign = JoistDesign(600.0)
-            joistDesign.projectName = getString(R.string.default_project_name)
-            joistDesigns.add(0, joistDesign)
-            loadJoistDesignActivity(joistDesign)
-            recyclerView?.adapter?.notifyDataSetChanged()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                if (menu.findItem(R.id.action_delete) == null) {
-                    menuInflater.inflate(R.menu.main, menu)
-                }
-                deleteAction = menu.findItem(R.id.action_delete)
-                updateDeleteActionVisibility()
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                var changed = false
-                joistDesigns.removeIf {
-                    changed = changed or it.selected
-                    if (it.selected) repo.delete(it)
-                    it.selected
-                }
-                if (changed) {
-                    updateDeleteActionVisibility()
-                    recyclerView?.adapter?.notifyDataSetChanged()
-                }
-                return true
-            }
-        }, this, Lifecycle.State.RESUMED)
-        return true
-    }
-
-    private fun updateDeleteActionVisibility() {
-        deleteAction?.isVisible = joistDesigns.count { it.selected } > 0
+        return toggle?.onOptionsItemSelected(item) == true || super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

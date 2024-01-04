@@ -71,11 +71,11 @@
 
     <string name="hint_price_list_code">شمارهٔ فهرست بها را وارد کنید.</string>
     <string name="hint_currency">واحد پول را وارد کنید.</string>
-    <string name="hint_plate">بهای ورق</string>
-    <string name="hint_rebar">بهای میلگرد</string>
-    <string name="hint_angle">بهای نبشی</string>
-    <string name="hint_concrete">بهای بتن</string>
-    <string name="hint_block">بهای بلوک</string>
+    <string name="hint_plate">قیمت واحد ورق</string>
+    <string name="hint_rebar">قیمت واحد میلگرد</string>
+    <string name="hint_angle">قیمت واحد نبشی</string>
+    <string name="hint_concrete">قیمت واحد بتن</string>
+    <string name="hint_block">قیمت واحد بلوک</string>
 
     <string name="label_no">ردیف</string>
     <string name="label_description">شرح</string>
