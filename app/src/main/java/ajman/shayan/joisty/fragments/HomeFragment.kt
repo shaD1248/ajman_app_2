@@ -3,6 +3,7 @@ package ajman.shayan.joisty.fragments
 import ajman.shayan.joisty.JoistyApplication
 import ajman.shayan.joisty.R
 import ajman.shayan.joisty.activities.JoistDesignActivity
+import ajman.shayan.joisty.activities.MainActivity
 import ajman.shayan.joisty.adapters.JoistDesignAdapter
 import ajman.shayan.joisty.adapters.JoistDesignViewHolder
 import ajman.shayan.joisty.databinding.FragmentHomeBinding
@@ -14,15 +15,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -32,11 +28,15 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var repo: JoistDesignViewModel
-    private var recyclerView: RecyclerView? = null
     private var updateView = false
-    private var deleteAction: MenuItem? = null
+    private val activity: MainActivity get() { return requireActivity() as MainActivity }
 
-    var joistDesigns = mutableListOf<JoistDesign>()
+    var joistDesigns: MutableList<JoistDesign>
+        get() { return activity.joistDesigns }
+        set (joistDesigns) { activity.joistDesigns = joistDesigns }
+    var recyclerView: RecyclerView?
+        get() { return activity.recyclerView }
+        set (recyclerView) { activity.recyclerView = recyclerView }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setJoistDesignAdapter() {
-        val application = requireActivity().application as JoistyApplication
+        val application = activity.application as JoistyApplication
         repo = application.repo
         val updateRecyclerView = {joistDesigns: MutableList<JoistDesign> ->
             this.joistDesigns = joistDesigns
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
 
     private fun onItemSelectionChanged(joistDesign: JoistDesign, holder: JoistDesignViewHolder) {
         holder.checkIcon.visibility = if (joistDesign.selected) View.VISIBLE else View.GONE
-        updateDeleteActionVisibility()
+        activity.updateDeleteActionVisibility()
     }
 
     private fun addListenerForCreateButton() {
@@ -121,38 +121,6 @@ class HomeFragment : Fragment() {
             loadJoistDesignActivity(joistDesign)
             recyclerView?.adapter?.notifyDataSetChanged()
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                if (menu.findItem(R.id.action_delete) == null) {
-                    menuInflater.inflate(R.menu.main, menu)
-                }
-                deleteAction = menu.findItem(R.id.action_delete)
-                updateDeleteActionVisibility()
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                var changed = false
-                joistDesigns.removeIf {
-                    changed = changed or it.selected
-                    if (it.selected) repo.delete(it)
-                    it.selected
-                }
-                if (changed) {
-                    updateDeleteActionVisibility()
-                    recyclerView?.adapter?.notifyDataSetChanged()
-                }
-                return true
-            }
-        }, this, Lifecycle.State.RESUMED)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun updateDeleteActionVisibility() {
-        deleteAction?.isVisible = joistDesigns.count { it.selected } > 0
     }
 
     override fun onDestroyView() {
