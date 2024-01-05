@@ -21,20 +21,15 @@ class HtmlGenerator(val context: Context, val view: View) {
         <html lang="en"${if (isRtl()) """ dir="rtl"""" else ""}>
           <head>
             <script type="text/javascript" async src="file:///android_asset/joisty/canvas.js"></script>
-            ${HtmlLatexRenderer().getScriptTags()}
+            ${HtmlSectionRenderer().getScriptTags()}
             <style>
-              table, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-                text-align: center;
-                padding: 4px;
-              }
+                ${HtmlSectionRenderer().getCssStyles()}
             </style>
           </head>
           <body>
             <canvas id="joistCanvas" width="200" height="200" data='${getCanvasJson(report.joistDesign)}'></canvas>
             <div id="errorLog"></div>
-            ${generateLatexDocument(report)}
+            ${renderSections(report)}
           </body>
         </html>
         """.trimIndent()
@@ -42,41 +37,12 @@ class HtmlGenerator(val context: Context, val view: View) {
     private fun isRtl(): Boolean =
         ViewCompat.getLayoutDirection(view) == ViewCompat.LAYOUT_DIRECTION_RTL
 
-    private fun generateLatexDocument(report: Report): String {
-        val latexRenderer = HtmlLatexRenderer()
-        return report.sections.joinToString(separator = "<p>&nbsp;</p>") { reportSection ->
-            val title = translate(reportSection.titleResourceId)
-            val latexParagraphs = reportSection.paragraphs.joinToString(separator = "") {
-                "<p>${it.text}</p>${latexRenderer.getBodyTags(it.latexLines)}"
-            }
-            val tables = reportSection.tables.joinToString(separator = "") { table ->
-                """<table>
-                        <tr>
-                        <th colspan="${table.columns.count()}">${translate(table.title)}</th>
-                        </tr>
-                        <tr>${table.columns.joinToString(separator = "") { column ->
-                    "<th>${translate(table.columnTitles.getValue(column))}</th>"
-                        }}</tr>
-                        ${
-                    table.rows.joinToString(separator = "") { row ->
-                        """<tr>${
-                            table.columns.joinToString(separator = "") { column ->
-                                "<td>${translate(row.getValue(column))}</td>"
-                            }
-                        }</tr>"""
-                    }
-                }
-                        </table>"""
-            }
-            "<h3>$title</h3>$latexParagraphs$tables".trimIndent()
+    private fun renderSections(report: Report): String {
+        val htmlSectionRenderer = HtmlSectionRenderer()
+        return report.sections.joinToString(separator = "") { reportSection ->
+            htmlSectionRenderer.render(reportSection, context)
         }
     }
-
-    private fun translate(resourceId: Any) = if (resourceId is Int) try {
-        context.getString(resourceId)
-    } catch (e: Exception) {
-        resourceId
-    } else resourceId
 
     private fun getCanvasJson(
         joistDesign: JoistDesign,
@@ -120,3 +86,9 @@ class HtmlGenerator(val context: Context, val view: View) {
         return Json.encodeToString(canvasDataModel)
     }
 }
+
+fun translate(resourceId: Any, context: Context) = if (resourceId is Int) try {
+    context.getString(resourceId)
+} catch (e: Exception) {
+    resourceId
+} else resourceId
