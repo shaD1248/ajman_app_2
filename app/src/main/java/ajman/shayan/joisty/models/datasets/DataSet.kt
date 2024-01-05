@@ -44,6 +44,8 @@ import ajman.shayan.joisty.models.structure.LocatedCompositeSection
 class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val hasConcreteWeb = true
 
+    val occupancy = locatedCompositeSection.compositeJoist.areaLoading.occupancy
+
     val Asb = GivenQuantity("Asb", locatedCompositeSection.Asb)
     val Ast = GivenQuantity("Ast", locatedCompositeSection.Ast)
     val Asw = GivenQuantity("Asw", locatedCompositeSection.Asw)

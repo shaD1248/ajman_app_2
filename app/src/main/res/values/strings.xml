@@ -56,11 +56,29 @@
     <string name="joist_arrangement_single_70_without_concrete_web">1 @ 70 cm</string>
     <string name="joist_arrangement_single_85_with_concrete_web">2 @ 85 cm + Concrete Web</string>
 
+    <string name="report_section_occupancy_loading">Occupancy Loading</string>
     <string name="report_section_flexural_strength_of_composite_section">Flexural Strength of Composite Section</string>
     <string name="report_section_transverse_shear_strength_of_composite_section">Transverse Shear Strength of Composite Section</string>
     <string name="report_section_deflection">Deflection</string>
     <string name="report_section_natural_frequency">Natural Frequency</string>
+    <string name="report_table_dead_load_commercial_title">Super-dead Load of Roof Ceilings</string>
+    <string name="report_table_dead_load_parking_title">Super-dead Load of Parking Ceilings</string>
+    <string name="report_table_dead_load_residential_title">Super-dead Load of Residential Ceilings</string>
+    <string name="report_table_dead_load_roof_title">Super-dead Load of Roof Ceilings</string>
+    <string name="report_table_dead_load_column_component">Component</string>
+    <string name="report_table_dead_load_column_specific_weight">Specific Weight</string>
+    <string name="report_table_dead_load_column_thickness">Thickness</string>
+    <string name="report_table_dead_load_column_area_load">Area Load</string>
+    <string name="report_table_dead_load_component_mosaic_stone">Mosaic Stone</string>
+    <string name="report_table_dead_load_component_cement_and_sand_mortar">Cement and Sand Mortar</string>
+    <string name="report_table_dead_load_component_concrete_with_mineral_pumice_and_sand">Concrete with Mineral Pumice and Sand</string>
+    <string name="report_table_dead_load_component_plaster_and_soil_mortar">Plaster and Soil Mortar</string>
+    <string name="report_table_dead_load_component_plaster_mortar">Plaster Mortar</string>
+    <string name="report_table_dead_load_component_cement_mosaic">Cement Mosaic</string>
+    <string name="report_table_dead_load_component_two_later_bitumen_coated_bag">Two-Layer Bitumen Coated Bag</string>
+    <string name="report_table_dead_load_component_total">Total</string>
     <string name="colon">: </string>
+
     <string name="export_as_pdf">Export as PDF</string>
 
     <string name="menu_price_list">Price List</string>

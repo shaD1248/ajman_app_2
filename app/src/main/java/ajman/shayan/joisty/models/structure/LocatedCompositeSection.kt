@@ -2,7 +2,7 @@ package ajman.shayan.joisty.models.structure
 
 import kotlin.math.min
 
-class LocatedCompositeSection(val x: Double, private val compositeJoist: CompositeJoist) {
+class LocatedCompositeSection(val x: Double, val compositeJoist: CompositeJoist) {
     val L: Double get() = compositeJoist.L
     val wD: Double get() = compositeJoist.areaLoading.wD
     val wL: Double get() = compositeJoist.areaLoading.wL

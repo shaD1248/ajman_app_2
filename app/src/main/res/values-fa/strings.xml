@@ -57,10 +57,27 @@
     <string name="joist_arrangement_single_70_without_concrete_web">1 @ 70 cm</string>
     <string name="joist_arrangement_single_85_with_concrete_web">2 @ 85 cm + جان بتنی</string>
 
+    <string name="report_section_occupancy_loading">بار ناشی از کاربری</string>
     <string name="report_section_flexural_strength_of_composite_section">مقاومت خمشی مقطع مختلط</string>
     <string name="report_section_transverse_shear_strength_of_composite_section">مقاومت برشی عرضی مقطع مختلط</string>
     <string name="report_section_deflection">تغییرشکل</string>
     <string name="report_section_natural_frequency">بسامد طبیعی</string>
+    <string name="report_table_dead_load_commercial_title">سربار مردهٔ سقف‌های با کاربری تجاری</string>
+    <string name="report_table_dead_load_parking_title">سربار مردهٔ سقف‌های با کاربری پارکینگ</string>
+    <string name="report_table_dead_load_residential_title">سربار مردهٔ سقف‌های با کاربری مسکونی</string>
+    <string name="report_table_dead_load_roof_title">سربار مردهٔ سقف‌های با کاربری بام</string>
+    <string name="report_table_dead_load_column_component">جزء</string>
+    <string name="report_table_dead_load_column_specific_weight">وزن حجمی</string>
+    <string name="report_table_dead_load_column_thickness">ضخامت</string>
+    <string name="report_table_dead_load_column_area_load">وزن سطحی</string>
+    <string name="report_table_dead_load_component_mosaic_stone">سنگ موزاییک</string>
+    <string name="report_table_dead_load_component_cement_and_sand_mortar">ملاط ماسه‌سیمان</string>
+    <string name="report_table_dead_load_component_concrete_with_mineral_pumice_and_sand">بتن با پوکهٔ معدنی و ماسه</string>
+    <string name="report_table_dead_load_component_plaster_and_soil_mortar">ملاط گچ و خاک</string>
+    <string name="report_table_dead_load_component_plaster_mortar">ملاط گچ</string>
+    <string name="report_table_dead_load_component_cement_mosaic">موزاییک سیمانی</string>
+    <string name="report_table_dead_load_component_two_later_bitumen_coated_bag">گونی قیراندود دولایه</string>
+    <string name="report_table_dead_load_component_total">جمع</string>
     <string name="colon">: </string>
     <string name="export_as_pdf">ذخیرهٔ PDF</string>
 

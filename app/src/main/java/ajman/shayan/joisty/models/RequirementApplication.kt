@@ -3,6 +3,7 @@ package ajman.shayan.joisty.models
 import ajman.shayan.joisty.models.datasets.DataSet
 import ajman.shayan.joisty.models.report.Paragraph
 import ajman.shayan.joisty.models.report.ReportSection
+import ajman.shayan.joisty.models.requirements.limit_states.OccupancyLoading
 import ajman.shayan.joisty.models.requirements.limit_states.deflection.Deflection
 import ajman.shayan.joisty.models.requirements.limit_states.flexure.FlexuralStrengthOfCompositeSection
 import ajman.shayan.joisty.models.requirements.limit_states.shear.TransverseShearStrengthOfCompositeSection
@@ -24,6 +25,7 @@ class RequirementApplication(
 
     constructor(compositeJoist: CompositeJoist) : this(0.0) {
         val requirements: List<Requirement<LocatedCompositeSection>> = listOf(
+            OccupancyLoading(),
             FlexuralStrengthOfCompositeSection(),
             TransverseShearStrengthOfCompositeSection(),
             Deflection(),
@@ -39,7 +41,8 @@ class RequirementApplication(
                 val mappedQuantity = requirement.mappedQuantity
                 val assignments = evaluator.mappedAssignments[mappedQuantity] ?: mutableListOf()
                 val ratio = evaluator.dataSet.get(mappedQuantity)?.value ?: 0.0
-                val reportSections = mutableListOf(ReportSection(requirement.titleResourceId, listOf(Paragraph("", assignments.map { it.getLatex() }))))
+                requirement.updateTableValues(evaluator.dataSet)
+                val reportSections = mutableListOf(ReportSection(requirement.titleResourceId, listOf(Paragraph("", assignments.map { it.getLatex() })), requirement.tables))
                 RequirementApplication(ratio, reportSections)
             }
         }
