@@ -39,11 +39,9 @@ class HtmlSectionRenderer {
         val tables = reportSection.tables.joinToString(separator = "") { table ->
             htmlTableRenderer.renderTable(table, context)
         }
-        return """<h3 onclick="toggleSection('$sectionId')">$title</h3>
-                <div id="$sectionId" class="sectionContent">
-                    $latexParagraphs
-                    $tables
-                    <p>&nbsp;</p>
-                </div>"""
+        return """
+            <h3 onclick="toggleSection('$sectionId')">$title</h3>
+            <div id="$sectionId" class="sectionContent">$tables$latexParagraphs</div>
+        """
     }
 }
