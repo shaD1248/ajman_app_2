@@ -1,6 +1,7 @@
 package ajman.shayan.joisty.models.templates
 
 import ajman.shayan.joisty.enums.Unit
+import ajman.shayan.joisty.services.formatQuantityValue
 
 class Assignment(
     var name: String,
@@ -8,9 +9,8 @@ class Assignment(
     private var unit: Unit,
     private var formula: String? = null
 ) {
-    private val valueFormat = "%.2f"
     override fun toString(): String {
-        val formattedValue = String.format(valueFormat, value / unit.getValue())
+        val formattedValue = formatQuantityValue(value, unit)
         val formulaString = formula?.let { " = $it" } ?: ""
         return "$name$formulaString = $formattedValue$unit"
     }

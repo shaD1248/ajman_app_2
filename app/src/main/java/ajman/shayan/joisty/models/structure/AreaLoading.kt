@@ -5,7 +5,7 @@ import kotlin.math.cos
 import kotlin.math.pow
 
 class AreaLoading(var occupancy: Occupancy) {
-    private var shouldAddSelfWeight: Boolean = occupancy.shouldAddSelfWeight
+    var shouldAddSelfWeight: Boolean = occupancy.shouldAddSelfWeight
     private var wsD: Double = occupancy.wsD
     var wL: Double = occupancy.wL
     private var wcD: Double = 0.0

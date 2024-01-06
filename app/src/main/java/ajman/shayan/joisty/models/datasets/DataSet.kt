@@ -35,6 +35,8 @@ import ajman.shayan.joisty.models.quantities.qD
 import ajman.shayan.joisty.models.quantities.ratio_Delta
 import ajman.shayan.joisty.models.quantities.ratio_f
 import ajman.shayan.joisty.models.quantities.w
+import ajman.shayan.joisty.models.quantities.wD
+import ajman.shayan.joisty.models.quantities.wcD
 import ajman.shayan.joisty.models.quantities.wu
 import ajman.shayan.joisty.models.quantities.y_composite
 import ajman.shayan.joisty.models.quantity_models.GivenQuantity
@@ -43,6 +45,7 @@ import ajman.shayan.joisty.models.structure.LocatedCompositeSection
 
 class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val hasConcreteWeb = true
+    val shouldAddSelfWeight = locatedCompositeSection.compositeJoist.areaLoading.shouldAddSelfWeight
 
     val occupancy = locatedCompositeSection.compositeJoist.areaLoading.occupancy
 
@@ -64,12 +67,12 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val h = GivenQuantity("h", locatedCompositeSection.h)
     val n = GivenQuantity("n", locatedCompositeSection.n.toDouble())
     val s = GivenQuantity("s", locatedCompositeSection.s)
-    val wD = GivenQuantity("wD", locatedCompositeSection.wD)
+    val wsD = GivenQuantity("wsD", locatedCompositeSection.compositeJoist.areaLoading.occupancy.wsD)
     val wL = GivenQuantity("wL", locatedCompositeSection.wL)
     val xb = GivenQuantity("xb", locatedCompositeSection.L / 2)
     val xv = GivenQuantity("xv", 0.0)
     private fun getGivenQuantities(): Set<GivenQuantity> = setOf(
-        Asb, Ast, Asw, Ec, Es, Fy, Fyw, L, b, be, bw, d, dj, fc, h, n, s, xb, xv
+        Asb, Ast, Asw, Ec, Es, Fy, Fyw, L, b, be, bw, d, dj, fc, h, n, s, wsD, xb, xv
     )
 
     val Delta_aDL = Delta_aDL(this)
@@ -102,7 +105,9 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val qL = qL(this)
     val qu = qu(this)
     val w = w(this)
+    val wcD = wcD(this)
     val wu = wu(this)
+    val wD = wD(this)
     val y_composite = y_composite(this)
 
     private val ratio_b = ratio_b(this)
@@ -111,8 +116,8 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     private val ratio_v = ratio_v(this)
     private fun getEvaluatableQuantities(): Set<EvaluatableQuantity> = setOf(
         Delta_aDL, Delta_aL, Delta_DL, Delta_L, I_composite, Mn, Mp, Mu, Qsb, Qst, Sb, Sc, Tp, Vc,
-        Vn, Vs, Vu, a, alpha, epsilon_t, fn, fn_min, ns, phi_b, phi_v, q, qD, qL, qu, w, wu,
-        y_composite, ratio_b, ratio_Delta, ratio_f, ratio_v,
+        Vn, Vs, Vu, a, alpha, epsilon_t, fn, fn_min, ns, phi_b, phi_v, q, qD, qL, qu, w, wcD, wu,
+        wD, y_composite, ratio_b, ratio_Delta, ratio_f, ratio_v,
     )
 
     private fun getAllQuantities() = getGivenQuantities() + getEvaluatableQuantities()

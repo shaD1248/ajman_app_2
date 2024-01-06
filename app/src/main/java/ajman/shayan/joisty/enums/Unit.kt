@@ -5,7 +5,7 @@ import ajman.shayan.joisty.models.structure.m
 import ajman.shayan.joisty.models.structure.s
 
 enum class Unit {
-    CM, CM3, CM4, HZ, KGFM, KGF_OVER_M, KGF_OVER_M2, M, M3, TF, TFM, UNIT;
+    CM, CM3, CM4, HZ, KGFM, KGF_OVER_M, KGF_OVER_M2, KGF_OVER_M3, M, M3, TF, TFM, UNIT;
 
     override fun toString(): String = when (this) {
         CM -> "cm"
@@ -15,6 +15,7 @@ enum class Unit {
         KGFM -> "kgfm"
         KGF_OVER_M -> "kgf/m"
         KGF_OVER_M2 -> "kgf/m²"
+        KGF_OVER_M3 -> "kgf/m³"
         M -> "m"
         M3 -> "m³"
         TF -> "Tf"
@@ -29,6 +30,7 @@ enum class Unit {
         KGFM -> kgf * m
         KGF_OVER_M -> kgf / m
         KGF_OVER_M2 -> kgf / m / m
+        KGF_OVER_M3 -> kgf / m / m / m
         M -> m
         M3 -> m * m * m
         TF -> 1000 * kgf
