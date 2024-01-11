@@ -36,7 +36,7 @@ class HtmlSectionRenderer {
         val latexParagraphs = reportSection.paragraphs.joinToString(separator = "") {
             "<p>${it.text}</p>${latexRenderer.getBodyTags(it.latexLines)}"
         }
-        val tables = reportSection.tables.joinToString(separator = "") { table ->
+        val tables = reportSection.tables.joinToString(separator = "<p>&nbsp;</p>") { table ->
             htmlTableRenderer.renderTable(table, context)
         }
         return """

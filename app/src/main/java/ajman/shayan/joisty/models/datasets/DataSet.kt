@@ -1,5 +1,6 @@
 package ajman.shayan.joisty.models.datasets
 
+import ajman.shayan.joisty.entities.PriceList
 import ajman.shayan.joisty.models.quantities.Delta_DL
 import ajman.shayan.joisty.models.quantities.Delta_L
 import ajman.shayan.joisty.models.quantities.Delta_aDL
@@ -21,6 +22,7 @@ import ajman.shayan.joisty.models.quantities.epsilon_t
 import ajman.shayan.joisty.models.quantities.ns
 import ajman.shayan.joisty.models.quantities.phi_b
 import ajman.shayan.joisty.models.quantities.phi_v
+import ajman.shayan.joisty.models.quantities.price
 import ajman.shayan.joisty.models.quantities.qu
 import ajman.shayan.joisty.models.quantities.qL
 import ajman.shayan.joisty.models.quantities.ratio_b
@@ -44,7 +46,7 @@ import ajman.shayan.joisty.models.quantity_models.GivenQuantity
 import ajman.shayan.joisty.models.quantity_models.NamedQuantity
 import ajman.shayan.joisty.models.structure.LocatedCompositeSection
 
-class DataSet(locatedCompositeSection: LocatedCompositeSection) {
+class DataSet(locatedCompositeSection: LocatedCompositeSection, val priceList: PriceList?) {
     val hasConcreteWeb = true
     val shouldAddSelfWeight = locatedCompositeSection.compositeJoist.areaLoading.shouldAddSelfWeight
 
@@ -102,6 +104,7 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     val ns = ns(this)
     val phi_b = phi_b(this)
     val phi_v = phi_v(this)
+    val price = price(this)
     val q = q(this)
     val qD = qD(this)
     val qL = qL(this)
@@ -118,8 +121,8 @@ class DataSet(locatedCompositeSection: LocatedCompositeSection) {
     private val ratio_v = ratio_v(this)
     private fun getEvaluatableQuantities(): Set<EvaluatableQuantity> = setOf(
         Delta_aDL, Delta_aL, Delta_DL, Delta_L, I_composite, Mj, Mn, Mp, Mu, Qsb, Qst, Sb, Sc, Tp,
-        Vc, Vn, Vs, Vu, a, alpha, epsilon_t, fn, fn_min, ns, phi_b, phi_v, q, qD, qL, qu, w, wcD,
-        wu, wD, y_composite, ratio_b, ratio_Delta, ratio_f, ratio_v,
+        Vc, Vn, Vs, Vu, a, alpha, epsilon_t, fn, fn_min, ns, phi_b, phi_v, price, q, qD, qL, qu, w,
+        wcD, wu, wD, y_composite, ratio_b, ratio_Delta, ratio_f, ratio_v,
     )
 
     private fun getAllQuantities() = getGivenQuantities() + getEvaluatableQuantities()

@@ -63,6 +63,7 @@
     <string name="report_section_transverse_shear_strength_of_composite_section">Transverse Shear Strength of Composite Section</string>
     <string name="report_section_deflection">Deflection</string>
     <string name="report_section_natural_frequency">Natural Frequency</string>
+    <string name="report_section_price_calculation">Price Calculation</string>
 
     <string name="report_table_joist_weight">Joist Weight</string>
     <string name="report_table_dead_load_structural_ceiling">Structure Dead Load of Ceilings</string>
@@ -70,15 +71,20 @@
     <string name="report_table_dead_load_parking">Super-dead Load of Parking Ceilings</string>
     <string name="report_table_dead_load_residential">Super-dead Load of Residential Ceilings</string>
     <string name="report_table_dead_load_roof">Super-dead Load of Roof Ceilings</string>
+    <string name="report_table_price_breakdown">Price Breakdown</string>
 
+    <string name="report_table_column_amount">Amount</string>
     <string name="report_table_column_area_load">Area Load</string>
     <string name="report_table_column_area_section">Area Section</string>
     <string name="report_table_column_component">Component</string>
     <string name="report_table_column_height">Height</string>
     <string name="report_table_column_length">Length</string>
     <string name="report_table_column_length_ratio">Ratio of Component Length to Ceiling Length</string>
+    <string name="report_table_column_price">Price</string>
+    <string name="report_table_column_price_per_unit">Price per Unit</string>
     <string name="report_table_column_specific_weight">Specific Weight</string>
     <string name="report_table_column_thickness">Thickness</string>
+    <string name="report_table_column_unit">Unit</string>
     <string name="report_table_column_volume">Volume</string>
     <string name="report_table_column_weight">Weight</string>
     <string name="report_table_column_width_ratio">Ratio of Component Width to Ceiling Width</string>

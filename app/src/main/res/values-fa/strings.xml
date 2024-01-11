@@ -64,6 +64,7 @@
     <string name="report_section_transverse_shear_strength_of_composite_section">مقاومت برشی عرضی مقطع مختلط</string>
     <string name="report_section_deflection">تغییرشکل</string>
     <string name="report_section_natural_frequency">بسامد طبیعی</string>
+    <string name="report_section_price_calculation">محاسبهٔ هزینه</string>
 
     <string name="report_table_joist_weight">وزن تیرچه</string>
     <string name="report_table_dead_load_structural_ceiling">بار مردهٔ سازه‌ای سقف</string>
@@ -71,15 +72,20 @@
     <string name="report_table_dead_load_parking">سربار مردهٔ سقف‌های با کاربری پارکینگ</string>
     <string name="report_table_dead_load_residential">سربار مردهٔ سقف‌های با کاربری مسکونی</string>
     <string name="report_table_dead_load_roof">سربار مردهٔ سقف‌های با کاربری بام</string>
+    <string name="report_table_price_breakdown">ریز هزینه</string>
 
+    <string name="report_table_column_amount">مقدار</string>
     <string name="report_table_column_area_load">وزن سطحی</string>
     <string name="report_table_column_area_section">مساحت مقطع</string>
     <string name="report_table_column_component">جزء</string>
     <string name="report_table_column_height">ارتفاع</string>
     <string name="report_table_column_length">طول</string>
     <string name="report_table_column_length_ratio">نسبت طول جزء به طول سقف</string>
+    <string name="report_table_column_price">قیمت</string>
+    <string name="report_table_column_price_per_unit">قیمت واحد</string>
     <string name="report_table_column_specific_weight">وزن حجمی</string>
     <string name="report_table_column_thickness">ضخامت</string>
+    <string name="report_table_column_unit">واحد</string>
     <string name="report_table_column_volume">حجم</string>
     <string name="report_table_column_weight">وزن</string>
     <string name="report_table_column_width_ratio">نسبت عرض جزء به عرض سقف</string>

@@ -3,14 +3,13 @@ package ajman.shayan.joisty.models.report.tables
 import ajman.shayan.joisty.R
 import ajman.shayan.joisty.enums.Unit
 import ajman.shayan.joisty.models.datasets.DataSet
-import ajman.shayan.joisty.models.quantity_models.times
 import ajman.shayan.joisty.models.structure.gamma_s
 import ajman.shayan.joisty.services.formatQuantityValue
 import kotlin.math.cos
 
-class JoistWeightTable(dataSet: DataSet): Table() {
+class JoistWeightTable(dataSet: DataSet) : Table() {
     override var columns = listOf(COMPONENT, LENGTH, AREA_SECTION, VOLUME, WEIGHT)
-    
+
     init {
         columnTitles = mapOf(
             COMPONENT to R.string.report_table_column_component,
@@ -26,22 +25,25 @@ class JoistWeightTable(dataSet: DataSet): Table() {
                     COMPONENT to R.string.report_table_component_bot_chord,
                     LENGTH to formatQuantityValue(dataSet.L.value, Unit.M),
                     AREA_SECTION to formatQuantityValue(dataSet.Asb.value, Unit.CM2),
-                    VOLUME to formatQuantityValue(dataSet.Asb * dataSet.L, Unit.CM3),
-                    WEIGHT to formatQuantityValue(gamma_s * dataSet.Asb * dataSet.L, Unit.KGF),
+                    VOLUME to formatQuantityValue(dataSet.Mj.Vsb, Unit.CM3),
+                    WEIGHT to formatQuantityValue(gamma_s * dataSet.Mj.Vsb, Unit.KGF),
                 ),
                 mapOf(
                     COMPONENT to R.string.report_table_component_top_chord,
                     LENGTH to formatQuantityValue(dataSet.L.value, Unit.M),
                     AREA_SECTION to formatQuantityValue(dataSet.Ast.value, Unit.CM2),
-                    VOLUME to formatQuantityValue(dataSet.Ast * dataSet.L, Unit.CM3),
-                    WEIGHT to formatQuantityValue(gamma_s * dataSet.Ast * dataSet.L, Unit.KGF),
+                    VOLUME to formatQuantityValue(dataSet.Mj.Vst, Unit.CM3),
+                    WEIGHT to formatQuantityValue(gamma_s * dataSet.Mj.Vst, Unit.KGF),
                 ),
                 mapOf(
                     COMPONENT to R.string.report_table_component_web_rebar,
-                    LENGTH to formatQuantityValue(dataSet.L / cos(dataSet.alpha.value ?: 0.0), Unit.M),
+                    LENGTH to formatQuantityValue(
+                        dataSet.L / cos(dataSet.alpha.value ?: 0.0),
+                        Unit.M
+                    ),
                     AREA_SECTION to formatQuantityValue(dataSet.Asw.value, Unit.CM2),
-                    VOLUME to formatQuantityValue(dataSet.Asw * dataSet.L / cos(dataSet.alpha.value ?: 0.0), Unit.CM3),
-                    WEIGHT to formatQuantityValue(gamma_s * dataSet.Asw * dataSet.L / cos(dataSet.alpha.value ?: 0.0), Unit.KGF),
+                    VOLUME to formatQuantityValue(dataSet.Mj.Vsw, Unit.CM3),
+                    WEIGHT to formatQuantityValue(gamma_s * dataSet.Mj.Vsw, Unit.KGF),
                 ),
                 mapOf(
                     COMPONENT to R.string.report_table_component_total,

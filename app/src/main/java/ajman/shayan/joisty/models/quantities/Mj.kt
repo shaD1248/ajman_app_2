@@ -7,16 +7,18 @@ import ajman.shayan.joisty.models.structure.gamma_s
 import ajman.shayan.joisty.models.templates.Assignment
 import kotlin.math.cos
 
-class Mj(dataSet: DataSet): EvaluatableQuantity(dataSet) {
+class Mj(dataSet: DataSet) : EvaluatableQuantity(dataSet) {
     override val name = "Mj"
     override val dependencies = mutableSetOf("Asb", "Ast", "Asw", "alpha", "L")
 
+    var Vsb: Double = 0.0
+    var Vst: Double = 0.0
+    var Vsw: Double = 0.0
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val Mj = gamma_s * (
-                dataSet.Asb * dataSet.L +
-                        dataSet.Ast * dataSet.L +
-                        dataSet.Asw * dataSet.L / cos(dataSet.alpha.value ?: 0.0)
-                )
+        Vsb = dataSet.Asb * dataSet.L
+        Vst = dataSet.Ast * dataSet.L
+        Vsw = dataSet.Asw * dataSet.L / cos(dataSet.alpha.value ?: 0.0)
+        val Mj = gamma_s * (Vsb + Vst + Vsw)
         actualDependencies = mutableSetOf(
             dataSet.Asb, dataSet.Ast, dataSet.Asw, dataSet.alpha, dataSet.L,
         )

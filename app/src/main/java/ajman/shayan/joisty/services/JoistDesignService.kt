@@ -1,6 +1,7 @@
 package ajman.shayan.joisty.services
 
 import ajman.shayan.joisty.entities.JoistDesign
+import ajman.shayan.joisty.entities.PriceList
 import ajman.shayan.joisty.enums.Status
 import ajman.shayan.joisty.models.RequirementApplication
 import ajman.shayan.joisty.models.report.Report
@@ -15,7 +16,7 @@ class JoistDesignService {
     private var analysisStatus: Status = Status.NOT_STARTED
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun analyze(joistDesign: JoistDesign): Report {
+    fun analyze(joistDesign: JoistDesign, priceList: PriceList): Report {
         val violations = joistDesign.validate()
         if (violations.isNotEmpty()) {
             throw Exception(violations.map { it.message }.joinToString { "\n" })
@@ -37,7 +38,7 @@ class JoistDesignService {
             joistDesign.concreteGrade,
             loading
         )
-        val requirementApplication = RequirementApplication(compositeJoist)
+        val requirementApplication = RequirementApplication(compositeJoist, priceList)
         analysisStatus = Status.COMPLETED
         return Report(requirementApplication.reportSections, joistDesign)
     }

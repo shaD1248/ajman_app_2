@@ -1,10 +1,11 @@
 package ajman.shayan.joisty.models
 
+import ajman.shayan.joisty.entities.PriceList
 import ajman.shayan.joisty.models.datasets.DataSet
 import ajman.shayan.joisty.models.report.Paragraph
 import ajman.shayan.joisty.models.report.ReportSection
-import ajman.shayan.joisty.models.requirements.limit_states.JoistWeight
 import ajman.shayan.joisty.models.requirements.limit_states.OccupancyLoading
+import ajman.shayan.joisty.models.requirements.limit_states.PriceCalculation
 import ajman.shayan.joisty.models.requirements.limit_states.StructureDeadLoad
 import ajman.shayan.joisty.models.requirements.limit_states.deflection.Deflection
 import ajman.shayan.joisty.models.requirements.limit_states.flexure.FlexuralStrengthOfCompositeSection
@@ -25,19 +26,19 @@ class RequirementApplication(
         _reportSections = applications.flatMap { it.reportSections }.toMutableList()
     }
 
-    constructor(compositeJoist: CompositeJoist) : this(0.0) {
+    constructor(compositeJoist: CompositeJoist, priceList: PriceList?) : this(0.0) {
         val requirements: List<Requirement<LocatedCompositeSection>> = listOf(
-            JoistWeight(),
             StructureDeadLoad(),
             OccupancyLoading(),
             FlexuralStrengthOfCompositeSection(),
             TransverseShearStrengthOfCompositeSection(),
             Deflection(),
             NaturalFrequency(),
+            PriceCalculation(),
         )
         compositeJoist.analyze()
         val applications = compositeJoist.locatedSections.flatMap { locatedCompositeSection ->
-            val dataSet = DataSet(locatedCompositeSection)
+            val dataSet = DataSet(locatedCompositeSection, priceList)
             val quantitiesToBeEvaluated = requirements.map { it.mappedQuantity }.toMutableSet()
             val evaluator = QuantityEvaluator(dataSet, quantitiesToBeEvaluated)
             evaluator.evaluate()

@@ -5,6 +5,7 @@ import ajman.shayan.joisty.R
 import ajman.shayan.joisty.adapters.SpinnerAdapter
 import ajman.shayan.joisty.databinding.FragmentJoistDesignBinding
 import ajman.shayan.joisty.entities.JoistDesign
+import ajman.shayan.joisty.entities.PriceList
 import ajman.shayan.joisty.models.report.Report
 import ajman.shayan.joisty.models.structure.ConcreteGrade
 import ajman.shayan.joisty.models.structure.JoistArrangement
@@ -43,6 +44,7 @@ class JoistDesignFragment : Fragment() {
     private var _binding: FragmentJoistDesignBinding? = null
     private val binding get() = _binding!!
     private var joistDesign: JoistDesign? = null
+    private var priceList: PriceList? = null
     private var additionalFieldsVisible = false
     private var updateView = false
 
@@ -60,6 +62,9 @@ class JoistDesignFragment : Fragment() {
                 projectName = getString(R.string.default_project_name)
             }
             updateView = true
+        })
+        application.priceListRepo.getOne(fun (priceList: PriceList?) {
+            this.priceList = priceList
         })
         postDelayed()
         return binding.root
@@ -134,7 +139,9 @@ class JoistDesignFragment : Fragment() {
 
     private fun analyze(joistDesign: JoistDesign): Report {
         val joistDesignService = JoistDesignService()
-        return joistDesignService.analyze(joistDesign)
+        return joistDesignService.analyze(
+            joistDesign, priceList ?: PriceList(1.0).apply {}
+        )
     }
 
     private fun convertDataToFrom(
