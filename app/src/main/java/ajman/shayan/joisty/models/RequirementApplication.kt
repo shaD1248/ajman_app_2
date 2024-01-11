@@ -3,6 +3,7 @@ package ajman.shayan.joisty.models
 import ajman.shayan.joisty.models.datasets.DataSet
 import ajman.shayan.joisty.models.report.Paragraph
 import ajman.shayan.joisty.models.report.ReportSection
+import ajman.shayan.joisty.models.requirements.limit_states.JoistWeight
 import ajman.shayan.joisty.models.requirements.limit_states.OccupancyLoading
 import ajman.shayan.joisty.models.requirements.limit_states.StructureDeadLoad
 import ajman.shayan.joisty.models.requirements.limit_states.deflection.Deflection
@@ -26,6 +27,7 @@ class RequirementApplication(
 
     constructor(compositeJoist: CompositeJoist) : this(0.0) {
         val requirements: List<Requirement<LocatedCompositeSection>> = listOf(
+            JoistWeight(),
             StructureDeadLoad(),
             OccupancyLoading(),
             FlexuralStrengthOfCompositeSection(),

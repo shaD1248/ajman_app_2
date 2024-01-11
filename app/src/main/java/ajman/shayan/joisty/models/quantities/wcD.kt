@@ -19,7 +19,7 @@ import kotlin.math.pow
 
 class wcD(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     override val name = "wcD"
-    override val dependencies = mutableSetOf("wsD", "wcD")
+    override val dependencies = mutableSetOf("Mj", "b", "bw", "d", "h", "L")
 
     val et = 8 * cm
     var beta_1: Double = 0.0
@@ -34,11 +34,7 @@ class wcD(dataSet: DataSet): EvaluatableQuantity(dataSet) {
     var sigma: Double = 0.0
 
     override fun evaluate(): Triple<Double, MutableList<Assignment>, MutableSet<String>> {
-        val Mj = gamma_s * (
-                dataSet.Asb * dataSet.L +
-                        dataSet.Ast * dataSet.L +
-                        dataSet.Asw * dataSet.L / cos(dataSet.alpha.value ?: 0.0)
-                )
+        val Mj = dataSet.Mj
         beta_1 = dataSet.bw / dataSet.b
         beta_2 = 0.04
         hs = if (dataSet.hasConcreteWeb) 2 * cm else 0.0
@@ -52,7 +48,7 @@ class wcD(dataSet: DataSet): EvaluatableQuantity(dataSet) {
         val precision = 5 * kgf / m2
         val wcD = ceil(sigma / precision) * precision
         actualDependencies = mutableSetOf(
-            dataSet.b, dataSet.bw, dataSet.d, dataSet.h, dataSet.L,
+            dataSet.Mj, dataSet.b, dataSet.bw, dataSet.d, dataSet.h, dataSet.L,
         )
         this.assignments = mutableListOf(Assignment("w_{cD}", wcD, Unit.KGF_OVER_M2))
         value = wcD

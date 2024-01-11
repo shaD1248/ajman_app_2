@@ -56,6 +56,7 @@
     <string name="joist_arrangement_single_70_without_concrete_web">1 @ 70 cm</string>
     <string name="joist_arrangement_single_85_with_concrete_web">2 @ 85 cm + Concrete Web</string>
 
+    <string name="report_section_joist_weight">Joist Weight</string>
     <string name="report_section_structural_dead_load">Structure Dead Load of Ceilings</string>
     <string name="report_section_occupancy_loading">Super-dead Load of Ceilings</string>
     <string name="report_section_flexural_strength_of_composite_section">Flexural Strength of Composite Section</string>
@@ -63,33 +64,42 @@
     <string name="report_section_deflection">Deflection</string>
     <string name="report_section_natural_frequency">Natural Frequency</string>
 
-    <string name="report_table_dead_load_structural_ceiling_title">Structure Dead Load of Ceilings</string>
-    <string name="report_table_dead_load_commercial_title">Super-dead Load of Roof Ceilings</string>
-    <string name="report_table_dead_load_parking_title">Super-dead Load of Parking Ceilings</string>
-    <string name="report_table_dead_load_residential_title">Super-dead Load of Residential Ceilings</string>
-    <string name="report_table_dead_load_roof_title">Super-dead Load of Roof Ceilings</string>
-    <string name="report_table_dead_load_column_component">Component</string>
-    <string name="report_table_dead_load_column_specific_weight">Specific Weight</string>
-    <string name="report_table_dead_load_column_length_ratio">Ratio of Component Length to Ceiling Length</string>
-    <string name="report_table_dead_load_column_width_ratio">Ratio of Component Width to Ceiling Width</string>
-    <string name="report_table_dead_load_column_height">Height</string>
-    <string name="report_table_dead_load_column_thickness">Thickness</string>
-    <string name="report_table_dead_load_column_area_load">Area Load</string>
+    <string name="report_table_joist_weight">Joist Weight</string>
+    <string name="report_table_dead_load_structural_ceiling">Structure Dead Load of Ceilings</string>
+    <string name="report_table_dead_load_commercial">Super-dead Load of Roof Ceilings</string>
+    <string name="report_table_dead_load_parking">Super-dead Load of Parking Ceilings</string>
+    <string name="report_table_dead_load_residential">Super-dead Load of Residential Ceilings</string>
+    <string name="report_table_dead_load_roof">Super-dead Load of Roof Ceilings</string>
 
-    <string name="report_table_dead_load_component_joist">Joist</string>
-    <string name="report_table_dead_load_component_concrete_slab">Concrete Slab</string>
-    <string name="report_table_dead_load_component_concrete_web">Concrete Web</string>
-    <string name="report_table_dead_load_component_tie">Tie</string>
-    <string name="report_table_dead_load_component_triangular_cut">Triangular Prismatic Cut on Block</string>
-    <string name="report_table_dead_load_component_block">Polystyrene Block</string>
-    <string name="report_table_dead_load_component_mosaic_stone">Mosaic Stone</string>
-    <string name="report_table_dead_load_component_cement_and_sand_mortar">Cement and Sand Mortar</string>
-    <string name="report_table_dead_load_component_concrete_with_mineral_pumice_and_sand">Concrete with Mineral Pumice and Sand</string>
-    <string name="report_table_dead_load_component_plaster_and_soil_mortar">Plaster and Soil Mortar</string>
-    <string name="report_table_dead_load_component_plaster_mortar">Plaster Mortar</string>
-    <string name="report_table_dead_load_component_cement_mosaic">Cement Mosaic</string>
-    <string name="report_table_dead_load_component_two_later_bitumen_coated_bag">Two-Layer Bitumen Coated Bag</string>
-    <string name="report_table_dead_load_component_total">Total</string>
+    <string name="report_table_column_area_load">Area Load</string>
+    <string name="report_table_column_area_section">Area Section</string>
+    <string name="report_table_column_component">Component</string>
+    <string name="report_table_column_height">Height</string>
+    <string name="report_table_column_length">Length</string>
+    <string name="report_table_column_length_ratio">Ratio of Component Length to Ceiling Length</string>
+    <string name="report_table_column_specific_weight">Specific Weight</string>
+    <string name="report_table_column_thickness">Thickness</string>
+    <string name="report_table_column_volume">Volume</string>
+    <string name="report_table_column_weight">Weight</string>
+    <string name="report_table_column_width_ratio">Ratio of Component Width to Ceiling Width</string>
+
+    <string name="report_table_component_top_chord">Top Chord</string>
+    <string name="report_table_component_bot_chord">Bottom Chord</string>
+    <string name="report_table_component_web_rebar">Web Rebar</string>
+    <string name="report_table_component_joist">Joist</string>
+    <string name="report_table_component_concrete_slab">Concrete Slab</string>
+    <string name="report_table_component_concrete_web">Concrete Web</string>
+    <string name="report_table_component_tie">Tie</string>
+    <string name="report_table_component_triangular_cut">Triangular Prismatic Cut on Block</string>
+    <string name="report_table_component_block">Polystyrene Block</string>
+    <string name="report_table_component_mosaic_stone">Mosaic Stone</string>
+    <string name="report_table_component_cement_and_sand_mortar">Cement and Sand Mortar</string>
+    <string name="report_table_component_concrete_with_mineral_pumice_and_sand">Concrete with Mineral Pumice and Sand</string>
+    <string name="report_table_component_plaster_and_soil_mortar">Plaster and Soil Mortar</string>
+    <string name="report_table_component_plaster_mortar">Plaster Mortar</string>
+    <string name="report_table_component_cement_mosaic">Cement Mosaic</string>
+    <string name="report_table_component_two_later_bitumen_coated_bag">Two-Layer Bitumen Coated Bag</string>
+    <string name="report_table_component_total">Total</string>
     <string name="colon">: </string>
 
     <string name="export_as_pdf">Export as PDF</string>

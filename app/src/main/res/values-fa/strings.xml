@@ -57,6 +57,7 @@
     <string name="joist_arrangement_single_70_without_concrete_web">1 @ 70 cm</string>
     <string name="joist_arrangement_single_85_with_concrete_web">2 @ 85 cm + جان بتنی</string>
 
+    <string name="report_section_joist_weight">وزن تیرچه</string>
     <string name="report_section_structural_dead_load">بار مردهٔ سازه‌ای سقف</string>
     <string name="report_section_occupancy_loading">سربار مردهٔ ناشی از کاربری</string>
     <string name="report_section_flexural_strength_of_composite_section">مقاومت خمشی مقطع مختلط</string>
@@ -64,33 +65,42 @@
     <string name="report_section_deflection">تغییرشکل</string>
     <string name="report_section_natural_frequency">بسامد طبیعی</string>
 
-    <string name="report_table_dead_load_structural_ceiling_title">بار مردهٔ سازه‌ای سقف</string>
-    <string name="report_table_dead_load_commercial_title">سربار مردهٔ سقف‌های با کاربری تجاری</string>
-    <string name="report_table_dead_load_parking_title">سربار مردهٔ سقف‌های با کاربری پارکینگ</string>
-    <string name="report_table_dead_load_residential_title">سربار مردهٔ سقف‌های با کاربری مسکونی</string>
-    <string name="report_table_dead_load_roof_title">سربار مردهٔ سقف‌های با کاربری بام</string>
-    <string name="report_table_dead_load_column_component">جزء</string>
-    <string name="report_table_dead_load_column_specific_weight">وزن حجمی</string>
-    <string name="report_table_dead_load_column_length_ratio">نسبت طول جزء به طول سقف</string>
-    <string name="report_table_dead_load_column_width_ratio">نسبت عرض جزء به عرض سقف</string>
-    <string name="report_table_dead_load_column_height">ارتفاع</string>
-    <string name="report_table_dead_load_column_thickness">ضخامت</string>
-    <string name="report_table_dead_load_column_area_load">وزن سطحی</string>
+    <string name="report_table_joist_weight">وزن تیرچه</string>
+    <string name="report_table_dead_load_structural_ceiling">بار مردهٔ سازه‌ای سقف</string>
+    <string name="report_table_dead_load_commercial">سربار مردهٔ سقف‌های با کاربری تجاری</string>
+    <string name="report_table_dead_load_parking">سربار مردهٔ سقف‌های با کاربری پارکینگ</string>
+    <string name="report_table_dead_load_residential">سربار مردهٔ سقف‌های با کاربری مسکونی</string>
+    <string name="report_table_dead_load_roof">سربار مردهٔ سقف‌های با کاربری بام</string>
 
-    <string name="report_table_dead_load_component_joist">تیرچه</string>
-    <string name="report_table_dead_load_component_concrete_slab">دال بتنی</string>
-    <string name="report_table_dead_load_component_concrete_web">جان بتنی</string>
-    <string name="report_table_dead_load_component_tie">کلاف میانی</string>
-    <string name="report_table_dead_load_component_triangular_cut">برش منشوری مثلّثی بلوک</string>
-    <string name="report_table_dead_load_component_block">بلوک پلی‌استایرن</string>
-    <string name="report_table_dead_load_component_mosaic_stone">سنگ موزاییک</string>
-    <string name="report_table_dead_load_component_cement_and_sand_mortar">ملاط ماسه‌سیمان</string>
-    <string name="report_table_dead_load_component_concrete_with_mineral_pumice_and_sand">بتن با پوکهٔ معدنی و ماسه</string>
-    <string name="report_table_dead_load_component_plaster_and_soil_mortar">ملاط گچ و خاک</string>
-    <string name="report_table_dead_load_component_plaster_mortar">ملاط گچ</string>
-    <string name="report_table_dead_load_component_cement_mosaic">موزاییک سیمانی</string>
-    <string name="report_table_dead_load_component_two_later_bitumen_coated_bag">گونی قیراندود دولایه</string>
-    <string name="report_table_dead_load_component_total">جمع</string>
+    <string name="report_table_column_area_load">وزن سطحی</string>
+    <string name="report_table_column_area_section">مساحت مقطع</string>
+    <string name="report_table_column_component">جزء</string>
+    <string name="report_table_column_height">ارتفاع</string>
+    <string name="report_table_column_length">طول</string>
+    <string name="report_table_column_length_ratio">نسبت طول جزء به طول سقف</string>
+    <string name="report_table_column_specific_weight">وزن حجمی</string>
+    <string name="report_table_column_thickness">ضخامت</string>
+    <string name="report_table_column_volume">حجم</string>
+    <string name="report_table_column_weight">وزن</string>
+    <string name="report_table_column_width_ratio">نسبت عرض جزء به عرض سقف</string>
+
+    <string name="report_table_component_top_chord">بال فوقانی</string>
+    <string name="report_table_component_bot_chord">بال تحتانی</string>
+    <string name="report_table_component_web_rebar">میلگرد عرضی</string>
+    <string name="report_table_component_joist">تیرچه</string>
+    <string name="report_table_component_concrete_slab">دال بتنی</string>
+    <string name="report_table_component_concrete_web">جان بتنی</string>
+    <string name="report_table_component_tie">کلاف میانی</string>
+    <string name="report_table_component_triangular_cut">برش منشوری مثلّثی بلوک</string>
+    <string name="report_table_component_block">بلوک پلی‌استایرن</string>
+    <string name="report_table_component_mosaic_stone">سنگ موزاییک</string>
+    <string name="report_table_component_cement_and_sand_mortar">ملاط ماسه‌سیمان</string>
+    <string name="report_table_component_concrete_with_mineral_pumice_and_sand">بتن با پوکهٔ معدنی و ماسه</string>
+    <string name="report_table_component_plaster_and_soil_mortar">ملاط گچ و خاک</string>
+    <string name="report_table_component_plaster_mortar">ملاط گچ</string>
+    <string name="report_table_component_cement_mosaic">موزاییک سیمانی</string>
+    <string name="report_table_component_two_later_bitumen_coated_bag">گونی قیراندود دولایه</string>
+    <string name="report_table_component_total">جمع</string>
     <string name="colon">: </string>
     <string name="export_as_pdf">ذخیرهٔ PDF</string>
 
