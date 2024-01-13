@@ -18,7 +18,8 @@ class RequirementApplication(
     private var _ratio: Double,
     private var _reportSections: MutableList<ReportSection> = mutableListOf()
 ) {
-    private val ratio: Double get() = _ratio
+    val ratio: Double get() = _ratio
+    lateinit var dataSet: DataSet
     val reportSections: MutableList<ReportSection> get() = _reportSections
 
     constructor(applications: List<RequirementApplication>) : this(0.0) {
@@ -38,15 +39,15 @@ class RequirementApplication(
         )
         compositeJoist.analyze()
         val applications = compositeJoist.locatedSections.flatMap { locatedCompositeSection ->
-            val dataSet = DataSet(locatedCompositeSection, priceList)
+            dataSet = DataSet(locatedCompositeSection, priceList)
             val quantitiesToBeEvaluated = requirements.map { it.mappedQuantity }.toMutableSet()
             val evaluator = QuantityEvaluator(dataSet, quantitiesToBeEvaluated)
             evaluator.evaluate()
             requirements.map { requirement ->
                 val mappedQuantity = requirement.mappedQuantity
                 val assignments = evaluator.mappedAssignments[mappedQuantity] ?: mutableListOf()
-                val ratio = evaluator.dataSet.get(mappedQuantity)?.value ?: 0.0
-                requirement.updateTableValues(evaluator.dataSet)
+                val ratio = dataSet.get(mappedQuantity)?.value ?: 0.0
+                requirement.updateTableValues(dataSet)
                 val reportSections = mutableListOf(ReportSection(requirement.titleResourceId, listOf(Paragraph("", assignments.map { it.getLatex() })), requirement.tables))
                 RequirementApplication(ratio, reportSections)
             }

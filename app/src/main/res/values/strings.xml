@@ -44,6 +44,7 @@
     <string name="label_show_more">Show More</string>
     <string name="label_show_less">Show Less</string>
     <string name="label_analyze">Analyze</string>
+    <string name="label_design">Design</string>
 
     <string name="occupancy_commercial">Commercial</string>
     <string name="occupancy_parking">Parking</string>

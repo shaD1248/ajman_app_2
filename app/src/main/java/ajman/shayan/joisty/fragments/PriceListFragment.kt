@@ -6,6 +6,7 @@ import ajman.shayan.joisty.databinding.FragmentPriceListBinding
 import ajman.shayan.joisty.entities.PriceList
 import ajman.shayan.joisty.models.structure.kgf
 import ajman.shayan.joisty.models.structure.m3
+import ajman.shayan.joisty.services.set
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -95,9 +96,7 @@ class PriceListFragment : Fragment() {
         )
 
         for ((propertyName, value) in formData) {
-            val field = priceList.javaClass.getDeclaredField(propertyName)
-            field.isAccessible = true
-            field.set(priceList, value)
+            set(priceList, propertyName, value)
         }
 
         val application = requireActivity().application as JoistyApplication

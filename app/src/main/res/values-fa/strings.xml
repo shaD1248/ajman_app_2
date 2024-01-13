@@ -45,6 +45,7 @@
     <string name="label_show_more">جزئیّات بیشتر</string>
     <string name="label_show_less">جزئیّات کمتر</string>
     <string name="label_analyze">ارزیابی</string>
+    <string name="label_design">طرّاحی</string>
 
     <string name="occupancy_commercial">تجاری</string>
     <string name="occupancy_parking">پارکینگ</string>

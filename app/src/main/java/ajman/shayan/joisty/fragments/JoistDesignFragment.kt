@@ -16,6 +16,7 @@ import ajman.shayan.joisty.models.structure.m
 import ajman.shayan.joisty.services.HtmlGenerator
 import ajman.shayan.joisty.services.JoistDesignService
 import ajman.shayan.joisty.services.convertHtmlToPdf
+import ajman.shayan.joisty.services.set
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -44,7 +45,7 @@ class JoistDesignFragment : Fragment() {
     private var _binding: FragmentJoistDesignBinding? = null
     private val binding get() = _binding!!
     private var joistDesign: JoistDesign? = null
-    private var priceList: PriceList? = null
+    private var priceList: PriceList = PriceList(1.0).apply {}
     private var additionalFieldsVisible = false
     private var updateView = false
 
@@ -64,7 +65,7 @@ class JoistDesignFragment : Fragment() {
             updateView = true
         })
         application.priceListRepo.getOne(fun (priceList: PriceList?) {
-            this.priceList = priceList
+            if (priceList != null) this.priceList = priceList
         })
         postDelayed()
         return binding.root
@@ -108,6 +109,14 @@ class JoistDesignFragment : Fragment() {
             }
         }
 
+        view.findViewById<Button>(R.id.buttonDesign).setOnClickListener {
+            joistDesign?.let {
+                convertFormToData(it)
+                design(it)
+                convertDataToFrom(it, analyze(it))
+            }
+        }
+
         val contract = ActivityResultContracts.StartActivityForResult()
         val resultLauncher = registerForActivityResult(contract) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -137,11 +146,14 @@ class JoistDesignFragment : Fragment() {
         }
     }
 
+    private fun design(joistDesign: JoistDesign) {
+        val joistDesignService = JoistDesignService()
+        joistDesignService.design(joistDesign, priceList)
+    }
+
     private fun analyze(joistDesign: JoistDesign): Report {
         val joistDesignService = JoistDesignService()
-        return joistDesignService.analyze(
-            joistDesign, priceList ?: PriceList(1.0).apply {}
-        )
+        return joistDesignService.getAnalysisReport(joistDesign, priceList)
     }
 
     private fun convertDataToFrom(
@@ -215,9 +227,7 @@ class JoistDesignFragment : Fragment() {
         )
 
         for ((propertyName, value) in formData) {
-            val field = joistDesign.javaClass.getDeclaredField(propertyName)
-            field.isAccessible = true
-            field.set(joistDesign, value)
+            set(joistDesign, propertyName, value)
         }
 
         val application = requireActivity().application as JoistyApplication

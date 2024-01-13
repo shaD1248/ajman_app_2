@@ -248,7 +248,6 @@
 
     </LinearLayout>
 
-    <!-- Analyze Button -->
     <Button
         android:id="@+id/buttonAnalyze"
         android:layout_width="wrap_content"
@@ -256,7 +255,13 @@
         android:text="@string/label_analyze"
         android:textColor="#FFFFFFFF" />
 
-    <!-- Analyze Button -->
+    <Button
+        android:id="@+id/buttonDesign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_design"
+        android:textColor="#FFFFFFFF" />
+
     <Button
         android:id="@+id/buttonExportAsPdf"
         android:layout_width="wrap_content"
