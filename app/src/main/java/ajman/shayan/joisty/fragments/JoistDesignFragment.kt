@@ -17,8 +17,10 @@ import ajman.shayan.joisty.services.HtmlGenerator
 import ajman.shayan.joisty.services.JoistDesignService
 import ajman.shayan.joisty.services.convertHtmlToPdf
 import ajman.shayan.joisty.services.set
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -33,6 +35,8 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -41,11 +45,13 @@ import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class JoistDesignFragment : Fragment() {
+    private val REQUEST_WRITE_EXTERNAL_STORAGE = 1
 
     private var _binding: FragmentJoistDesignBinding? = null
     private val binding get() = _binding!!
     private var joistDesign: JoistDesign? = null
     private var priceList: PriceList = PriceList(1.0).apply {}
+    private var outputPath: String? = null
     private var additionalFieldsVisible = false
     private var updateView = false
 
@@ -117,15 +123,42 @@ class JoistDesignFragment : Fragment() {
             }
         }
 
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission already granted
+        } else {
+            // Request the permission
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                REQUEST_WRITE_EXTERNAL_STORAGE
+            )
+        }
+
         val contract = ActivityResultContracts.StartActivityForResult()
         val resultLauncher = registerForActivityResult(contract) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
                 val data: Intent? = result.data
                 data?.also { uri ->
-                    val outputPath = uri.toString() // The chosen directory's URI
-                    joistDesign?.let {
-                        convertHtmlToPdf(generateHtml(analyze(it)), outputPath)
+                    outputPath = uri.dataString
+                    if (ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        // Permission already granted
+                        export()
+                    } else {
+                        // Request the permission
+//                        ActivityCompat.requestPermissions(
+//                            requireActivity(),
+//                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                            REQUEST_WRITE_EXTERNAL_STORAGE
+//                        )
                     }
                 }
             }
@@ -143,6 +176,28 @@ class JoistDesignFragment : Fragment() {
                 if (additionalFieldsVisible) View.VISIBLE else View.GONE
             view.findViewById<TextView>(R.id.textViewShowMore)?.text =
                 requireContext().getString(if (additionalFieldsVisible) R.string.label_show_less else R.string.label_show_more)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_WRITE_EXTERNAL_STORAGE) {
+            // Check if the permission is granted
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+                export()
+            } else {
+                // Permission denied
+            }
+        }
+    }
+
+    private fun export() {
+        joistDesign?.let {
+            convertHtmlToPdf(generateHtml(analyze(it)), outputPath ?: "", requireContext())
         }
     }
 

@@ -1,5 +1,11 @@
 package ajman.shayan.joisty.services
 
+import android.content.Context
+import android.net.Uri
+import com.pspdfkit.document.PdfDocumentLoader
+import com.pspdfkit.document.html.HtmlToPdfConverter
+import java.io.File
+
 //import org.xhtmlrenderer.pdf.ITextRenderer
 //import java.io.FileOutputStream
 //import java.io.OutputStream
@@ -33,7 +39,23 @@ package ajman.shayan.joisty.services
 
 
 //@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-fun convertHtmlToPdf(htmlContent: String, outputPath: String) {
+fun convertHtmlToPdf(html: String, outputPath: String, context: Context) {
+    val dir = File(outputPath, "joisty")
+    dir.mkdirs()
+    val file = File.createTempFile("export", ".pdf", dir);
+    HtmlToPdfConverter.fromHTMLString(context, html)
+        // Configure title for the created document.
+        .title("Converted document")
+        // Perform the conversion.
+        .convertToPdfAsync(file)
+        // Subscribe to the conversion result.
+        .subscribe({
+            // Open and process the converted document.
+            val document = PdfDocumentLoader.openDocument(context, Uri.fromFile(file))
+        }, {
+            val x = 1
+            // Handle the error.
+        })
 ////    // Create a PDF document
 ////    try {
 ////    val document = PDDocument()
