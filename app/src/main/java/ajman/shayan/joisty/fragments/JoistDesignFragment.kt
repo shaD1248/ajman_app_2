@@ -17,10 +17,8 @@ import ajman.shayan.joisty.services.HtmlGenerator
 import ajman.shayan.joisty.services.JoistDesignService
 import ajman.shayan.joisty.services.convertHtmlToPdf
 import ajman.shayan.joisty.services.set
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -35,9 +33,9 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import java.io.IOException
+import java.io.OutputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -45,8 +43,6 @@ import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class JoistDesignFragment : Fragment() {
-    private val REQUEST_WRITE_EXTERNAL_STORAGE = 1
-
     private var _binding: FragmentJoistDesignBinding? = null
     private val binding get() = _binding!!
     private var joistDesign: JoistDesign? = null
@@ -123,48 +119,30 @@ class JoistDesignFragment : Fragment() {
             }
         }
 
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            // Permission already granted
-        } else {
-            // Request the permission
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                REQUEST_WRITE_EXTERNAL_STORAGE
-            )
-        }
-
         val contract = ActivityResultContracts.StartActivityForResult()
         val resultLauncher = registerForActivityResult(contract) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
                 val data: Intent? = result.data
-                data?.also { uri ->
-                    outputPath = uri.dataString
-                    if (ContextCompat.checkSelfPermission(
-                            requireContext(),
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        // Permission already granted
-                        export()
-                    } else {
-                        // Request the permission
-//                        ActivityCompat.requestPermissions(
-//                            requireActivity(),
-//                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-//                            REQUEST_WRITE_EXTERNAL_STORAGE
-//                        )
+                data?.data?.let { uri ->
+                    // Use the URI to create the file
+                    val outputStream = requireContext().contentResolver.openOutputStream(uri)
+                    outputStream?.use { outputStream ->
+                        joistDesign?.let {
+                            val html = generateHtml(analyze(it))
+                            // Write data to the file if needed
+                            writeToOutputStream(outputStream, html)
+                        }
                     }
                 }
             }
         }
         view.findViewById<Button>(R.id.buttonExportAsPdf).setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "application/html"
+                putExtra(Intent.EXTRA_TITLE, "export.html")
+            }
             resultLauncher.launch(intent)
         }
 
@@ -179,18 +157,18 @@ class JoistDesignFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == REQUEST_WRITE_EXTERNAL_STORAGE) {
-            // Check if the permission is granted
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
-                export()
-            } else {
-                // Permission denied
+    private fun writeToOutputStream(outputStream: OutputStream, text: String) {
+        try {
+            val bytes = text.toByteArray(Charsets.UTF_8)
+            outputStream.write(bytes)
+            outputStream.flush()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            try {
+                outputStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
         }
     }
