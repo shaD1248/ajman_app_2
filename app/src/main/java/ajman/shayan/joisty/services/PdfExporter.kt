@@ -5,44 +5,37 @@ import android.net.Uri
 import com.pspdfkit.document.PdfDocumentLoader
 import com.pspdfkit.document.html.HtmlToPdfConverter
 import java.io.File
+import java.io.IOException
 
-//import org.xhtmlrenderer.pdf.ITextRenderer
-//import java.io.FileOutputStream
-//import java.io.OutputStream
-//
-//fun exportHtmlToPdf(htmlContent: String, outputPath: String) {
-//    val renderer = ITextRenderer()
-//    renderer.setDocumentFromString(htmlContent)
-//    renderer.layout()
-//
-//    val os: OutputStream = FileOutputStream(outputPath)
-//    renderer.createPDF(os)
-//    os.close()
-//}
+fun interface ConversionCallback {
+    fun onConversionComplete(pdfData: ByteArray?, error: Throwable?)
+}
 
-//import android.os.Build
-//import androidx.annotation.RequiresApi
-//import org.apache.pdfbox.pdmodel.PDDocument
-//import org.apache.pdfbox.pdmodel.PDPage
-//import org.apache.pdfbox.pdmodel.PDPageContentStream
-//import org.apache.pdfbox.pdmodel.font.PDType1Font
-//import org.thymeleaf.TemplateEngine
-//import org.thymeleaf.context.Context
-//import java.io.ByteArrayOutputStream
-//import java.io.File
-//import java.io.FileInputStream
-//import java.io.FileOutputStream
-//import java.io.OutputStreamWriter
-//import java.nio.charset.StandardCharsets
+fun convertHtmlToPdfBinary(html: String, context: Context, callback: ConversionCallback) {
+    val tempFile = File.createTempFile("export", ".pdf", context.cacheDir)
+    HtmlToPdfConverter.fromHTMLString(context, html)
+        .title("Converted document")
+        .convertToPdfAsync(tempFile)
+        .subscribe({
+            val pdfData = try {
+                tempFile.readBytes() // Use readBytes to get binary data
+            } catch (e: IOException) {
+                null // Handle potential IOException
+            } finally {
+                tempFile.delete() // Delete the temporary file
+            }
+            // Conversion successful
+            callback.onConversionComplete(pdfData, null)
+        }, { error ->
+            // Conversion failed
+            callback.onConversionComplete(null, error)
+        })
+}
 
-//import com.itextpdf.html2pdf.HtmlConverter
-
-
-//@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 fun convertHtmlToPdf(html: String, outputPath: String, context: Context) {
     val dir = File(outputPath, "joisty")
     dir.mkdirs()
-    val file = File.createTempFile("export", ".pdf", dir);
+    val file = File.createTempFile("export", ".pdf", dir)
     HtmlToPdfConverter.fromHTMLString(context, html)
         // Configure title for the created document.
         .title("Converted document")
@@ -56,48 +49,6 @@ fun convertHtmlToPdf(html: String, outputPath: String, context: Context) {
             val x = 1
             // Handle the error.
         })
-////    // Create a PDF document
-////    try {
-////    val document = PDDocument()
-////    val page = PDPage()
-////    document.addPage(page)
-////
-////    // Create a content stream to write to the page
-////    val contentStream = PDPageContentStream(document, page)
-////
-////    // Use Thymeleaf to process the HTML content
-////    val templateEngine = TemplateEngine()
-////    val context = Context()
-////    context.setVariable("content", htmlContent)
-////    val processedHtml = templateEngine.process("your_template_name.html", context)
-////
-////    // Use PDFBox to write the HTML content to the PDF
-////    val outputStream = ByteArrayOutputStream()
-////    val writer = OutputStreamWriter(outputStream, StandardCharsets.UTF_8)
-////    writer.use { it.write(processedHtml) }
-////
-////    contentStream.beginText()
-////    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12f)
-////    contentStream.newLineAtOffset(100f, 700f)
-////    contentStream.showText(outputStream.toString(StandardCharsets.UTF_8))
-////    contentStream.endText()
-////
-////    // Save the document to a file or perform other actions as needed
-////    document.save(File(outputPath))
-////    document.close()
-////    } catch (e: Exception) {
-////        e.printStackTrace()
-////    }
-//
-////    val htmlFilePath = outputPath
-////    val pdfFilePath = outputPath
-////
-////    File(htmlFilePath).writeText(htmlContent)
-////    FileInputStream(htmlFilePath).use { htmlInputStream ->
-////        FileOutputStream(pdfFilePath).use { pdfOutputStream ->
-////            HtmlConverter.convertToPdf(htmlInputStream, pdfOutputStream)
-////        }
-////    }
 }
 
 //import com.itextpdf.text.Document

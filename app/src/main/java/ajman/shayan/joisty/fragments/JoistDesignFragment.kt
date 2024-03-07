@@ -16,6 +16,7 @@ import ajman.shayan.joisty.models.structure.m
 import ajman.shayan.joisty.services.HtmlGenerator
 import ajman.shayan.joisty.services.JoistDesignService
 import ajman.shayan.joisty.services.convertHtmlToPdf
+import ajman.shayan.joisty.services.convertHtmlToPdfBinary
 import ajman.shayan.joisty.services.set
 import android.app.Activity
 import android.content.Intent
@@ -50,6 +51,7 @@ class JoistDesignFragment : Fragment() {
     private var outputPath: String? = null
     private var additionalFieldsVisible = false
     private var updateView = false
+    private var pdfData: ByteArray? = null
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
@@ -60,13 +62,13 @@ class JoistDesignFragment : Fragment() {
         setSpinnerValues()
         val joistDesignId = arguments?.getLong("joistDesignId")
         val application = requireActivity().application as JoistyApplication
-        application.repo.get(joistDesignId, fun (joistDesign: JoistDesign?) {
+        application.repo.get(joistDesignId, fun(joistDesign: JoistDesign?) {
             this.joistDesign = joistDesign ?: JoistDesign(600.0).apply {
                 projectName = getString(R.string.default_project_name)
             }
             updateView = true
         })
-        application.priceListRepo.getOne(fun (priceList: PriceList?) {
+        application.priceListRepo.getOne(fun(priceList: PriceList?) {
             if (priceList != null) this.priceList = priceList
         })
         postDelayed()
@@ -127,23 +129,40 @@ class JoistDesignFragment : Fragment() {
                 data?.data?.let { uri ->
                     // Use the URI to create the file
                     val outputStream = requireContext().contentResolver.openOutputStream(uri)
-                    outputStream?.use { outputStream ->
-                        joistDesign?.let {
-                            val html = generateHtml(analyze(it))
-                            // Write data to the file if needed
-                            writeToOutputStream(outputStream, html)
+                    outputStream?.let { outputStream ->
+                        try {
+                            outputStream.write(pdfData)
+                            outputStream.flush()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        } finally {
+                            try {
+                                outputStream.close()
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
                         }
                     }
                 }
             }
         }
         view.findViewById<Button>(R.id.buttonExportAsPdf).setOnClickListener {
-            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "application/html"
-                putExtra(Intent.EXTRA_TITLE, "export.html")
+            joistDesign?.let {
+                val html = generateHtml(analyze(it))
+                convertHtmlToPdfBinary(html, requireContext()) { pdfData, error ->
+                    if (error == null) {
+                        this.pdfData = pdfData
+                        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                            addCategory(Intent.CATEGORY_OPENABLE)
+                            type = "application/pdf"
+                            putExtra(Intent.EXTRA_TITLE, "export.pdf")
+                        }
+                        resultLauncher.launch(intent)
+                    } else {
+                        // Handle conversion error
+                    }
+                }
             }
-            resultLauncher.launch(intent)
         }
 
         view.findViewById<TextView>(R.id.textViewShowMore).setOnClickListener {
