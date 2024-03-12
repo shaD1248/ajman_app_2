@@ -12,7 +12,6 @@ android {
     defaultConfig {
         applicationId = "ajman.shayan.joisty"
         minSdk = 24
-//        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -43,33 +42,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    packaging {
-        resources {
-            excludes += "com/lowagie/text/pdf/fonts/*"
-            excludes += "com/lowagie/text/pdf/*/*"
-            excludes += "com/lowagie/text/*.*"
-            excludes += "com/lowagie/text/*/*.*"
-            excludes += "org/bouncycastle/x509/*.properties"
-            excludes += "org/bouncycastle/mail/smime/validator/*.properties"
-            excludes += "META-INF/DEPENDENCIES"
-            excludes += "META-INF/INDEX.LIST"
-            excludes += "META-INF/LICENSE-GPL-2.txt"
-            excludes += "META-INF/LICENSE-GPL-3.txt"
-            excludes += "META-INF/LICENSE-LGPL-2.1.txt"
-            excludes += "META-INF/LICENSE-LGPL-2.txt"
-            excludes += "META-INF/LICENSE-LGPL-3.txt"
-            excludes += "META-INF/LICENSE-W3C-TEST"
-            excludes += "org/bouncycastle/x509/CertPathReviewerMessages.properties"
-            excludes += "org/bouncycastle/x509/CertPathReviewerMessages_de.properties"
-        }
-    }
 }
-
-//configurations.all {
-//    resolutionStrategy {
-//        force("org.bouncycastle:bcprov-jdk14:1.38")
-//    }
-//}
 
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
@@ -90,7 +63,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     implementation("androidx.activity:activity-ktx:1.7.2")
-
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -113,37 +85,4 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-    implementation(files("libs/pspdfkit-8.10.0.aar"))
-    implementation("org.xhtmlrenderer:flying-saucer-pdf:9.5.2") {
-//        exclude(group = "org.xhtmlrenderer")
-    }
-//    implementation("com.lowagie:flying-saucer:2.1.2")
-//    implementation("com.lowagie:itext:2.1.7") {
-//        exclude(group = "org.bouncycastle")
-//        exclude(group = "com.lowagie.text")
-//        exclude(group = "com.github.librepdf")
-//    }
-
-//    implementation("com.pspdfkit:pspdfkit:8.10.0")
-////    implementation("org.bouncycastle:bcprov-jdk14:1.76")
-//    implementation("org.xhtmlrenderer:flying-saucer-pdf:9.2.0") {
-////        exclude(group = "org.bouncycastle")
-//    }
-//    implementation("org.xhtmlrenderer:flying-saucer-core:9.2.0") {
-////        exclude(group = "org.bouncycastle")
-//    }
-//    implementation("com.lowagie:itext:2.1.7")
-
-//    implementation("org.apache.pdfbox:pdfbox:2.0.30")
-//    implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0")
-//    implementation("org.thymeleaf:thymeleaf:3.1.2.RELEASE")
-//    implementation("org.thymeleaf:thymeleaf-spring5:3.1.2.RELEASE")
-
-//    implementation("com.itextpdf:itext7-core:7.1.15")
-
-//    implementation("com.github.PDDStudio:WebView2PDF:1.0.5")
-
-//    implementation("com.itextpdf:itextpdf:5.5.13.2")
-//    implementation("org.scilab.forge:jlatexmath:1.0.7")
-
 }

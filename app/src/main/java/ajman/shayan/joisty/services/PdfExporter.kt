@@ -2,63 +2,15 @@ package ajman.shayan.joisty.services
 
 import ajman.shayan.joisty.R
 import android.content.Context
-import android.net.Uri
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
 import android.print.PrintManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.pspdfkit.document.PdfDocumentLoader
-import com.pspdfkit.document.html.HtmlToPdfConverter
-import java.io.File
-import java.io.IOException
 
-fun interface ConversionCallback {
-    fun onConversionComplete(pdfData: ByteArray?, error: Throwable?)
-}
-
-fun convertHtmlToPdfBinary(html: String, context: Context, callback: ConversionCallback) {
-    val tempFile = File.createTempFile("export", ".pdf", context.cacheDir)
-    HtmlToPdfConverter.fromHTMLString(context, html)
-        .title("Converted document")
-        .convertToPdfAsync(tempFile)
-        .subscribe({
-            val pdfData = try {
-                tempFile.readBytes() // Use readBytes to get binary data
-            } catch (e: IOException) {
-                null // Handle potential IOException
-            } finally {
-                tempFile.delete() // Delete the temporary file
-            }
-            // Conversion successful
-            callback.onConversionComplete(pdfData, null)
-        }, { error ->
-            // Conversion failed
-            callback.onConversionComplete(null, error)
-        })
-}
-
-fun convertHtmlToPdf(html: String, outputPath: String, context: Context) {
-    val dir = File(outputPath, "joisty")
-    dir.mkdirs()
-    val file = File.createTempFile("export", ".pdf", dir)
-    HtmlToPdfConverter.fromHTMLString(context, html)
-        // Configure title for the created document.
-        .title("Converted document")
-        // Perform the conversion.
-        .convertToPdfAsync(file)
-        // Subscribe to the conversion result.
-        .subscribe({
-            // Open and process the converted document.
-            val document = PdfDocumentLoader.openDocument(context, Uri.fromFile(file))
-        }, {
-            val x = 1
-            // Handle the error.
-        })
-}
-
-public fun saveHtmlAsPdf(htmlContent: String, context: Context) {
+fun saveHtmlAsPdf(htmlContent: String, context: Context) {
     val webView = WebView(context)
+    webView.settings.javaScriptEnabled = true
     webView.webViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView, url: String) {
             createPdf(webView, context)

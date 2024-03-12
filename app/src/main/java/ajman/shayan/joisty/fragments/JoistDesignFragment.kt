@@ -15,7 +15,6 @@ import ajman.shayan.joisty.models.structure.cm
 import ajman.shayan.joisty.models.structure.m
 import ajman.shayan.joisty.services.HtmlGenerator
 import ajman.shayan.joisty.services.JoistDesignService
-import ajman.shayan.joisty.services.convertHtmlToPdf
 import ajman.shayan.joisty.services.saveHtmlAsPdf
 import ajman.shayan.joisty.services.set
 import android.app.Activity
@@ -176,12 +175,6 @@ class JoistDesignFragment : Fragment() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        }
-    }
-
-    private fun export() {
-        joistDesign?.let {
-            convertHtmlToPdf(generateHtml(analyze(it)), outputPath ?: "", requireContext())
         }
     }
 
