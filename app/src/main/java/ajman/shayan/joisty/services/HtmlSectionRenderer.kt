@@ -18,13 +18,13 @@ class HtmlSectionRenderer {
         </script>
     """
 
-    fun getCssStyles() = """
+    fun getCssStyles(collapsed: Boolean = false) = """
         ${HtmlTableRenderer().getCssStyles()}
         h3:hover {
             background-color: #f0f0f0;
         }
         .sectionContent {
-            display: none;
+            display: ${if (collapsed) "none" else "block"};
         }
     """
 

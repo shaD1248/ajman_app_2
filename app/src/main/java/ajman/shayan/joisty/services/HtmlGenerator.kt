@@ -17,13 +17,13 @@ import kotlinx.serialization.json.Json
 
 @RequiresApi(Build.VERSION_CODES.O)
 class HtmlGenerator(val context: Context, val view: View) {
-    fun generateHtml(report: Report): String = """<!DOCTYPE html>
+    fun generateHtml(report: Report, collapsed: Boolean = false): String = """<!DOCTYPE html>
         <html lang="en"${if (isRtl()) """ dir="rtl"""" else ""}>
           <head>
             <script type="text/javascript" async src="file:///android_asset/joisty/canvas.js"></script>
             ${HtmlSectionRenderer().getScriptTags()}
             <style>
-                ${HtmlSectionRenderer().getCssStyles()}
+                ${HtmlSectionRenderer().getCssStyles(collapsed)}
             </style>
           </head>
           <body>

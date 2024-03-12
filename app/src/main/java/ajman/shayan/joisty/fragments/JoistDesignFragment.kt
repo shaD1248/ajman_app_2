@@ -228,7 +228,7 @@ class JoistDesignFragment : Fragment() {
         for ((viewId, value) in spinnerFormData) {
             root.findViewById<Spinner?>(viewId).setSelection(value.ordinal)
         }
-        loadWebView(generateHtml(report))
+        loadWebView(generateHtml(report, true))
     }
 
     private fun formatLocalDateTime(localDateTime: LocalDateTime): String {
@@ -240,9 +240,9 @@ class JoistDesignFragment : Fragment() {
         return "$dayOfMonth $month $year, $hour:$minute"
     }
 
-    private fun generateHtml(report: Report): String {
+    private fun generateHtml(report: Report, collapsed: Boolean = false): String {
         val htmlGenerator = HtmlGenerator(requireContext(), binding.root)
-        return htmlGenerator.generateHtml(report)
+        return htmlGenerator.generateHtml(report, collapsed)
     }
 
     private fun loadWebView(html: String) {
