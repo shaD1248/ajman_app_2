@@ -16,7 +16,7 @@ import ajman.shayan.joisty.models.structure.m
 import ajman.shayan.joisty.services.HtmlGenerator
 import ajman.shayan.joisty.services.JoistDesignService
 import ajman.shayan.joisty.services.convertHtmlToPdf
-import ajman.shayan.joisty.services.convertHtmlToPdfBinary
+import ajman.shayan.joisty.services.saveHtmlAsPdf
 import ajman.shayan.joisty.services.set
 import android.app.Activity
 import android.content.Intent
@@ -148,20 +148,7 @@ class JoistDesignFragment : Fragment() {
         }
         view.findViewById<Button>(R.id.buttonExportAsPdf).setOnClickListener {
             joistDesign?.let {
-                val html = generateHtml(analyze(it))
-                convertHtmlToPdfBinary(html, requireContext()) { pdfData, error ->
-                    if (error == null) {
-                        this.pdfData = pdfData
-                        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                            addCategory(Intent.CATEGORY_OPENABLE)
-                            type = "application/pdf"
-                            putExtra(Intent.EXTRA_TITLE, "export.pdf")
-                        }
-                        resultLauncher.launch(intent)
-                    } else {
-                        // Handle conversion error
-                    }
-                }
+                saveHtmlAsPdf(generateHtml(analyze(it)), requireContext())
             }
         }
 

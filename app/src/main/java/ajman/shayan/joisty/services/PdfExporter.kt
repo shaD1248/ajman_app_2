@@ -1,7 +1,13 @@
 package ajman.shayan.joisty.services
 
+import ajman.shayan.joisty.R
 import android.content.Context
 import android.net.Uri
+import android.print.PrintAttributes
+import android.print.PrintDocumentAdapter
+import android.print.PrintManager
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.pspdfkit.document.PdfDocumentLoader
 import com.pspdfkit.document.html.HtmlToPdfConverter
 import java.io.File
@@ -51,52 +57,22 @@ fun convertHtmlToPdf(html: String, outputPath: String, context: Context) {
         })
 }
 
-//import com.itextpdf.text.Document
-//import com.itextpdf.text.Element
-//import com.itextpdf.text.Image
-//import com.itextpdf.text.Paragraph
-//import com.itextpdf.text.pdf.PdfWriter
-//import org.jlatexmath.renderer.Renderer
-//import org.jlatexmath.renderer.awt.AwtGlyphVector
-//import org.jlatexmath.renderer.latex.LatexRenderer
-//
-//import java.awt.image.BufferedImage
-//import java.io.ByteArrayOutputStream
-//import java.io.FileOutputStream
-//import javax.imageio.ImageIO
-//
-//fun main() {
-//    val pdfPath = "output.pdf"
-//    convertHtmlToPdf("", pdfPath)
-//    println("PDF generated at: $pdfPath")
-//}
-//
-//fun convertHtmlToPdf(htmlContent: String, outputPath: String) {
-//    val document = Document()
-//    PdfWriter.getInstance(document, FileOutputStream(outputPath))
-//    document.open()
-//
-//    // Add text
-//    document.add(Paragraph("Hello, this is some text in the PDF."))
-//
-//    // Render LaTeX to image
-//    val latexExpression = "\\LaTeX"
-//    val latexImage = renderLatexToImage(latexExpression)
-//
-//    // Embed LaTeX image into PDF
-//    document.add(Image.getInstance(toByteArray(latexImage)))
-//
-//    document.close()
-//}
-//
-//fun renderLatexToImage(latexExpression: String): BufferedImage {
-//    val latexRenderer: Renderer<BufferedImage> = LatexRenderer.createRenderer()
-//    val awtGlyphVector: AwtGlyphVector = latexRenderer.render(latexExpression, 20f, java.awt.Color.BLACK)
-//    return awtGlyphVector.getBufferedImage()
-//}
-//
-//fun toByteArray(image: BufferedImage): ByteArray {
-//    val baos = ByteArrayOutputStream()
-//    ImageIO.write(image, "png", baos)
-//    return baos.toByteArray()
-//}
+public fun saveHtmlAsPdf(htmlContent: String, context: Context) {
+    val webView = WebView(context)
+    webView.webViewClient = object : WebViewClient() {
+        override fun onPageFinished(view: WebView, url: String) {
+            createPdf(webView, context)
+        }
+    }
+    webView.loadDataWithBaseURL(null, htmlContent, "text/HTML", "UTF-8", null)
+}
+
+private fun createPdf(webView: WebView, context: Context) {
+    val printManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
+    val printAdapter: PrintDocumentAdapter = webView.createPrintDocumentAdapter("MyDocument")
+    val jobName = context.getString(R.string.app_name) + " Document"
+    val attributes = PrintAttributes.Builder()
+        .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+        .build()
+    printManager.print(jobName, printAdapter, attributes)
+}

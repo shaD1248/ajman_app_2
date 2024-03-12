@@ -43,20 +43,26 @@ android {
     buildFeatures {
         viewBinding = true
     }
-//    packaging {
-//        resources {
-//            excludes += "META-INF/DEPENDENCIES"
-//            excludes += "META-INF/INDEX.LIST"
-//            excludes += "META-INF/LICENSE-GPL-2.txt"
-//            excludes += "META-INF/LICENSE-GPL-3.txt"
-//            excludes += "META-INF/LICENSE-LGPL-2.1.txt"
-//            excludes += "META-INF/LICENSE-LGPL-2.txt"
-//            excludes += "META-INF/LICENSE-LGPL-3.txt"
-//            excludes += "META-INF/LICENSE-W3C-TEST"
-//            excludes += "org/bouncycastle/x509/CertPathReviewerMessages.properties"
-//            excludes += "org/bouncycastle/x509/CertPathReviewerMessages_de.properties"
-//        }
-//    }
+    packaging {
+        resources {
+            excludes += "com/lowagie/text/pdf/fonts/*"
+            excludes += "com/lowagie/text/pdf/*/*"
+            excludes += "com/lowagie/text/*.*"
+            excludes += "com/lowagie/text/*/*.*"
+            excludes += "org/bouncycastle/x509/*.properties"
+            excludes += "org/bouncycastle/mail/smime/validator/*.properties"
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/INDEX.LIST"
+            excludes += "META-INF/LICENSE-GPL-2.txt"
+            excludes += "META-INF/LICENSE-GPL-3.txt"
+            excludes += "META-INF/LICENSE-LGPL-2.1.txt"
+            excludes += "META-INF/LICENSE-LGPL-2.txt"
+            excludes += "META-INF/LICENSE-LGPL-3.txt"
+            excludes += "META-INF/LICENSE-W3C-TEST"
+            excludes += "org/bouncycastle/x509/CertPathReviewerMessages.properties"
+            excludes += "org/bouncycastle/x509/CertPathReviewerMessages_de.properties"
+        }
+    }
 }
 
 //configurations.all {
@@ -108,6 +114,15 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation(files("libs/pspdfkit-8.10.0.aar"))
+    implementation("org.xhtmlrenderer:flying-saucer-pdf:9.5.2") {
+//        exclude(group = "org.xhtmlrenderer")
+    }
+//    implementation("com.lowagie:flying-saucer:2.1.2")
+//    implementation("com.lowagie:itext:2.1.7") {
+//        exclude(group = "org.bouncycastle")
+//        exclude(group = "com.lowagie.text")
+//        exclude(group = "com.github.librepdf")
+//    }
 
 //    implementation("com.pspdfkit:pspdfkit:8.10.0")
 ////    implementation("org.bouncycastle:bcprov-jdk14:1.76")
